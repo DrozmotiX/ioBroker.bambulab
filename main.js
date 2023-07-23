@@ -10,7 +10,7 @@ const utils = require('@iobroker/adapter-core');
 const mqtt = require('mqtt');
 
 const jsonExplorer = require('iobroker-jsonexplorer');
-// const fs = require("fs");
+const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
 
 class Bambulab extends utils.Adapter {
 	/**
@@ -107,12 +107,18 @@ class Bambulab extends utils.Adapter {
 	 */
 	messageHandler (message) {
 
+		try {
+			// Parse string to an JSON object
+			message = JSON.parse(message);
 
 			// Explore JSON & create states
-		await this.setStateAsync('testVariable', { val: true, ack: true });
+			jsonExplorer.traverseJson(message.print, this.config.serial, true, true, 0);
 
 			// Set values for states which need modification
 			this.setStateChanged(`${this.config.serial}.cooling_fan_speed`, {val: convert.fanSpeed(message.print.cooling_fan_speed), ack: true});
+		} catch (e) {
+			this.log.error(e);
+		}
 
 
 	}
