@@ -9,6 +9,8 @@
 const utils = require('@iobroker/adapter-core');
 const mqtt = require('mqtt');
 const convert = require('./lib/converter');
+let client;
+let timeout;
 
 const jsonExplorer = require('iobroker-jsonexplorer');
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
@@ -105,6 +107,8 @@ class Bambulab extends utils.Adapter {
 		}
 	}
 
+	/**
+	 * Handle MQTT messages to ioBroker states
 	 */
 	messageHandler (message) {
 
@@ -136,14 +140,18 @@ class Bambulab extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
-			// Here you must clear all timeouts or intervals that may still be active
-			// clearTimeout(timeout1);
-			// clearTimeout(timeout2);
-			// ...
-			// clearInterval(interval1);
+
+			// Close running timmers
+			if (timeout) {clearTimeout(timeout); timeout = null;}
+
+			// Close MQTT connection if present
+			if (client){
+				client.end();
+			}
 
 			callback();
 		} catch (e) {
+			this.log.error(e);
 			callback();
 		}
 	}

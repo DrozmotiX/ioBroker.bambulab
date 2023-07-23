@@ -2,15 +2,20 @@
 	"i18n": true,
 	"type": "panel",
 	"items": {
-		"option1": {
-			"type": "checkbox",
-			"label": "option1",
+		"host": {
+			"type": "text",
+			"label": "Printer IP address",
 			"newLine": true
 		},
-		"option2": {
-			"type": "text",
-			"label": "option2",
+		"Password": {
+			"type": "password",
+			"label": "Access Token (see printer network settings)",
 			"newLine": true
+		},
+		"serial": {
+			"type": "text",
+			"label": "Serial number of device (see printer network settings)",
+			"newLine": false
 		}
 	}
 }
