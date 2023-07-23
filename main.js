@@ -8,6 +8,7 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 const mqtt = require('mqtt');
+const convert = require('./lib/converter');
 
 const jsonExplorer = require('iobroker-jsonexplorer');
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
@@ -116,6 +117,12 @@ class Bambulab extends utils.Adapter {
 
 			// Set values for states which need modification
 			this.setStateChanged(`${this.config.serial}.cooling_fan_speed`, {val: convert.fanSpeed(message.print.cooling_fan_speed), ack: true});
+			this.setStateChanged(`${this.config.serial}.heatbreak_fan_speed`, {val: convert.fanSpeed(message.print.heatbreak_fan_speed), ack: true});
+			this.setStateChanged(`${this.config.serial}.stg_cur`, {val: convert.stageParser(message.print.stg_cur), ack: true});
+			this.setStateChanged(`${this.config.serial}.spd_lvl`, {val: convert.speedProfile(message.print.spd_lvl), ack: true});
+			this.setStateChanged(`${this.config.serial}.big_fan1_speed`, {val: convert.fanSpeed(message.print.big_fan1_speed), ack: true});
+			this.setStateChanged(`${this.config.serial}.big_fan2_speed`, {val: convert.fanSpeed(message.print.big_fan2_speed), ack: true});
+			this.setStateChanged(`${this.config.serial}.mc_remaining_time`, {val: convert.remainingTime(message.print.mc_remaining_time), ack: true});
 		} catch (e) {
 			this.log.error(e);
 		}
