@@ -74,7 +74,12 @@
 		]
 	},
 	"encryptedNative": [
-		"Password"
+		"Password",
+		"serial"
+	],
+	"protectedNative": [
+		"Password",
+		"serial"
 	],
 	"native": {
 		"host": "192.168.1.100",
