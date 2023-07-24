@@ -66,6 +66,8 @@ class Bambulab extends utils.Adapter {
 				this.log.info(`Printer connected`);
 				this.setState('info.connection', true, true);
 
+				this.createControlStates();
+
 				// Subscribe on printer topic after connection
 				client.subscribe([`device/${this.config.serial}/report`], () => {
 					this.log.debug(`Subscribed to printer topic by serial`);
@@ -110,14 +112,14 @@ class Bambulab extends utils.Adapter {
 	/**
 	 * Handle MQTT messages to ioBroker states
 	 */
-	messageHandler (message) {
+	async messageHandler (message) {
 
 		try {
 			// Parse string to an JSON object
 			message = JSON.parse(message);
 
 			// Explore JSON & create states
-			jsonExplorer.traverseJson(message.print, this.config.serial, true, true, 0);
+			await jsonExplorer.traverseJson(message.print, this.config.serial, true, true, 0);
 
 			// Set values for states which need modification
 			this.setStateChanged(`${this.config.serial}.cooling_fan_speed`, {val: convert.fanSpeed(message.print.cooling_fan_speed), ack: true});
@@ -134,6 +136,66 @@ class Bambulab extends utils.Adapter {
 
 	}
 
+	publishMQTTmessages (msg) {
+
+		console.debug(`Publish message ${msg}`);
+
+		const topic = `device/${this.config.serial}/request`;
+		client.subscribe([topic], () => {
+			console.log(`Subscribe to topic '${topic}'`);
+			// client.publish([`device/${this.config.serial}/request`], JSON.stringify(msg));
+			client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, (error) => {
+				if (error) {
+					console.error(error);
+				}
+			});
+		});
+	}
+
+	createControlStates(){
+
+		const controlStates = {
+			chamberLight : {
+				name: 'Chamber Light',
+				type: 'boolean',
+				role: 'state',
+				write: true
+			},
+			start : {
+				name: 'Start printing',
+				type: 'boolean',
+				role: 'button.start',
+				write: true
+			},
+			stop : {
+				name: 'Stop Printing',
+				type: 'boolean',
+				role: 'button.stop'
+			},
+			resume : {
+				name: 'Resume Printing',
+				type: 'boolean',
+				role: 'button.resume'
+			}
+		};
+
+		this.extendObject(`${this.config.serial}.control`, {
+			'type': 'channel',
+			'common': {
+				'name': `Control device`,
+			},
+		});
+
+		for (const state in controlStates){
+			this.extendObject(`${this.config.serial}.control.${state}`, {
+				type: 'state',
+				common: controlStates[state]
+			});
+
+			this.subscribeStates(`${this.config.serial}.control.${state}`);
+		}
+	}
+
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
 	 * @param {() => void} callback
@@ -141,7 +203,7 @@ class Bambulab extends utils.Adapter {
 	onUnload(callback) {
 		try {
 
-			// Close running timmers
+			// Close running timers
 			if (timeout) {clearTimeout(timeout); timeout = null;}
 
 			// Close MQTT connection if present
@@ -163,8 +225,76 @@ class Bambulab extends utils.Adapter {
 	 */
 	onStateChange(id, state) {
 		if (state) {
-			// The state was changed
-			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+			// Only act on trigger if value is not Acknowledged
+			if (!state.ack) {
+				console.debug(`${id} | ${state.val}`);
+				let msg;
+				const checkID = id.split('.');
+
+				switch (checkID[4]) {
+					case ('chamberLight'):
+						if (state.val === true) {
+							msg = {
+								'system': {
+									'sequence_id': '2003',
+									'command': 'ledctrl',
+									'led_node': 'chamber_light',
+									'led_mode': 'on',
+									'led_on_time': 500,
+									'led_off_time': 500,
+									'loop_times': 0,
+									'interval_time': 0
+								}, 'user_id': '2712364565'
+							};
+						} else if (state.val === false) {
+							msg = {
+								'system': {
+									'sequence_id': '2003',
+									'command': 'ledctrl',
+									'led_node': 'chamber_light',
+									'led_mode': 'off',
+									'led_on_time': 500,
+									'led_off_time': 500,
+									'loop_times': 0,
+									'interval_time': 0
+								}
+							};
+						}
+						break;
+
+					case ('start'):
+						msg = {
+							'print': {
+								'sequence_id': '0',
+								'command': 'start'
+							}
+						};
+						break;
+
+					case ('stop'):
+						msg = {
+							'print': {
+								'sequence_id': '0',
+								'command': 'stop'
+							}
+						};
+						break;
+
+					case ('resume'):
+						msg = {
+							'print': {
+								'sequence_id': '0',
+								'command': 'resume'
+							}
+						};
+						break;
+				}
+
+				if (msg) {
+					this.publishMQTTmessages(msg);
+				}
+			}
+
 		} else {
 			// The state was deleted
 			this.log.info(`state ${id} deleted`);
