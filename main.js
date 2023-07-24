@@ -114,7 +114,7 @@ class Bambulab extends utils.Adapter {
 				if (timeout) {clearTimeout(timeout); timeout = null;}
 				timeout = setTimeout(async function () {
 					client.reconnect();
-				}, 5000);
+				}, 30000);
 
 			});
 
