@@ -1,5 +1,6 @@
 {
-	"bambulab adapter settings": "bambulab的适配器设置",
-	"option1": "选项1",
-	"option2": "选项2"
+    "bambulab adapter settings": "bambulab 的适配器设置",
+    "host": "您打印机的 IP 地址",
+    "Password": "令牌，请参阅打印机网络设置",
+    "serial": "打印机序列号，请参阅打印机设置"
 }

@@ -1,5 +1,6 @@
 {
 	"bambulab adapter settings": "Adapter settings for bambulab",
-	"option1": "option1",
-	"option2": "option2"
+	"host": "Ip-Address of your printer",
+	"Password": "Token, see printer network settings",
+	"serial": "Serial number of Printer, see printer settings"
 }

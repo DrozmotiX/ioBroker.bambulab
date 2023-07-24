@@ -1,5 +1,6 @@
 {
-	"bambulab adapter settings": "Ajustes del adaptador para bambulab",
-	"option1": "Opción 1",
-	"option2": "opcion 2"
+    "bambulab adapter settings": "Configuración del adaptador para bambulab",
+    "host": "Dirección IP de su impresora",
+    "Password": "Token, consulte la configuración de red de la impresora",
+    "serial": "Número de serie de la impresora, consulte la configuración de la impresora"
 }
