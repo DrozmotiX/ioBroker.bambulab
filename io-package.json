@@ -1,78 +1,83 @@
 {
-	"common": {
-		"name": "bambulab",
-		"version": "0.1.0",
-		"news": {
-			"0.1.0": {
-				"en": "initial release",
-				"de": "Erstveröffentlichung",
-				"ru": "Начальная версия",
-				"pt": "lançamento inicial",
-				"nl": "Eerste uitgave",
-				"fr": "Première version",
-				"it": "Versione iniziale",
-				"es": "Versión inicial",
-				"pl": "Pierwsze wydanie",
-				"uk": "Початкова версія",
-				"zh-cn": "首次出版"
-			}
-		},
-		"title": "Bambulab 3d Printer integration",
-		"titleLang": {
-			"en": "Bambulab 3d Printer integration",
-			"de": "Integration des Bambulab 3D-Druckers",
-			"ru": "Интеграция с 3D-принтером Bambulab",
-			"pt": "Integração da impressora 3D Bambulab",
-			"nl": "Bambulab 3D Printer integratie",
-			"fr": "Intégration de l'imprimante 3d Bambulab",
-			"it": "Integrazione della stampante 3d Bambulab",
-			"es": "Integración de la impresora 3d Bambulab",
-			"pl": "Integracja drukarki 3D Bambulab",
-			"uk": "Інтеграція 3d принтера Bambulab",
-			"zh-cn": "Bambulab 3D 打印机集成"
-		},
-		"desc": {
-			"en": "Connects to Bambulab 3d printers to retrieve data of current print and control main aspects",
-			"de": "Verbindet sich mit Bambulab-3D-Druckern, um Daten des aktuellen Drucks abzurufen und Hauptaspekte zu steuern",
-			"ru": "Подключается к 3D-принтерам Bambulab для получения данных о текущей печати и управления основными аспектами.",
-			"pt": "Conecta-se às impressoras 3D Bambulab para recuperar dados de impressão atual e controlar os principais aspectos",
-			"nl": "Maakt verbinding met Bambulab 3D-printers om gegevens op te halen over de huidige afdruk- en controleaspecten",
-			"fr": "Se connecte aux imprimantes 3d Bambulab pour récupérer les données d'impression en cours et contrôler les principaux aspects",
-			"it": "Si collega alle stampanti 3D Bambulab per recuperare i dati della stampa corrente e controllare gli aspetti principali",
-			"es": "Se conecta a impresoras 3d Bambulab para recuperar datos de impresión actual y controlar aspectos principales",
-			"pl": "Łączy się z drukarkami 3D Bambulab, aby pobierać dane dotyczące bieżącego drukowania i kontrolować główne aspekty",
-			"uk": "Підключається до 3d-принтерів Bambulab для отримання даних поточного друку та контролю основних аспектів",
-			"zh-cn": "连接到 Bambulab 3D 打印机以检索当前打印的数据并控制主要方面"
-		},
-		"authors": ["DutchmanNL <oss@drozmotix.eu>"],
-		"keywords": ["bambulab", "3d-printing"],
-		"license": "MIT",
-		"platform": "Javascript/Node.js",
-		"main": "main.js",
-		"icon": "bambulab.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.bambulab/main/admin/bambulab.png",
-		"readme": "https://github.com/DrozmotiX/ioBroker.bambulab/blob/main/README.md",
-		"loglevel": "info",
-		"mode": "daemon",
-		"type": "hardware",
-		"compact": true,
-		"connectionType": "local",
-		"dataSource": "push",
-		"adminUI": {
-			"config": "json"
-		},
-		"dependencies": [
-			{
-				"js-controller": ">=3.3.22"
-			}
-		],
-		"globalDependencies": [
-			{
-				"admin": ">=5.1.13"
-			}
-		]
-	},
+    "common": {
+        "name": "bambulab",
+        "version": "0.1.0",
+        "news": {
+            "0.1.0": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "uk": "Початкова версія",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Bambulab 3d Printer integration",
+        "titleLang": {
+            "en": "Bambulab 3d Printer integration",
+            "de": "Integration des Bambulab 3D-Druckers",
+            "ru": "Интеграция с 3D-принтером Bambulab",
+            "pt": "Integração da impressora 3D Bambulab",
+            "nl": "Bambulab 3D Printer integratie",
+            "fr": "Intégration de l'imprimante 3d Bambulab",
+            "it": "Integrazione della stampante 3d Bambulab",
+            "es": "Integración de la impresora 3d Bambulab",
+            "pl": "Integracja drukarki 3D Bambulab",
+            "uk": "Інтеграція 3d принтера Bambulab",
+            "zh-cn": "Bambulab 3D 打印机集成"
+        },
+        "desc": {
+            "en": "Connects to Bambulab 3d printers to retrieve data of current print and control main aspects",
+            "de": "Verbindet sich mit Bambulab-3D-Druckern, um Daten des aktuellen Drucks abzurufen und Hauptaspekte zu steuern",
+            "ru": "Подключается к 3D-принтерам Bambulab для получения данных о текущей печати и управления основными аспектами.",
+            "pt": "Conecta-se às impressoras 3D Bambulab para recuperar dados de impressão atual e controlar os principais aspectos",
+            "nl": "Maakt verbinding met Bambulab 3D-printers om gegevens op te halen over de huidige afdruk- en controleaspecten",
+            "fr": "Se connecte aux imprimantes 3d Bambulab pour récupérer les données d'impression en cours et contrôler les principaux aspects",
+            "it": "Si collega alle stampanti 3D Bambulab per recuperare i dati della stampa corrente e controllare gli aspetti principali",
+            "es": "Se conecta a impresoras 3d Bambulab para recuperar datos de impresión actual y controlar aspectos principales",
+            "pl": "Łączy się z drukarkami 3D Bambulab, aby pobierać dane dotyczące bieżącego drukowania i kontrolować główne aspekty",
+            "uk": "Підключається до 3d-принтерів Bambulab для отримання даних поточного друку та контролю основних аспектів",
+            "zh-cn": "连接到 Bambulab 3D 打印机以检索当前打印的数据并控制主要方面"
+        },
+        "authors": [
+            "DutchmanNL <oss@drozmotix.eu>"
+        ],
+        "keywords": [
+            "bambulab",
+            "3d-printing"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "bambulab.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.bambulab/main/admin/bambulab.png",
+        "readme": "https://github.com/DrozmotiX/ioBroker.bambulab/blob/main/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "hardware",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "push",
+        "adminUI": {
+            "config": "json"
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=3.3.22"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=5.1.13"
+            }
+        ]
+    },
     "encryptedNative": [
         "Password",
         "serial"
