@@ -50,7 +50,7 @@ class Bambulab extends utils.Adapter {
 	mqttMessageHandle(){
 		try {
 
-			this.log.debug(`Try to connect to printer to connect`);
+			this.log.debug(`Try to connect to printer`);
 
 			// Connect to Printer using MQTT
 			client = mqtt.connect(`mqtts://${this.config.host}:8883`, {
@@ -82,14 +82,15 @@ class Bambulab extends utils.Adapter {
 
 			// Receive MQTT messages
 			client.on('message',  (topic, message) => {
-				// message is Buffer
-				// console.debug(message.toString());
 				// Parse string to an JSON object
 				message = JSON.parse(message.toString());
-				if (message && message.print) {
-					console.debug(message.print);
-					this.messageHandler(`Print Message ${JSON.stringify(message)}`);
-				} else if (message && message.system){
+
+				// @ts-ignore if print does not exist function will return false and skip
+				if (message && message.print) { // Handle values for printer statistics
+					console.debug(`Print Message ${JSON.stringify(message)}`);
+					this.messageHandler(message);
+					// @ts-ignore if system does not exist function will return false and skip
+				} else if (message && message.system){ // Handle values for system messages, used to acknowledge messages
 					console.debug(`System Message ${JSON.stringify(message)}`);
 				}
 
@@ -118,7 +119,7 @@ class Bambulab extends utils.Adapter {
 			});
 
 		} catch (e) {
-			this.log.error(e);
+			this.log.error(`[MQTT Message handler] ${e} | ${e.stack}`);
 		}
 	}
 
@@ -147,10 +148,8 @@ class Bambulab extends utils.Adapter {
 			}
 
 		} catch (e) {
-			this.log.error(e);
+			this.log.error(`[messageHandler] ${e} | ${e.stack}`);
 		}
-
-
 	}
 
 	publishMQTTmessages (msg) {
@@ -226,7 +225,7 @@ class Bambulab extends utils.Adapter {
 
 			callback();
 		} catch (e) {
-			this.log.error(e);
+			this.log.error(`[onUnload] ${e} | ${e.stack}`);
 			callback();
 		}
 	}

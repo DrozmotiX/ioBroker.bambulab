@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.8",
-    "@node-bambu/core": "^0.5.1",
     "iobroker-jsonexplorer": "git+https://git@github.com/DutchmanNL/ioBroker-jsonExplorer#main",
     "mqtt": "^4.3.7"
   },
