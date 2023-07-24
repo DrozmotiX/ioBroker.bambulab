@@ -29,8 +29,10 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.1.0 initial release
 * (DutchmanNL) initial release
+* During startup adapter throws warnings, these can be ignored and will be solved in >= 0.1.1
+* Control start/stop/resume and light available available in >= 0.1.1
 
 ## License
 MIT License
