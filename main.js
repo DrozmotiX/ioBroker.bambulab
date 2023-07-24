@@ -182,12 +182,14 @@ class Bambulab extends utils.Adapter {
 			stop : {
 				name: 'Stop Printing',
 				type: 'boolean',
-				role: 'button.stop'
+				role: 'button.stop',
+				write: true
 			},
 			resume : {
 				name: 'Resume Printing',
 				type: 'boolean',
-				role: 'button.resume'
+				role: 'button',
+				write: true
 			}
 		};
 
