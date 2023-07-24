@@ -70,7 +70,12 @@ class Bambulab extends utils.Adapter {
 
 				// Subscribe on printer topic after connection
 				client.subscribe([`device/${this.config.serial}/report`], () => {
-					this.log.debug(`Subscribed to printer topic by serial`);
+					this.log.debug(`Subscribed to printer data topic by serial`);
+				});
+
+				// Subscribe on printer topic after connection
+				client.subscribe([`device/${this.config.serial}/request`], () => {
+					this.log.debug(`Subscribed to printer request topic by serial`);
 				});
 
 			});
@@ -78,8 +83,16 @@ class Bambulab extends utils.Adapter {
 			// Receive MQTT messages
 			client.on('message',  (topic, message) => {
 				// message is Buffer
-				console.debug(message.toString());
-				this.messageHandler(message.toString());
+				// console.debug(message.toString());
+				// Parse string to an JSON object
+				message = JSON.parse(message.toString());
+				if (message && message.print) {
+					console.debug(message.print);
+					this.messageHandler(`Print Message ${JSON.stringify(message)}`);
+				} else if (message && message.system){
+					console.debug(`System Message ${JSON.stringify(message)}`);
+				}
+
 			});
 
 			client.on('reconnecting',  (topic, message) =>{
@@ -115,9 +128,6 @@ class Bambulab extends utils.Adapter {
 	async messageHandler (message) {
 
 		try {
-			// Parse string to an JSON object
-			message = JSON.parse(message);
-
 			// Explore JSON & create states
 			await jsonExplorer.traverseJson(message.print, this.config.serial, true, true, 0);
 
@@ -148,14 +158,10 @@ class Bambulab extends utils.Adapter {
 		console.debug(`Publish message ${msg}`);
 
 		const topic = `device/${this.config.serial}/request`;
-		client.subscribe([topic], () => {
-			console.log(`Subscribe to topic '${topic}'`);
-			// client.publish([`device/${this.config.serial}/request`], JSON.stringify(msg));
-			client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, (error) => {
-				if (error) {
-					console.error(error);
-				}
-			});
+		client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, (error) => {
+			if (error) {
+				console.error(error);
+			}
 		});
 	}
 
@@ -238,6 +244,7 @@ class Bambulab extends utils.Adapter {
 				let msg;
 				const checkID = id.split('.');
 
+				//ToDo: Implement ACK based on success message of MQTT in relation to sequence ID.
 				switch (checkID[4]) {
 					case ('chamberLight'):
 						if (state.val === true) {
