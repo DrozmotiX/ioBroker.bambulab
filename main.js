@@ -129,6 +129,13 @@ class Bambulab extends utils.Adapter {
 			this.setStateChanged(`${this.config.serial}.big_fan1_speed`, {val: convert.fanSpeed(message.print.big_fan1_speed), ack: true});
 			this.setStateChanged(`${this.config.serial}.big_fan2_speed`, {val: convert.fanSpeed(message.print.big_fan2_speed), ack: true});
 			this.setStateChanged(`${this.config.serial}.mc_remaining_time`, {val: convert.remainingTime(message.print.mc_remaining_time), ack: true});
+
+			if (message.print && message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
+				this.setStateChanged(`${this.config.serial}.control.chamberLight`, {val: true, ack: true});
+			} else if (message.print && message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
+				this.setStateChanged(`${this.config.serial}.control.chamberLight`, {val: false, ack: true});
+			}
+
 		} catch (e) {
 			this.log.error(e);
 		}
