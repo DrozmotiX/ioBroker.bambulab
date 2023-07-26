@@ -173,28 +173,28 @@ class Bambulab extends utils.Adapter {
 				name: 'Chamber Light',
 				type: 'boolean',
 				role: 'state',
-				read: true,
+				read: false,
 				write: true
 			},
 			start : {
 				name: 'Start printing',
 				type: 'boolean',
 				role: 'button.start',
-				read: true,
+				read: false,
 				write: true
 			},
 			stop : {
 				name: 'Stop Printing',
 				type: 'boolean',
 				role: 'button.stop',
-				read: true,
+				read: false,
 				write: true
 			},
 			resume : {
 				name: 'Resume Printing',
 				type: 'boolean',
 				role: 'button',
-				read: true,
+				read: false,
 				write: true
 			}
 		};
