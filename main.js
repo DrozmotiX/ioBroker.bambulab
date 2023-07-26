@@ -70,12 +70,12 @@ class Bambulab extends utils.Adapter {
 
 				// Subscribe on printer topic after connection
 				client.subscribe([`device/${this.config.serial}/report`], () => {
-					this.log.debug(`Subscribed to printer data topic by serial`);
+					this.log.debug(`Subscribed to printer data topic by serial | ${this.config.serial}`);
 				});
 
 				// Subscribe on printer topic after connection
 				client.subscribe([`device/${this.config.serial}/request`], () => {
-					this.log.debug(`Subscribed to printer request topic by serial`);
+					this.log.debug(`Subscribed to printer request topic by serial | ${this.config.serial}`);
 				});
 
 			});
@@ -87,11 +87,13 @@ class Bambulab extends utils.Adapter {
 
 				// @ts-ignore if print does not exist function will return false and skip
 				if (message && message.print) { // Handle values for printer statistics
-					console.debug(`Print Message ${JSON.stringify(message)}`);
+					this.log.debug(`Printer Message ${JSON.stringify(message)}`);
 					this.messageHandler(message);
 					// @ts-ignore if system does not exist function will return false and skip
 				} else if (message && message.system){ // Handle values for system messages, used to acknowledge messages
-					console.debug(`System Message ${JSON.stringify(message)}`);
+					this.log.debug(`System Message ${JSON.stringify(message)}`);
+				} else {
+					this.log.debug(`Unknown Message ${JSON.stringify(message)}`);
 				}
 
 			});
@@ -101,7 +103,7 @@ class Bambulab extends utils.Adapter {
 			});
 
 			client.on('end',  () =>{
-				this.log.info(`Connection to Printer closed`);
+				this.log.warn(`Connection to Printer closed`);
 				this.setState('info.connection', false, true);
 			});
 
@@ -154,7 +156,7 @@ class Bambulab extends utils.Adapter {
 
 	publishMQTTmessages (msg) {
 
-		console.debug(`Publish message ${msg}`);
+		this.log.debug(`Publish message ${msg}`);
 
 		const topic = `device/${this.config.serial}/request`;
 		client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, (error) => {

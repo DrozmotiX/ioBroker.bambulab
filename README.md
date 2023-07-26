@@ -29,8 +29,9 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS** - Minor improvements
+### 0.1.1 - Minor improvements
 * (DutchmanNL) Translations added
+* (DutchmanNL) Debug logging improved
 * (DutchmanNL) Minor code improvements
 * (DutchmanNL) Control states implemented
 * (DutchmanNL) Test & release workflows updated
@@ -38,8 +39,8 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 
 ### 0.1.0 initial release
 * (DutchmanNL) initial release
-* During startup adapter throws warnings, these can be ignored and will be solved in >= 0.1.1
-* Control start/stop/resume and light available available in >= 0.1.1
+* During startup adapter throws warnings, these can be ignored and will be solved in >= 0.1.2
+* Control start/stop/resume and light available in >= 0.1.1
 
 ## License
 MIT License
