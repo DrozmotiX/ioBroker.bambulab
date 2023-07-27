@@ -166,7 +166,7 @@ class Bambulab extends utils.Adapter {
 
 	publishMQTTmessages (msg) {
 
-		this.log.debug(`Publish message ${msg}`);
+		this.log.debug(`Publish message ${JSON.stringify(msg)}`);
 
 		const topic = `device/${this.config.serial}/request`;
 		client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, (error) => {
@@ -179,19 +179,20 @@ class Bambulab extends utils.Adapter {
 	createControlStates(){
 
 		const controlStates = {
-			chamberLight : {
+			lightChamber : {
 				name: 'Chamber Light',
 				type: 'boolean',
 				role: 'state',
-				read: false,
-				write: true
+				read: true,
+				write: true,
+				def: false
 			},
 			start : {
 				name: 'Start printing',
 				type: 'boolean',
 				role: 'button.start',
 				read: false,
-				write: true
+				write: true,
 			},
 			stop : {
 				name: 'Stop Printing',
@@ -263,7 +264,7 @@ class Bambulab extends utils.Adapter {
 
 				//ToDo: Implement ACK based on success message of MQTT in relation to sequence ID.
 				switch (checkID[4]) {
-					case ('chamberLight'):
+					case ('lightChamber'):
 						if (state.val === true) {
 							msg = {
 								'system': {
