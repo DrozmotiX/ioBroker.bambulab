@@ -78,6 +78,16 @@ class Bambulab extends utils.Adapter {
 					this.log.debug(`Subscribed to printer request topic by serial | ${this.config.serial}`);
 				});
 
+				// Request data for P1p printer series
+				const msg = {
+					'pushing': {
+						'sequence_id': '1',
+						'command': 'pushall'
+					},
+					'user_id': '1234567890'
+				};
+				this.publishMQTTmessages(msg);
+
 			});
 
 			// Receive MQTT messages

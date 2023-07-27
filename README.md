@@ -29,6 +29,9 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* (DutchmanNL) Integration of P1p printers series
+
 ### 0.1.1 - Minor improvements
 * (DutchmanNL) Translations added
 * (DutchmanNL) Debug logging improved
