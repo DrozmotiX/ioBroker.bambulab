@@ -3,11 +3,18 @@
         "name": "bambulab",
         "version": "0.1.2",
         "news": {
-            "0.1.2": {
-                "en": "Try to integrate P1p printer series"
-            },
             "0.1.1": {
-                "en": "Allow control and minor improvements"
+                "en": "Allow control and minor improvements",
+                "de": "Erlauben Sie Kontrolle und kleinere Verbesserungen",
+                "ru": "Разрешить контроль и небольшие улучшения",
+                "pt": "Permitir controle e pequenas melhorias",
+                "nl": "Sta controle en kleine verbeteringen toe",
+                "fr": "Autoriser le contrôle et les améliorations mineures",
+                "it": "Consenti il ​​controllo e piccoli miglioramenti",
+                "es": "Permitir control y mejoras menores",
+                "pl": "Zezwalaj na kontrolę i drobne ulepszenia",
+                "uk": "Дозволити контроль і незначні покращення",
+                "zh-cn": "允许控制和微小的改进"
             },
             "0.1.0": {
                 "en": "initial release",

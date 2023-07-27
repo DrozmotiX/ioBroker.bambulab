@@ -29,8 +29,8 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
-* (DutchmanNL) Integration of P1p printers series
+### **WORK IN PROGRESS** - Add new control options
+* (DutchmanNL) add control for chamber fan, tooling head light and allow custom g-code
 
 ### 0.1.1 - Minor improvements
 * (DutchmanNL) Translations added
@@ -42,7 +42,7 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 
 ### 0.1.0 initial release
 * (DutchmanNL) initial release
-* During startup adapter throws warnings, these can be ignored and will be solved in >= 0.1.2
+* During startup adapter throws warnings, these can be ignored and will be solved in >= 0.2.0
 * Control start/stop/resume and light available in >= 0.1.1
 
 ## License

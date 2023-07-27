@@ -285,7 +285,7 @@ class Bambulab extends utils.Adapter {
 	 * @param {ioBroker.State | null | undefined} state
 	 */
 	onStateChange(id, state) {
-		if (state) {
+		if (state && state.val != null) {
 			// Only act on trigger if value is not Acknowledged
 			if (!state.ack) {
 				console.debug(`${id} | ${state.val}`);
