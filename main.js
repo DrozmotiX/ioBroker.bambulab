@@ -215,7 +215,15 @@ class Bambulab extends utils.Adapter {
 				role: 'button',
 				read: false,
 				write: true
-			}
+			},
+			fanSpeedChamber : {
+				name: 'Chamber Fan Speed',
+				type: 'number',
+				role: 'level',
+				read: true,
+				write: true,
+				def: 0
+			},
 		};
 
 		this.extendObject(`${this.config.serial}.control`, {
@@ -335,6 +343,11 @@ class Bambulab extends utils.Adapter {
 								'command': 'resume'
 							}
 						};
+						break;
+
+					case ('fanSpeedChamber'):
+						msg = { 'print': { 'command': 'gcode_line', 'param': `M106 P3 S${state.val * 2.55}`, 'sequence_id': '0' } };
+
 						break;
 				}
 
