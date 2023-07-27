@@ -179,6 +179,14 @@ class Bambulab extends utils.Adapter {
 	createControlStates(){
 
 		const controlStates = {
+			_customGcode : {
+				name: 'Custom G-Code',
+				type: 'string',
+				role: 'state',
+				read: true,
+				write: true,
+				def: ''
+			},
 			lightChamber : {
 				name: 'Chamber Light',
 				type: 'boolean',
@@ -280,6 +288,10 @@ class Bambulab extends utils.Adapter {
 
 				//ToDo: Implement ACK based on success message of MQTT in relation to sequence ID.
 				switch (checkID[4]) {
+					case ('_customGcode'):
+						msg = msg = { 'print': { 'command': 'gcode_line', 'param': `${state.val}`, 'sequence_id': '0' } };
+						break;
+
 					case ('lightChamber'):
 						if (state.val === true) {
 							msg = {
