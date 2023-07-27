@@ -1,6 +1,6 @@
 {
   "name": "iobroker.bambulab",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Connects to Bambulab 3d printers to retrieve data of current print and control main aspects",
   "author": {
     "name": "DutchmanNL",

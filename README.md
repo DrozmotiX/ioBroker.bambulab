@@ -28,8 +28,7 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS** - Add new control options
+### 0.1.3 (2023-07-27) - Add new control options
 * (DutchmanNL) add control for chamber fan, tooling head light and allow custom g-code
 
 ### 0.1.1 - Minor improvements
