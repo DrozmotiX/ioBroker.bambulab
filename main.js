@@ -96,9 +96,15 @@ class Bambulab extends utils.Adapter {
 				message = JSON.parse(message.toString());
 
 				// @ts-ignore if print does not exist function will return false and skip
-				if (message && message.print) { // Handle values for printer statistics
+				if (message && message.print && message && message.print.result) { // Handle values for printer statistics
+					this.log.debug(`Printer message result ${JSON.stringify(message)}`);
+				// @ts-ignore if system does not exist function will return false and skip
+				} else if (message && message.print){
 					this.log.debug(`Printer Message ${JSON.stringify(message)}`);
 					this.messageHandler(message);
+					// @ts-ignore if system does not exist function will return false and skip
+				} else if (message && message.command){
+					this.log.debug(`Response to control command ${JSON.stringify(message)}`);
 					// @ts-ignore if system does not exist function will return false and skip
 				} else if (message && message.system){ // Handle values for system messages, used to acknowledge messages
 					this.log.debug(`System Message ${JSON.stringify(message)}`);
@@ -154,9 +160,9 @@ class Bambulab extends utils.Adapter {
 			this.setStateChanged(`${this.config.serial}.mc_remaining_time`, {val: convert.remainingTime(message.print.mc_remaining_time), ack: true});
 
 			if (message.print && message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
-				this.setStateChanged(`${this.config.serial}.control.chamberLight`, {val: true, ack: true});
+				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: true, ack: true});
 			} else if (message.print && message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
-				this.setStateChanged(`${this.config.serial}.control.chamberLight`, {val: false, ack: true});
+				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: false, ack: true});
 			}
 
 		} catch (e) {
