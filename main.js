@@ -148,20 +148,21 @@ class Bambulab extends utils.Adapter {
 
 		try {
 			// Explore JSON & create states
+			if (message.print) {
+				// Modify values of JSONfor states which need modification
+				if (message.print.cooling_fan_speed != null) message.print.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
+				if (message.print.heatbreak_fan_speed != null) message.print.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
+				if (message.print.stg_cur != null) message.print.stg_cur = convert.stageParser(message.print.stg_cur);
+				if (message.print.spd_lvl != null) message.print.spd_lvl = convert.speedProfile(message.print.spd_lvl);
+				if (message.print.big_fan1_speed != null) message.print.big_fan1_speed = convert.fanSpeed(message.print.big_fan1_speed);
+				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
+				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
+			}
 			await jsonExplorer.traverseJson(message.print, this.config.serial, true, true, 0);
 
-			// Set values for states which need modification
-			this.setStateChanged(`${this.config.serial}.cooling_fan_speed`, {val: convert.fanSpeed(message.print.cooling_fan_speed), ack: true});
-			this.setStateChanged(`${this.config.serial}.heatbreak_fan_speed`, {val: convert.fanSpeed(message.print.heatbreak_fan_speed), ack: true});
-			this.setStateChanged(`${this.config.serial}.stg_cur`, {val: convert.stageParser(message.print.stg_cur), ack: true});
-			this.setStateChanged(`${this.config.serial}.spd_lvl`, {val: convert.speedProfile(message.print.spd_lvl), ack: true});
-			this.setStateChanged(`${this.config.serial}.big_fan1_speed`, {val: convert.fanSpeed(message.print.big_fan1_speed), ack: true});
-			this.setStateChanged(`${this.config.serial}.big_fan2_speed`, {val: convert.fanSpeed(message.print.big_fan2_speed), ack: true});
-			this.setStateChanged(`${this.config.serial}.mc_remaining_time`, {val: convert.remainingTime(message.print.mc_remaining_time), ack: true});
-
-			if (message.print && message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
+			if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
 				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: true, ack: true});
-			} else if (message.print && message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
+			} else if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
 				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: false, ack: true});
 			}
 
