@@ -45,7 +45,7 @@ You must select your Printer model, only the X1 allows pushing of messages, P1x 
 | Custom g-code     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :question: needs testing |
 
 ## To-Do
-[ ] Implement more commands, please provide feedback what we need :exclamation: 
+[ ] Implement more commands, please provide feedback what we need :exclamation:  
 [ ] Optimize state attributes definitions  
 [ ] Test printer series P1S  
 
@@ -65,6 +65,10 @@ When the adapter crashes or any other Code error happens, this error message tha
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS** - update state definitions
+* (DutchmanNL) added correct definitions for all temperature related states
+
 ### 0.1.4 (2023-07-28) - Support P1-series
 * (DutchmanNL) Configuration page in admin updated
 * (DutchmanNL) Information messages regarding incorrect type of bed-temperatures solved
