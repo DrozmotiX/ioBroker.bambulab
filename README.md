@@ -28,6 +28,10 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS** - Support P1-series
+* (DutchmanNL) Configuration page in admin updated
+* (DutchmanNL) Implemented P1-X printer series, polling interval required for this model (only X1 handles data push)
+
 ### 0.1.3 (2023-07-27) - Add new control options
 * (DutchmanNL) add control for chamber fan, tooling head light and allow custom g-code
 

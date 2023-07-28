@@ -1,6 +1,10 @@
 {
     "bambulab adapter settings": "Adaptereinstellungen für Bambulab",
-    "host": "IP-Adresse Ihres Druckers",
-    "Password": "Token, siehe Netzwerkeinstellungen des Druckers",
-    "serial": "Seriennummer des Druckers, siehe Druckereinstellungen"
+    "Printer IP address": "IP-Adresse Ihres Druckers",
+    "Access Token (see printer network settings)": "Token, siehe Netzwerkeinstellungen des Druckers",
+    "Serial number of device (see printer network settings)": "Seriennummer des Druckers, siehe Druckereinstellungen",
+    "Printer Model": "Druckermodell",
+    "Please select your printer model": "Bitte wählen Sie Ihr Druckermodell aus",
+    "Seconds between data polling": "Sekunden zwischen der Datenabfrage",
+    "Only used for P1x series": "Wird nur für die P1x-Serie verwendet"
 }

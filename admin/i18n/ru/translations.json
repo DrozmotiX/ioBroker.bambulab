@@ -1,6 +1,10 @@
 {
     "bambulab adapter settings": "Настройки адаптера для bambulab",
-    "host": "IP-адрес вашего принтера",
-    "Password": "Токен, см. сетевые настройки принтера",
-    "serial": "Серийный номер принтера, см. настройки принтера"
+    "Printer IP address": "IP-адрес вашего принтера",
+    "Access Token (see printer network settings)": "Токен, см. сетевые настройки принтера",
+    "Serial number of device (see printer network settings)": "Серийный номер принтера, см. настройки принтера",
+    "Printer Model": "Модель принтера",
+    "Please select your printer model": "Пожалуйста, выберите модель вашего принтера",
+    "Seconds between data polling": "Секунд между опросом данных",
+    "Only used for P1x series": "Используется только для серии P1x"
 }

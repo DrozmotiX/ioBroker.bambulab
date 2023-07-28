@@ -1,6 +1,10 @@
 {
     "bambulab adapter settings": "bambulab 的适配器设置",
-    "host": "您打印机的 IP 地址",
-    "Password": "令牌，请参阅打印机网络设置",
-    "serial": "打印机序列号，请参阅打印机设置"
+    "Printer IP address": "您打印机的 IP 地址",
+    "Access Token (see printer network settings)": "令牌，请参阅打印机网络设置",
+    "Serial number of device (see printer network settings)": "打印机序列号，请参阅打印机设置",
+    "Printer Model": "打印机型号",
+    "Please select your printer model": "请选择您的打印机型号",
+    "Seconds between data polling": "数据轮询之间的秒数",
+    "Only used for P1x series": "仅用于P1x系列"
 }
