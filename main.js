@@ -10,8 +10,7 @@ const utils = require('@iobroker/adapter-core');
 const mqtt = require('mqtt');
 const convert = require('./lib/converter');
 let client;
-let timeout;
-let requestDatap1p;
+const timeouts = {};
 
 const jsonExplorer = require('iobroker-jsonexplorer');
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
@@ -74,23 +73,10 @@ class Bambulab extends utils.Adapter {
 					this.log.debug(`Subscribed to printer data topic by serial | ${this.config.serial}`);
 				});
 
-				// // Subscribe on printer topic after connection
-				// client.subscribe([`device/${this.config.serial}/request`], () => {
-				// 	this.log.debug(`Subscribed to printer request topic by serial | ${this.config.serial}`);
-				// });
-
-				// Request data for P1p printer series
-				// const msg = {
-				// 	'pushing': {
-				// 		'sequence_id': '1',
-				// 		'command': 'pushall'
-				// 	},
-				// 	'user_id': '1234567890'
-				// };
-				// this.publishMQTTmessages(msg);
-
-				// Start intervall to request data of P1P series
-				this.requestDatap1pSeries();
+				// Start interval to request data of P1P series
+				if (this.config.printerModel !== 'X1'){
+					this.requestDatap1pSeries();
+				}
 			});
 
 			// Receive MQTT messages
@@ -132,8 +118,8 @@ class Bambulab extends utils.Adapter {
 				client.end();
 
 				// Try to reconnect
-				if (timeout) {clearTimeout(timeout); timeout = null;}
-				timeout = setTimeout(async function () {
+				if (timeouts[this.config.serial]) {clearTimeout(timeouts[this.config.serial]); timeouts[this.config.serial] = null;}
+				timeouts[this.config.serial] = setTimeout(async function () {
 					client.reconnect();
 				}, 30000);
 
@@ -196,13 +182,15 @@ class Bambulab extends utils.Adapter {
 			},
 			'user_id': '1234567890'
 		};
-		this.publishMQTTmessages(msg);
+
 		// Try to request data
-		if (timeout) {clearTimeout(timeout); timeout = null;}
-		requestDatap1p = setTimeout(()=> {
+		this.publishMQTTmessages(msg);
+		// Handle interval
+		if (timeouts['p1pPolling']) {clearTimeout(timeouts['p1pPolling']); timeouts['p1pPolling'] = null;}
+		timeouts['p1pPolling'] = setTimeout(()=> {
 			// Request data for P1p printer series
 			this.requestDatap1pSeries();
-		}, 2000);
+		}, this.config.requestInterval * 1000);
 
 	}
 
@@ -289,7 +277,8 @@ class Bambulab extends utils.Adapter {
 		try {
 
 			// Close running timers
-			if (timeout) {clearTimeout(timeout); timeout = null;}
+			if (timeouts[this.config.serial]) {clearTimeout(timeouts[this.config.serial]); timeouts[this.config.serial] = null;}
+			if (timeouts['p1pPolling']) {clearTimeout(timeouts['p1pPolling']); timeouts[timeouts['p1pPolling']] = null;}
 
 			// Close MQTT connection if present
 			if (client){
