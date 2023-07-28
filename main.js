@@ -11,6 +11,7 @@ const mqtt = require('mqtt');
 const convert = require('./lib/converter');
 let client;
 let timeout;
+let requestDatap1p;
 
 const jsonExplorer = require('iobroker-jsonexplorer');
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
@@ -73,21 +74,23 @@ class Bambulab extends utils.Adapter {
 					this.log.debug(`Subscribed to printer data topic by serial | ${this.config.serial}`);
 				});
 
-				// Subscribe on printer topic after connection
-				client.subscribe([`device/${this.config.serial}/request`], () => {
-					this.log.debug(`Subscribed to printer request topic by serial | ${this.config.serial}`);
-				});
+				// // Subscribe on printer topic after connection
+				// client.subscribe([`device/${this.config.serial}/request`], () => {
+				// 	this.log.debug(`Subscribed to printer request topic by serial | ${this.config.serial}`);
+				// });
 
 				// Request data for P1p printer series
-				const msg = {
-					'pushing': {
-						'sequence_id': '1',
-						'command': 'pushall'
-					},
-					'user_id': '1234567890'
-				};
-				this.publishMQTTmessages(msg);
+				// const msg = {
+				// 	'pushing': {
+				// 		'sequence_id': '1',
+				// 		'command': 'pushall'
+				// 	},
+				// 	'user_id': '1234567890'
+				// };
+				// this.publishMQTTmessages(msg);
 
+				// Start intervall to request data of P1P series
+				this.requestDatap1pSeries();
 			});
 
 			// Receive MQTT messages
@@ -147,7 +150,6 @@ class Bambulab extends utils.Adapter {
 	async messageHandler (message) {
 
 		try {
-			// Explore JSON & create states
 			if (message.print) {
 				// Modify values of JSONfor states which need modification
 				if (message.print.cooling_fan_speed != null) message.print.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
@@ -158,8 +160,10 @@ class Bambulab extends utils.Adapter {
 				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
 			}
-			await jsonExplorer.traverseJson(message.print, this.config.serial, true, true, 0);
+			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, true, true, 0);
+			this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);
 
+			// Explore JSON & create states
 			if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
 				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: true, ack: true});
 			} else if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
@@ -181,6 +185,25 @@ class Bambulab extends utils.Adapter {
 				console.error(error);
 			}
 		});
+	}
+
+	requestDatap1pSeries(){
+
+		const msg = {
+			'pushing': {
+				'sequence_id': '1',
+				'command': 'pushall'
+			},
+			'user_id': '1234567890'
+		};
+		this.publishMQTTmessages(msg);
+		// Try to request data
+		if (timeout) {clearTimeout(timeout); timeout = null;}
+		requestDatap1p = setTimeout(()=> {
+			// Request data for P1p printer series
+			this.requestDatap1pSeries();
+		}, 2000);
+
 	}
 
 	createControlStates(){
