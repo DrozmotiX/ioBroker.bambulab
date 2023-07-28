@@ -8,7 +8,8 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 
-const mqtt = require('mqtt');
+const mqtt = require('mqtt'); // MQTT request library
+const {default: axios} = require('axios'); // Http request library
 
 const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer library
 const convert = require('./lib/converter'); // Load converter functions
@@ -40,6 +41,9 @@ class Bambulab extends utils.Adapter {
 
 		// Reset the connection indicator during startup
 		this.setState('info.connection', false, true);
+
+		// Download / Update HMS error Codes
+		await this.loadHMSerroCodeTranslations();
 
 		// Handle MQTT messages
 		this.mqttMessageHandle();
@@ -303,6 +307,49 @@ class Bambulab extends utils.Adapter {
 			});
 
 			this.subscribeStates(`${this.config.serial}.control.${state}`);
+		}
+	}
+
+	async loadHMSerroCodeTranslations(){
+		try {
+			this.log.info('Try to get current HMS code translations');
+			// Web request to download latest translations
+			const requestDeviceDataByAPI = async () => {
+				const response = await axios.get(`https://e.bambulab.com/query.php?lang=de`, {timeout: 3000}); // Timout of 3 seconds for API call
+				this.log.debug(JSON.stringify('HMS ErrorCode translations : ' + response.data));
+				// const translations = response.data;
+				return response.data;
+			};
+
+			// Try to download new translation JSON, abort function in case of error
+			const onlineTran = await requestDeviceDataByAPI();
+			if (onlineTran == null || onlineTran.data == null){
+				this.log.warn(`Cannot download HMS error code translations`);
+				return false;
+			}
+
+			// get current Translations
+			const currentTran = await this.getStateAsync('info.hmsErrorCodeTranslations');
+
+			if (currentTran == null || currentTran.val === ''){
+				this.log.info(`No Local translation available, version ${onlineTran.ver} downloaded`);
+
+				const onlineTranObj = onlineTran.data;
+				onlineTranObj.ver = onlineTran.ver;
+
+				this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
+
+			} else if (currentTran.val != null && currentTran.val !== ''){
+				const currentTranObj = JSON.parse(currentTran.val);
+				// Check if new version is available
+				if(currentTranObj.ver !== onlineTran.ver) {
+					this.log.info(`Local translation ${currentTranObj.ver} outdated, updating to ${onlineTran.ver}`);
+				} else {
+					this.log.info(`Local translation available, version ${currentTranObj.ver} is up-to-date`);
+				}
+			}
+		} catch (e) {
+			this.log.error(`[loadHMSerroCodeTranslations] ${e} | ${e.stack}`);
 		}
 	}
 
