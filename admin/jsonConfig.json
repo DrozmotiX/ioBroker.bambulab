@@ -38,6 +38,10 @@
 				{
 					"label": "X1",
 					"value": "X1"
+				},
+				{
+					"label": "X1-Carbon",
+					"value": "X1-Carbon"
 				}
 			],
 			"default": "X1",

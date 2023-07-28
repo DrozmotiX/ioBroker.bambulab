@@ -74,7 +74,7 @@ class Bambulab extends utils.Adapter {
 				});
 
 				// Start interval to request data of P1P series
-				if (this.config.printerModel !== 'X1'){
+				if (this.config.printerModel !== 'X1' && this.config.printerModel !== 'X1-Carbon'){
 					this.requestDatap1pSeries();
 				}
 			});
