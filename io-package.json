@@ -154,6 +154,19 @@
         "def": false
       },
       "native": {}
+    },
+    {
+      "_id": "info.hmsErrorCode",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": "Health Management System (HMS)",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
     }
   ]
 }

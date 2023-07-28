@@ -7,13 +7,15 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
+
 const mqtt = require('mqtt');
-const convert = require('./lib/converter');
+
+const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer library
+const convert = require('./lib/converter'); // Load converter functions
+const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
+
 let client;
 const timeouts = {};
-
-const jsonExplorer = require('iobroker-jsonexplorer');
-const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
 
 class Bambulab extends utils.Adapter {
 	/**
@@ -146,6 +148,20 @@ class Bambulab extends utils.Adapter {
 				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
 
+				// Translate HMS Code & write to state
+				const hmsError = [];
+				if(message.print.hms != null){
+					for (const hms_code in message.print.hms) {
+						const attr = convert.DecimalHexTwosComplement(message.print.hms[hms_code].attr);
+						const code = convert.DecimalHexTwosComplement(message.print.hms[hms_code].code);
+						let full_code = (attr + code).replace(/(.{4})/g, '$1_');
+						full_code = full_code.substring(0, full_code.length - 1);
+						const url = 'https://wiki.bambulab.com/en/x1/troubleshooting/hmscode/'+full_code;
+						hmsError.push({'code': 'HMS_'+full_code, 'url': url, 'description':''});
+					}
+				}
+
+				this.setState('info.hmsErrorCode',{val: JSON.stringify(hmsError), ack: true});
 
 				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
@@ -164,10 +180,13 @@ class Bambulab extends utils.Adapter {
 					if (message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
 				}
 			}
+
+			// Explore JSON & create states
 			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, false, false, 0);
 			this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);
 
-			// Explore JSON & create states
+			// ToDo: manipulate in JSON + move to existing state
+			// Update light control datapoint
 			if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
 				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: true, ack: true});
 			} else if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
