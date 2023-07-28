@@ -18,10 +18,47 @@
 With credits to [kmxak](https://forum.iobroker.net/user/kmxak), [djalexz](https://forum.iobroker.net/user/djalexz), all other involved and inspired by [this forum thread](https://forum.iobroker.net/topic/61585/bambu-lab-3d-drucker-mqtt-integration)
 this adapter integrates Bambulab 3D-Printers into ioBroker.
 
-Please provide your API token & serial number in adapter settings, these are required for a local connection (no cloud involved) to your printer.
+Please provide your Printer IP-Address, API token and serial number in adapter settings, these are required for a local connection (no cloud involved) to your printer.
 These credentials are stored locally and not shared to third parties.
 
-Serial API-Token & Serial number can be found in printer setting on your printer display
+You must select your Printer model, only the X1 allows pushing of messages, P1x series needs to request by interval setting (default every 5 seconds)
+
+## Supported models
+| Printer-Model | Status                  |
+|---------------|-------------------------|
+| P1p           | :white_check_mark:      |
+| P1s           | :question:needs testing |
+| X1            | :white_check_mark:      |
+| AMS           | :white_check_mark:      |
+
+## Supported commands
+| Command           | X1C                | X1                 | P1P                | P1S                      |
+|-------------------|--------------------|--------------------|--------------------|--------------------------|
+| Pause             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :question: needs testing |
+| Resume            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :question: needs testing |
+| Stop              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :question: needs testing |
+| Fan-Aux           | :x: To-Do          | :x: To-Do          | :x: To-Do          | :x: To-Do                |
+| Fan-Chamber       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :question: needs testing |
+| Fan-ToolHead      | :x: To-Do          | :x: To-Do          | :x: To-Do          | :x: To-Do                |
+| Light-Chamber     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :question: needs testing |
+| Light-ToolingHead | :white_check_mark: | :white_check_mark: | :white_check_mark: | :question: needs testing |
+| Custom g-code     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :question: needs testing |
+
+## To-Do
+[ ] Implement more commands, please provide feedback what we need :exclamation: 
+[ ] Optimize state attributes definitions  
+[ ] Test printer series P1S  
+
+## Support me
+If you like my work, please consider a personal donation  
+(this is a personal Donate link for DutchmanNL, no relation to the ioBroker Project !)  
+[![Donate](https://raw.githubusercontent.com/DrozmotiX/ioBroker.sourceanalytix/master/admin/button.png)](http://paypal.me/DutchmanNL)
+
+## What is Sentry.io and what is reported to the servers of that company?
+Sentry.io is a service for developers to get an overview about errors from their applications. And exactly this is implemented in this adapter.
+
+When the adapter crashes or any other Code error happens, this error message that also appears in the ioBroker log is submitted to Sentry. When you allowed iobroker GmbH to collect diagnostic data then also your installation ID (this is just a unique ID **without** any additional infos about you, email, name or such) is included. This allows Sentry to group errors and show how many unique users are affected by such an error. All of this helps me to provide error free adapters that basically never crashs.
+
 
 ## Changelog
 <!--
@@ -30,6 +67,7 @@ Serial API-Token & Serial number can be found in printer setting on your printer
 -->
 ### **WORK IN PROGRESS** - Support P1-series
 * (DutchmanNL) Configuration page in admin updated
+* (DutchmanNL) Information messages regarding incorrect type of bed-temperatures solved
 * (DutchmanNL) Implemented P1-X printer series, polling interval required for this model (only X1 handles data push)
 
 ### 0.1.3 (2023-07-27) - Add new control options
