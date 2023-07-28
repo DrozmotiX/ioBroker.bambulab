@@ -239,10 +239,10 @@ class Bambulab extends utils.Adapter {
 				write: true,
 				def: false
 			},
-			start : {
-				name: 'Start printing',
+			pause : {
+				name: 'Pause printing',
 				type: 'boolean',
-				role: 'button.start',
+				role: 'button.pause',
 				read: false,
 				write: true,
 			},
@@ -256,7 +256,7 @@ class Bambulab extends utils.Adapter {
 			resume : {
 				name: 'Resume Printing',
 				type: 'boolean',
-				role: 'button',
+				role: 'button.resume',
 				read: false,
 				write: true
 			},
@@ -367,11 +367,11 @@ class Bambulab extends utils.Adapter {
 						}
 						break;
 
-					case ('start'):
+					case ('pause'):
 						msg = {
 							'print': {
 								'sequence_id': '0',
-								'command': 'start'
+								'command': 'pause'
 							}
 						};
 						break;
