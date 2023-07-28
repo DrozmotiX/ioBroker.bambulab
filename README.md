@@ -65,7 +65,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS** - Support P1-series
+### 0.1.4 (2023-07-28) - Support P1-series
 * (DutchmanNL) Configuration page in admin updated
 * (DutchmanNL) Information messages regarding incorrect type of bed-temperatures solved
 * (DutchmanNL) Implemented P1-X printer series, polling interval required for this model (only X1 handles data push)
