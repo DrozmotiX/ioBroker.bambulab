@@ -145,6 +145,24 @@ class Bambulab extends utils.Adapter {
 				if (message.print.big_fan1_speed != null) message.print.big_fan1_speed = convert.fanSpeed(message.print.big_fan1_speed);
 				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
+
+
+				// ToDo: Check why library is not handling conversion correctly
+				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
+				if (message.print.ams !== null) {
+					// handle conversion for all AMS units
+					for (const unit in message.print.ams.ams){
+						if (message.print.ams.ams[unit] !== null){
+							for (const tray in message.print.ams.ams[unit].tray){
+								if (message.print.ams.ams[unit].tray[tray].bed_temp != null) message.print.ams.ams[unit].tray[tray].bed_temp = parseInt(message.print.ams.ams[unit].tray[tray].bed_temp);
+							}
+						}
+					}
+				}
+
+				if (message.print.vt_tray) {
+					if (message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
+				}
 			}
 			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, false, false, 0);
 			this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);
