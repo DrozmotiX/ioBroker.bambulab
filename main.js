@@ -146,7 +146,7 @@ class Bambulab extends utils.Adapter {
 				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
 			}
-			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, true, true, 0);
+			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, false, false, 0);
 			this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);
 
 			// Explore JSON & create states
