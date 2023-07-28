@@ -313,9 +313,15 @@ class Bambulab extends utils.Adapter {
 	async loadHMSerroCodeTranslations(){
 		try {
 			this.log.info('Try to get current HMS code translations');
+			// Get system language, use EN as fallback in case of errors
+			let language = 'en';
+			const sys_conf = await this.getForeignObjectAsync('system.config');
+			if (sys_conf && sys_conf.common.language){
+				language = sys_conf.common.language;
+			}
 			// Web request to download latest translations
 			const requestDeviceDataByAPI = async () => {
-				const response = await axios.get(`https://e.bambulab.com/query.php?lang=de`, {timeout: 3000}); // Timout of 3 seconds for API call
+				const response = await axios.get(`https://e.bambulab.com/query.php?lang=${language}`, {timeout: 3000}); // Timout of 3 seconds for API call
 				this.log.debug(JSON.stringify('HMS ErrorCode translations : ' + response.data));
 				// const translations = response.data;
 				return response.data;
@@ -328,23 +334,29 @@ class Bambulab extends utils.Adapter {
 				return false;
 			}
 
+			const onlineTranObj = onlineTran.data;
+			onlineTranObj.ver = onlineTran.ver;
+			onlineTranObj.language = language.toUpperCase();
+
 			// get current Translations
 			const currentTran = await this.getStateAsync('info.hmsErrorCodeTranslations');
 
 			if (currentTran == null || currentTran.val === ''){
 				this.log.info(`No Local translation available, version ${onlineTran.ver} downloaded`);
-
-				const onlineTranObj = onlineTran.data;
-				onlineTranObj.ver = onlineTran.ver;
-
 				this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
 
 			} else if (currentTran.val != null && currentTran.val !== ''){
 				const currentTranObj = JSON.parse(currentTran.val);
 				// Check if new version is available
-				if(currentTranObj.ver !== onlineTran.ver) {
-					this.log.info(`Local translation ${currentTranObj.ver} outdated, updating to ${onlineTran.ver}`);
-				} else {
+				if((currentTranObj.ver !== onlineTran.ver)){
+					this.log.info(`Local translation ${currentTranObj.ver.toUpperCase()} outdated, updating to ${onlineTran.ver}`);
+					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
+				} else if (currentTranObj.language !== onlineTran.language){
+					this.log.info(`Local translation ${currentTranObj.language} incorrect, updating to ${language.toUpperCase()}`);
+					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
+
+				}
+				else {
 					this.log.info(`Local translation available, version ${currentTranObj.ver} is up-to-date`);
 				}
 			}

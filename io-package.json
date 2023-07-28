@@ -167,6 +167,19 @@
         "def": ""
       },
       "native": {}
+    },
+    {
+      "_id": "info.hmsErrorCodeTranslations",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": "HMS translations",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
     }
   ]
 }
