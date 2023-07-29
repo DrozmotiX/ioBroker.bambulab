@@ -170,8 +170,8 @@ class Bambulab extends utils.Adapter {
 						const urlEN = 'https://wiki.bambulab.com/en/x1/troubleshooting/hmscode/'+full_code;
 
 						let errorDesc = 'No description available in your language';
-						if (errorCodesHMS[full_code.replaceAll('_','')] != null && errorCodesHMS[full_code.replaceAll('_','')].desc != null){
-							errorDesc = errorCodesHMS[full_code.replaceAll('_','').toUpperCase()].desc;
+						if (errorCodesHMS[full_code.replaceAll('_','').toUpperCase()]['desc'] != null && errorCodesHMS[full_code.replaceAll('_','').toUpperCase()]['desc'] != null){
+							errorDesc = errorCodesHMS[full_code.replaceAll('_','').toUpperCase()]['desc'];
 						}
 						const errorMessageArray = {'code': 'HMS_'+full_code, 'url-EN': urlEN, 'description': errorDesc};
 						if (language.toUpperCase() !== 'EN'){
@@ -357,8 +357,8 @@ class Bambulab extends utils.Adapter {
 					for (const errorCode in tranJSON[errorType][language]){
 						if (tranJSON[errorType][language][errorCode] != null && tranJSON[errorType][language][errorCode].ecode != null){
 							errorCodesHMS[tranJSON[errorType][language][errorCode].ecode.toUpperCase()] = {
-								ecode : tranJSON[errorType][language][errorCode].ecode,
-								desc: tranJSON[errorType][language][errorCode].intro
+								'ecode' : tranJSON[errorType][language][errorCode].ecode,
+								'desc': tranJSON[errorType][language][errorCode].intro
 							};
 						}
 					}
