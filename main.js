@@ -182,6 +182,16 @@ class Bambulab extends utils.Adapter {
 				}
 
 				this.setState(`${this.config.serial}.hms.hmsErrorCode`,{val: JSON.stringify(hmsError), ack: true});
+				if (message.print.hms != null) message.print.hms = {
+					hmsErrorCount : hmsError.length
+				};
+
+				if (hmsError.length > 0){
+					this.setState(`${this.config.serial}.hms.hmsErrors`,{val: true, ack: true});
+				} else {
+					this.setState(`${this.config.serial}.hms.hmsErrors`,{val: false, ack: true});
+
+				}
 
 				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
@@ -333,6 +343,21 @@ class Bambulab extends utils.Adapter {
 				'write': false,
 				'def': ''
 			},
+			'hmsErrorCount' : {
+				'role': 'indicator.maintenance',
+				'name': 'HMS Alarm count',
+				'type': 'number',
+				'read': true,
+				'write': false,
+				'def': 0
+			},
+			'hmsErrors' : {
+				'role': 'indicator.alarm',
+				'name': 'HMS Alarm ',
+				'type': 'boolean',
+				'read': true,
+				'write': false,
+				'def': false
 			}
 		};
 

@@ -75,6 +75,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 * (DutchmanNL) Speed level control implemented solves #10
 * (DutchmanNL) Capability to control all fans implemented
 * (DutchmanNL) Control bed & Nozzle temperature implemented
+* (DutchmanNL) HMS error status indicator states implemented
 * (DutchmanNL) Translations of HMS error codes implemented solves #9
 * (DutchmanNL) Correct definitions for all temperature related states
 * (DutchmanNL) Control LED for tooling head Logo and calibration unit
