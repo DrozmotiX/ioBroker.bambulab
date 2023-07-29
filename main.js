@@ -181,7 +181,7 @@ class Bambulab extends utils.Adapter {
 					}
 				}
 
-				this.setState('info.hmsErrorCode',{val: JSON.stringify(hmsError), ack: true});
+				this.setState(`${this.config.serial}.hms.hmsErrorCode`,{val: JSON.stringify(hmsError), ack: true});
 
 				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
@@ -324,6 +324,18 @@ class Bambulab extends utils.Adapter {
 			},
 		};
 
+		const hmstates = {
+			'hmsErrorCode' : {
+				'role': 'indicator.maintenance',
+				'name': 'Health Management System (HMS)',
+				'type': 'string',
+				'read': true,
+				'write': false,
+				'def': ''
+			},
+			}
+		};
+
 		this.extendObject(`${this.config.serial}.control`, {
 			'type': 'channel',
 			'common': {
@@ -338,6 +350,13 @@ class Bambulab extends utils.Adapter {
 			});
 
 			this.subscribeStates(`${this.config.serial}.control.${state}`);
+		}
+
+		for (const state in hmstates){
+			this.extendObject(`${this.config.serial}.hms.${state}`, {
+				type: 'state',
+				common: hmstates[state]
+			});
 		}
 	}
 
