@@ -562,6 +562,30 @@ class Bambulab extends utils.Adapter {
 							'sequence_id': '0'
 						}
 					};
+				} else if (checkID[3] === 'big_fan1_speed') {
+					msg = {
+						'print': {
+							'command': 'gcode_line',
+							'param': `M106 P2 S${state.val * 2.55}`,
+							'sequence_id': '0'
+						}
+					};
+				} else if (checkID[3] === 'big_fan2_speed') {
+					msg = {
+						'print': {
+							'command': 'gcode_line',
+							'param': `M106 P3 S${state.val * 2.55}`,
+							'sequence_id': '0'
+						}
+					};
+				} else if (checkID[3] === 'cooling_fan_speed') {
+					msg = {
+						'print': {
+							'command': 'gcode_line',
+							'param': `M106 P1 S${state.val * 2.55}`,
+							'sequence_id': '0'
+						}
+					};
 				}
 
 				if (msg) {
