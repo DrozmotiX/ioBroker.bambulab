@@ -70,8 +70,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS** - HMS error codes Human readable, added new functionalities
+### 0.1.5 (2023-07-29) - HMS error codes Human readable, new functionalities added
 #### Several state locations have been changed, advise to completely remove adapter & reinstall to upgrade
 * (DutchmanNL) State for human readable start time added
 * (DutchmanNL) Speed level control implemented solves #10
