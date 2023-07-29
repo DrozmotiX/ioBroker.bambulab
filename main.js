@@ -15,8 +15,9 @@ const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer libra
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
 
-let client;
-const timeouts = {};
+let client; // Memroy to store client connection information
+const timeouts = {}; // Object array containing all running timers
+const errorCodesHMS = {}; // Object array of translated error codes
 
 class Bambulab extends utils.Adapter {
 	/**
@@ -43,7 +44,7 @@ class Bambulab extends utils.Adapter {
 		this.setState('info.connection', false, true);
 
 		// Download / Update HMS error Codes
-		await this.loadHMSerroCodeTranslations();
+		await this.loadHMSerrorCodeTranslations();
 
 		// Handle MQTT messages
 		this.mqttMessageHandle();
@@ -161,7 +162,7 @@ class Bambulab extends utils.Adapter {
 						let full_code = (attr + code).replace(/(.{4})/g, '$1_');
 						full_code = full_code.substring(0, full_code.length - 1);
 						const url = 'https://wiki.bambulab.com/en/x1/troubleshooting/hmscode/'+full_code;
-						hmsError.push({'code': 'HMS_'+full_code, 'url': url, 'description':''});
+						hmsError.push({'code': 'HMS_'+full_code, 'url': url, 'description': errorCodesHMS[full_code.replaceAll('_','')].desc});
 					}
 				}
 
@@ -310,7 +311,7 @@ class Bambulab extends utils.Adapter {
 		}
 	}
 
-	async loadHMSerroCodeTranslations(){
+	async loadHMSerrorCodeTranslations(){
 		try {
 			this.log.info('Try to get current HMS code translations');
 			// Get system language, use EN as fallback in case of errors
@@ -323,8 +324,20 @@ class Bambulab extends utils.Adapter {
 			const requestDeviceDataByAPI = async () => {
 				const response = await axios.get(`https://e.bambulab.com/query.php?lang=${language}`, {timeout: 3000}); // Timout of 3 seconds for API call
 				this.log.debug(JSON.stringify('HMS ErrorCode translations : ' + response.data));
-				// const translations = response.data;
 				return response.data;
+			};
+
+			const loadTranslationsToMemory = (tranJSON) => {
+				for (const errorType in tranJSON){
+					for (const errorCode in tranJSON[errorType][language]){
+						if (tranJSON[errorType][language][errorCode] != null && tranJSON[errorType][language][errorCode].ecode != null){
+							errorCodesHMS[tranJSON[errorType][language][errorCode].ecode] = {
+								ecode : tranJSON[errorType][language][errorCode].ecode,
+								desc: tranJSON[errorType][language][errorCode].intro
+							};
+						}
+					}
+				}
 			};
 
 			// Try to download new translation JSON, abort function in case of error
@@ -351,13 +364,15 @@ class Bambulab extends utils.Adapter {
 				if((currentTranObj.ver !== onlineTran.ver)){
 					this.log.info(`Local translation ${currentTranObj.ver.toUpperCase()} outdated, updating to ${onlineTran.ver}`);
 					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
+					loadTranslationsToMemory(onlineTranObj);
 				} else if (currentTranObj.language.toUpperCase() !== language.toUpperCase()){
 					this.log.info(`Local translation ${currentTranObj.language} incorrect, updating to ${language.toUpperCase()}`);
 					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
-
+					loadTranslationsToMemory(onlineTranObj);
 				}
 				else {
 					this.log.info(`Local translation available, version ${currentTranObj.ver} is up-to-date`);
+					loadTranslationsToMemory(currentTranObj);
 				}
 			}
 		} catch (e) {
