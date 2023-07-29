@@ -546,6 +546,22 @@ class Bambulab extends utils.Adapter {
 							'sequence_id': '0'
 						}
 					};
+				} else if (checkID[3] === 'bed_target_temper') {
+					msg = {
+						'print': {
+							'command': 'gcode_line',
+							'param': `M140 S${state.val}`,
+							'sequence_id': '0'
+						}
+					};
+				} else if (checkID[3] === 'nozzle_target_temper') {
+					msg = {
+						'print': {
+							'command': 'gcode_line',
+							'param': `M104 S${state.val}`,
+							'sequence_id': '0'
+						}
+					};
 				}
 
 				if (msg) {
