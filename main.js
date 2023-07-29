@@ -185,7 +185,7 @@ class Bambulab extends utils.Adapter {
 
 				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
-				if (message.print.ams !== null && message.print.ams.ams !== null) {
+				if (message.print.ams !== null && message.print.ams.ams !== null && typeof(message.print.ams.ams)  == 'object') {
 					// handle conversion for all AMS units
 					for (const unit in message.print.ams.ams){
 						if (message.print.ams.ams[unit] !== null){
@@ -278,7 +278,7 @@ class Bambulab extends utils.Adapter {
 				write: true,
 				def: false
 			},
-			lightToolHeadNozzle : {
+			lightToolHeadCalibration : {
 				name: 'Tool head Nozzle',
 				type: 'boolean',
 				role: 'state',
@@ -442,7 +442,7 @@ class Bambulab extends utils.Adapter {
 				const checkID = id.split('.');
 
 				//ToDo: Implement ACK based on success message of MQTT in relation to sequence ID.
-				// Handle controle states
+				// Handle control states
 				if (checkID[3] === 'control') {
 					switch (checkID[4]) {
 						case ('_customGcode'):
@@ -505,7 +505,7 @@ class Bambulab extends utils.Adapter {
 							}
 							break;
 
-						case ('lightToolHeadNozzle'):
+						case ('lightToolHeadCalibration'):
 							if (state.val === true) {
 								msg = msg = {
 									'print': {

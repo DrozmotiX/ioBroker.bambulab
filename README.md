@@ -32,21 +32,21 @@ You must select your Printer model, only the X1 allows pushing of messages, P1x 
 | AMS           | :white_check_mark:      |
 
 ## Supported commands
-| Command            | X1C                 | X1                  | P1P                  | P1S                      |
-|--------------------|---------------------|---------------------|----------------------|--------------------------|
-| Custom g-code      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Pause              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Resume             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Stop               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Fan-Aux            | :white_check_mark:  | :white_check_mark:  | ::white_check_mark:  | :question: needs testing |
-| Fan-Chamber        | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Fan-ToolHead       | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Light-Chamber      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Light-Nozzle       | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Light-Logo         | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Temperature-Bed    | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Temperature-Nozzle | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Speed Level        | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
+| Command            | X1C                 | X1                  | P1P                      | P1S                      |
+|--------------------|---------------------|---------------------|--------------------------|--------------------------|
+| Custom g-code      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
+| Pause              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
+| Resume             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
+| Stop               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
+| Fan-Aux            | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
+| Fan-Chamber        | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
+| Fan-ToolHead       | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
+| Light-Chamber      | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
+| Light-Nozzle       | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
+| Light-Logo         | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
+| Temperature-Bed    | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
+| Temperature-Nozzle | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
+| Speed Level        | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
 
 ## To-Do
 [ ] Implement more commands, please provide feedback what we need :exclamation:  
@@ -72,12 +72,12 @@ When the adapter crashes or any other Code error happens, this error message tha
 -->
 
 ### **WORK IN PROGRESS** - HMS error codes Human readable
-* (DutchmanNL) Control LED for Logo and Nozzle separately
 * (DutchmanNL) Speed level control implemented solves #10
 * (DutchmanNL) Capability to control all fans implemented
 * (DutchmanNL) Control bed & Nozzle temperature implemented
 * (DutchmanNL) Translations of HMS error codes implemented solves #9
 * (DutchmanNL) Correct definitions for all temperature related states
+* (DutchmanNL) Control LED for tooling head Logo and calibration unit
 
 ### 0.1.4 (2023-07-28) - Support P1-series
 * (DutchmanNL) Configuration page in admin updated
