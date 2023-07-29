@@ -143,7 +143,7 @@ class Bambulab extends utils.Adapter {
 
 		try {
 			if (message.print) {
-				// Modify values of JSONfor states which need modification
+				// Modify values of JSON for states which need modification
 				if (message.print.cooling_fan_speed != null) message.print.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
 				if (message.print.heatbreak_fan_speed != null) message.print.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
 				if (message.print.stg_cur != null) message.print.stg_cur = convert.stageParser(message.print.stg_cur);
@@ -351,7 +351,7 @@ class Bambulab extends utils.Adapter {
 				if((currentTranObj.ver !== onlineTran.ver)){
 					this.log.info(`Local translation ${currentTranObj.ver.toUpperCase()} outdated, updating to ${onlineTran.ver}`);
 					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
-				} else if (currentTranObj.language !== onlineTran.language){
+				} else if (currentTranObj.language.toUpperCase() !== language.toUpperCase()){
 					this.log.info(`Local translation ${currentTranObj.language} incorrect, updating to ${language.toUpperCase()}`);
 					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
 
