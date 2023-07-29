@@ -270,8 +270,16 @@ class Bambulab extends utils.Adapter {
 				write: true,
 				def: false
 			},
-			lightToolHead : {
-				name: 'Tool head Light',
+			lightToolHeadLogo : {
+				name: 'Tool head Logo',
+				type: 'boolean',
+				role: 'state',
+				read: true,
+				write: true,
+				def: false
+			},
+			lightToolHeadNozzle : {
+				name: 'Tool head Nozzle',
 				type: 'boolean',
 				role: 'state',
 				read: true,
@@ -477,7 +485,7 @@ class Bambulab extends utils.Adapter {
 							}
 							break;
 
-						case ('lightToolHead'):
+						case ('lightToolHeadLogo'):
 							if (state.val === true) {
 								msg = msg = {
 									'print': {
@@ -491,6 +499,26 @@ class Bambulab extends utils.Adapter {
 									'print': {
 										'command': 'gcode_line',
 										'param': `M960 S5 P0`,
+										'sequence_id': '0'
+									}
+								};
+							}
+							break;
+
+						case ('lightToolHeadNozzle'):
+							if (state.val === true) {
+								msg = msg = {
+									'print': {
+										'command': 'gcode_line',
+										'param': `M960 S4 P1`,
+										'sequence_id': '0'
+									}
+								};
+							} else if (state.val === false) {
+								msg = msg = {
+									'print': {
+										'command': 'gcode_line',
+										'param': `M960 S4 P0`,
 										'sequence_id': '0'
 									}
 								};

@@ -42,7 +42,8 @@ You must select your Printer model, only the X1 allows pushing of messages, P1x 
 | Fan-Chamber        | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
 | Fan-ToolHead       | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
 | Light-Chamber      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
-| Light-ToolingHead  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
+| Light-Nozzle       | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
+| Light-Logo         | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
 | Temperature-Bed    | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
 | Temperature-Nozzle | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
 | Speed Level        | :white_check_mark:  | :white_check_mark:  | :white_check_mark:   | :question: needs testing |
@@ -71,6 +72,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 -->
 
 ### **WORK IN PROGRESS** - HMS error codes Human readable
+* (DutchmanNL) Control LED for Logo and Nozzle separately
 * (DutchmanNL) Speed level control implemented solves #10
 * (DutchmanNL) Capability to control all fans implemented
 * (DutchmanNL) Control bed & Nozzle temperature implemented
