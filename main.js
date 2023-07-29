@@ -169,7 +169,7 @@ class Bambulab extends utils.Adapter {
 
 				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
-				if (message.print.ams !== null) {
+				if (message.print.ams !== null && message.print.ams.ams !== null) {
 					// handle conversion for all AMS units
 					for (const unit in message.print.ams.ams){
 						if (message.print.ams.ams[unit] !== null){
