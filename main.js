@@ -7,13 +7,18 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
-const mqtt = require('mqtt');
-const convert = require('./lib/converter');
-let client;
-const timeouts = {};
 
-const jsonExplorer = require('iobroker-jsonexplorer');
+const mqtt = require('mqtt'); // MQTT request library
+const {default: axios} = require('axios'); // Http request library
+
+const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer library
+const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
+
+let client; // Memroy to store client connection information
+const timeouts = {}; // Object array containing all running timers
+const errorCodesHMS = {}; // Object array of translated error codes
+let language = 'en'; // System language to handle error code translations, default EN
 
 class Bambulab extends utils.Adapter {
 	/**
@@ -36,8 +41,17 @@ class Bambulab extends utils.Adapter {
 	async onReady() {
 		// Initialize your adapter here
 
+		// Get system language, use EN as fallback in case of errors
+		const sys_conf = await this.getForeignObjectAsync('system.config');
+		if (sys_conf && sys_conf.common.language){
+			language = sys_conf.common.language;
+		}
+
 		// Reset the connection indicator during startup
 		this.setState('info.connection', false, true);
+
+		// Download / Update HMS error Codes
+		await this.loadHMSerrorCodeTranslations();
 
 		// Handle MQTT messages
 		this.mqttMessageHandle();
@@ -137,7 +151,7 @@ class Bambulab extends utils.Adapter {
 
 		try {
 			if (message.print) {
-				// Modify values of JSONfor states which need modification
+				// Modify values of JSON for states which need modification
 				if (message.print.cooling_fan_speed != null) message.print.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
 				if (message.print.heatbreak_fan_speed != null) message.print.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
 				if (message.print.stg_cur != null) message.print.stg_cur = convert.stageParser(message.print.stg_cur);
@@ -146,10 +160,33 @@ class Bambulab extends utils.Adapter {
 				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
 
+				// Translate HMS Code & write to state
+				const hmsError = [];
+				if(message.print.hms != null){
+					for (const hms_code in message.print.hms) {
+						const attr = convert.DecimalHexTwosComplement(message.print.hms[hms_code].attr);
+						const code = convert.DecimalHexTwosComplement(message.print.hms[hms_code].code);
+						let full_code = (attr + code).replace(/(.{4})/g, '$1_');
+						full_code = full_code.substring(0, full_code.length - 1);
+						const urlEN = 'https://wiki.bambulab.com/en/x1/troubleshooting/hmscode/'+full_code;
+
+						let errorDesc = 'No description available in your language';
+						if (errorCodesHMS[full_code.replaceAll('_','')] != null && errorCodesHMS[full_code.replaceAll('_','')].desc != null){
+							errorDesc = errorCodesHMS[full_code.replaceAll('_','')].desc;
+						}
+						const errorMessageArray = {'code': 'HMS_'+full_code, 'url-EN': urlEN, 'description': errorDesc};
+						if (language.toUpperCase() !== 'EN'){
+							errorMessageArray['url-local'] = `https://wiki.bambulab.com/${language}/x1/troubleshooting/hmscode/${full_code}`;
+						}
+						hmsError.push(errorMessageArray);
+					}
+				}
+
+				this.setState('info.hmsErrorCode',{val: JSON.stringify(hmsError), ack: true});
 
 				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
-				if (message.print.ams !== null) {
+				if (message.print.ams !== null && message.print.ams.ams !== null) {
 					// handle conversion for all AMS units
 					for (const unit in message.print.ams.ams){
 						if (message.print.ams.ams[unit] !== null){
@@ -164,10 +201,13 @@ class Bambulab extends utils.Adapter {
 					if (message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
 				}
 			}
+
+			// Explore JSON & create states
 			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, false, false, 0);
 			this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);
 
-			// Explore JSON & create states
+			// ToDo: manipulate in JSON + move to existing state
+			// Update light control datapoint
 			if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
 				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: true, ack: true});
 			} else if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
@@ -260,6 +300,13 @@ class Bambulab extends utils.Adapter {
 				read: false,
 				write: true
 			},
+			updateHMSErrorCodeTranslation : {
+				name: 'Update HMS error code translations',
+				type: 'boolean',
+				role: 'button',
+				read: false,
+				write: true
+			},
 			fanSpeedChamber : {
 				name: 'Chamber Fan Speed',
 				type: 'number',
@@ -284,6 +331,70 @@ class Bambulab extends utils.Adapter {
 			});
 
 			this.subscribeStates(`${this.config.serial}.control.${state}`);
+		}
+	}
+
+	async loadHMSerrorCodeTranslations(){
+		try {
+			this.log.info('Try to get current HMS code translations');
+
+			// Web request to download latest translations
+			const requestDeviceDataByAPI = async () => {
+				const response = await axios.get(`https://e.bambulab.com/query.php?lang=${language}`, {timeout: 3000}); // Timout of 3 seconds for API call
+				this.log.debug(JSON.stringify('HMS ErrorCode translations : ' + response.data));
+				return response.data;
+			};
+
+			const loadTranslationsToMemory = async (tranJSON) => {
+				for (const errorType in tranJSON){
+					for (const errorCode in tranJSON[errorType][language]){
+						if (tranJSON[errorType][language][errorCode] != null && tranJSON[errorType][language][errorCode].ecode != null){
+							errorCodesHMS[tranJSON[errorType][language][errorCode].ecode] = {
+								ecode : tranJSON[errorType][language][errorCode].ecode,
+								desc: tranJSON[errorType][language][errorCode].intro
+							};
+						}
+					}
+				}
+			};
+
+			// Try to download new translation JSON, abort function in case of error
+			const onlineTran = await requestDeviceDataByAPI();
+			if (onlineTran == null || onlineTran.data == null){
+				this.log.warn(`Cannot download HMS error code translations`);
+				return false;
+			}
+
+			const onlineTranObj = onlineTran.data;
+			onlineTranObj.ver = onlineTran.ver;
+			onlineTranObj.language = language.toUpperCase();
+
+			// get current Translations
+			const currentTran = await this.getStateAsync('info.hmsErrorCodeTranslations');
+
+			if (currentTran == null || currentTran.val === ''){
+				this.log.info(`No Local translation available, version ${onlineTran.ver} downloaded`);
+				this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
+				await loadTranslationsToMemory(onlineTranObj);
+			} else if (currentTran.val != null && currentTran.val !== ''){
+				const currentTranObj = JSON.parse(currentTran.val);
+				// Check if new version is available
+				if((currentTranObj.ver !== onlineTran.ver)){
+					this.log.info(`Local translation ${currentTranObj.ver.toUpperCase()} outdated, updating to ${onlineTran.ver}`);
+					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
+					await loadTranslationsToMemory(onlineTranObj);
+				} else if (currentTranObj.language.toUpperCase() !== language.toUpperCase()){
+					this.log.info(`Local translation ${currentTranObj.language} incorrect, updating to ${language.toUpperCase()}`);
+					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
+					loadTranslationsToMemory(onlineTranObj);
+				}
+				else {
+					this.log.info(`Local translation available, version ${currentTranObj.ver} is up-to-date`);
+					loadTranslationsToMemory(currentTranObj);
+				}
+			}
+		} catch (e) {
+			this.log.error(`[loadHMSerroCodeTranslations] ${e} | ${e.stack}`);
 		}
 	}
 
@@ -315,7 +426,7 @@ class Bambulab extends utils.Adapter {
 	 * @param {string} id
 	 * @param {ioBroker.State | null | undefined} state
 	 */
-	onStateChange(id, state) {
+	async onStateChange(id, state) {
 		if (state && state.val != null) {
 			// Only act on trigger if value is not Acknowledged
 			if (!state.ack) {
@@ -374,6 +485,9 @@ class Bambulab extends utils.Adapter {
 								'command': 'pause'
 							}
 						};
+						break;
+					case ('updateHMSErrorCodeTranslation'):
+						await this.loadHMSerrorCodeTranslations();
 						break;
 
 					case ('stop'):
