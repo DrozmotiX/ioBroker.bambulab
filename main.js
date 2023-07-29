@@ -158,6 +158,7 @@ class Bambulab extends utils.Adapter {
 				if (message.print.big_fan1_speed != null) message.print.big_fan1_speed = convert.fanSpeed(message.print.big_fan1_speed);
 				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
+				if (message.print.gcode_start_time != null) message.print.gcode_start_timeFormatted = new Date(message.print.gcode_start_time * 1000);
 
 				// Translate HMS Code & write to state
 				const hmsError = [];

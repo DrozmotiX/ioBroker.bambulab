@@ -72,7 +72,8 @@ When the adapter crashes or any other Code error happens, this error message tha
 -->
 
 ### **WORK IN PROGRESS** - HMS error codes Human readable, added new functionalities
-#### Several state locations have been changed, advise to completely remove & reinstall to upgrade
+#### Several state locations have been changed, advise to completely remove adapter & reinstall to upgrade
+* (DutchmanNL) State for human readable start time added
 * (DutchmanNL) Speed level control implemented solves #10
 * (DutchmanNL) Capability to control all fans implemented
 * (DutchmanNL) Control bed & Nozzle temperature implemented
