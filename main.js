@@ -176,7 +176,7 @@ class Bambulab extends utils.Adapter {
 						}
 						const errorMessageArray = {'code': 'HMS_'+full_code, 'url-EN': urlEN, 'description': errorDesc};
 						if (language.toUpperCase() !== 'EN'){
-							errorMessageArray['url-local'] = `https://wiki.bambulab.com/${language}/x1/troubleshooting/hmscode/${full_code}}`;
+							errorMessageArray['url-local'] = `https://wiki.bambulab.com/${language}/x1/troubleshooting/hmscode/${full_code}`;
 						}
 						hmsError.push(errorMessageArray);
 					}
