@@ -300,6 +300,13 @@ class Bambulab extends utils.Adapter {
 				read: false,
 				write: true
 			},
+			updateHMSErrorCodeTranslation : {
+				name: 'Update HMS error code translations',
+				type: 'boolean',
+				role: 'button',
+				read: false,
+				write: true
+			},
 			fanSpeedChamber : {
 				name: 'Chamber Fan Speed',
 				type: 'number',
@@ -419,7 +426,7 @@ class Bambulab extends utils.Adapter {
 	 * @param {string} id
 	 * @param {ioBroker.State | null | undefined} state
 	 */
-	onStateChange(id, state) {
+	async onStateChange(id, state) {
 		if (state && state.val != null) {
 			// Only act on trigger if value is not Acknowledged
 			if (!state.ack) {
@@ -478,6 +485,9 @@ class Bambulab extends utils.Adapter {
 								'command': 'pause'
 							}
 						};
+						break;
+					case ('updateHMSErrorCodeTranslation'):
+						await this.loadHMSerrorCodeTranslations();
 						break;
 
 					case ('stop'):
