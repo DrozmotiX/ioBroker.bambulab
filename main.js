@@ -18,6 +18,7 @@ const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute l
 let client; // Memroy to store client connection information
 const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
+let language = 'en'; // System language to handle error code translations, default EN
 
 class Bambulab extends utils.Adapter {
 	/**
@@ -39,6 +40,12 @@ class Bambulab extends utils.Adapter {
 	 */
 	async onReady() {
 		// Initialize your adapter here
+
+		// Get system language, use EN as fallback in case of errors
+		const sys_conf = await this.getForeignObjectAsync('system.config');
+		if (sys_conf && sys_conf.common.language){
+			language = sys_conf.common.language;
+		}
 
 		// Reset the connection indicator during startup
 		this.setState('info.connection', false, true);
@@ -161,8 +168,17 @@ class Bambulab extends utils.Adapter {
 						const code = convert.DecimalHexTwosComplement(message.print.hms[hms_code].code);
 						let full_code = (attr + code).replace(/(.{4})/g, '$1_');
 						full_code = full_code.substring(0, full_code.length - 1);
-						const url = 'https://wiki.bambulab.com/en/x1/troubleshooting/hmscode/'+full_code;
-						hmsError.push({'code': 'HMS_'+full_code, 'url': url, 'description': errorCodesHMS[full_code.replaceAll('_','')].desc});
+						const urlEN = 'https://wiki.bambulab.com/en/x1/troubleshooting/hmscode/'+full_code;
+
+						let errorDesc = 'No description available in your language';
+						if (errorCodesHMS[full_code.replaceAll('_','')] != null && errorCodesHMS[full_code.replaceAll('_','')].desc != null){
+							errorDesc = errorCodesHMS[full_code.replaceAll('_','')].desc;
+						}
+						const errorMessageArray = {'code': 'HMS_'+full_code, 'url-EN': urlEN, 'description': errorDesc};
+						if (language.toUpperCase() !== 'EN'){
+							errorMessageArray['url-local'] = `https://wiki.bambulab.com/${language}/x1/troubleshooting/hmscode/${full_code}}`;
+						}
+						hmsError.push(errorMessageArray);
 					}
 				}
 
@@ -314,12 +330,7 @@ class Bambulab extends utils.Adapter {
 	async loadHMSerrorCodeTranslations(){
 		try {
 			this.log.info('Try to get current HMS code translations');
-			// Get system language, use EN as fallback in case of errors
-			let language = 'en';
-			const sys_conf = await this.getForeignObjectAsync('system.config');
-			if (sys_conf && sys_conf.common.language){
-				language = sys_conf.common.language;
-			}
+
 			// Web request to download latest translations
 			const requestDeviceDataByAPI = async () => {
 				const response = await axios.get(`https://e.bambulab.com/query.php?lang=${language}`, {timeout: 3000}); // Timout of 3 seconds for API call
@@ -327,7 +338,7 @@ class Bambulab extends utils.Adapter {
 				return response.data;
 			};
 
-			const loadTranslationsToMemory = (tranJSON) => {
+			const loadTranslationsToMemory = async (tranJSON) => {
 				for (const errorType in tranJSON){
 					for (const errorCode in tranJSON[errorType][language]){
 						if (tranJSON[errorType][language][errorCode] != null && tranJSON[errorType][language][errorCode].ecode != null){
@@ -357,14 +368,14 @@ class Bambulab extends utils.Adapter {
 			if (currentTran == null || currentTran.val === ''){
 				this.log.info(`No Local translation available, version ${onlineTran.ver} downloaded`);
 				this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
-
+				await loadTranslationsToMemory(onlineTranObj);
 			} else if (currentTran.val != null && currentTran.val !== ''){
 				const currentTranObj = JSON.parse(currentTran.val);
 				// Check if new version is available
 				if((currentTranObj.ver !== onlineTran.ver)){
 					this.log.info(`Local translation ${currentTranObj.ver.toUpperCase()} outdated, updating to ${onlineTran.ver}`);
 					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
-					loadTranslationsToMemory(onlineTranObj);
+					await loadTranslationsToMemory(onlineTranObj);
 				} else if (currentTranObj.language.toUpperCase() !== language.toUpperCase()){
 					this.log.info(`Local translation ${currentTranObj.language} incorrect, updating to ${language.toUpperCase()}`);
 					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
