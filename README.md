@@ -72,6 +72,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 -->
 
 ### **WORK IN PROGRESS** - HMS error codes Human readable, added new functionalities
+#### Several state locations have been changed, advise to completely remove & reinstall to upgrade
 * (DutchmanNL) Speed level control implemented solves #10
 * (DutchmanNL) Capability to control all fans implemented
 * (DutchmanNL) Control bed & Nozzle temperature implemented
@@ -98,7 +99,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 
 ### 0.1.0 initial release
 * (DutchmanNL) initial release
-* During startup adapter throws warnings, these can be ignored and will be solved in >= 0.2.0
+* During startup adapter throws warnings, these can be ignored and will be solved in =< 0.5.0
 * Control start/stop/resume and light available in >= 0.1.1
 
 ## License
