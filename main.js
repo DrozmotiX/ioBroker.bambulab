@@ -159,6 +159,7 @@ class Bambulab extends utils.Adapter {
 				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
 				if (message.print.gcode_start_time != null) message.print.gcode_start_timeFormatted = new Date(message.print.gcode_start_time * 1000);
+				if (message.print.vt_tray != null && message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
 
 				// Translate HMS Code & write to state
 				const hmsError = [];
@@ -201,9 +202,7 @@ class Bambulab extends utils.Adapter {
 					message.print.ams.ams = this.handleAMSUnits(message);
 				}
 
-				if (message.print.vt_tray) {
-					if (message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
-				}
+
 			}
 
 			// Explore JSON & create states
@@ -467,7 +466,7 @@ class Bambulab extends utils.Adapter {
 				const currentTranObj = JSON.parse(currentTran.val);
 				// Check if new version is available
 				if((currentTranObj.ver !== onlineTran.ver)){
-					this.log.info(`Local translation ${currentTranObj.ver.toUpperCase()} outdated, updating to ${onlineTran.ver}`);
+					this.log.info(`Local translation ${currentTranObj.ver} outdated, updating to ${onlineTran.ver}`);
 					this.setStateAsync(`info.hmsErrorCodeTranslations`, {val: JSON.stringify(onlineTranObj), ack: true});
 					await loadTranslationsToMemory(onlineTranObj);
 				} else if (currentTranObj.language.toUpperCase() !== language.toUpperCase()){
