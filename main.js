@@ -164,9 +164,11 @@ class Bambulab extends utils.Adapter {
 				// Translate HMS Code & write to state
 				const hmsError = [];
 				if(message.print.hms != null){
+					message.print.hms.hmsErrors = true;
 					for (const hms_code in message.print.hms) {
 						const attr = convert.DecimalHexTwosComplement(message.print.hms[hms_code].attr);
 						const code = convert.DecimalHexTwosComplement(message.print.hms[hms_code].code);
+
 						let full_code = (attr + code).replace(/(.{4})/g, '$1_');
 						full_code = full_code.substring(0, full_code.length - 1);
 						const urlEN = 'https://wiki.bambulab.com/en/x1/troubleshooting/hmscode/'+full_code;
@@ -181,18 +183,20 @@ class Bambulab extends utils.Adapter {
 						}
 						hmsError.push(errorMessageArray);
 					}
+				} else {
+					message.print.hms = {
+						hmsErrorCount: 0,
+						hmsErrors: false
+					};
 				}
 
 				await this.setStateAsync(`${this.config.serial}.hms.hmsErrorCode`,{val: JSON.stringify(hmsError), ack: true});
 
-				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
 				if (message.print.ams != null && message.print.ams.ams_exist_bits != null && message.print.ams.ams_exist_bits === '1') {
 					// Call function to handle states for AMS unit
 					message.print.ams.ams = this.handleAMSUnits(message);
 				}
-
-
 			}
 
 			// Explore JSON & create states
@@ -565,7 +569,7 @@ class Bambulab extends utils.Adapter {
 								};
 							}
 							break;
-							
+
 						case ('pause'):
 							msg = {
 								'print': {
