@@ -183,17 +183,7 @@ class Bambulab extends utils.Adapter {
 					}
 				}
 
-				this.setState(`${this.config.serial}.hms.hmsErrorCode`,{val: JSON.stringify(hmsError), ack: true});
-				if (message.print.hms != null) message.print.hms = {
-					hmsErrorCount : hmsError.length
-				};
-
-				if (hmsError.length > 0){
-					this.setState(`${this.config.serial}.hms.hmsErrors`,{val: true, ack: true});
-				} else {
-					this.setState(`${this.config.serial}.hms.hmsErrors`,{val: false, ack: true});
-
-				}
+				await this.setStateAsync(`${this.config.serial}.hms.hmsErrorCode`,{val: JSON.stringify(hmsError), ack: true});
 
 				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
@@ -317,14 +307,6 @@ class Bambulab extends utils.Adapter {
 			},
 			lightToolHeadLogo : {
 				name: 'Tool head Logo',
-				type: 'boolean',
-				role: 'state',
-				read: true,
-				write: true,
-				def: false
-			},
-			lightToolHeadCalibration : {
-				name: 'Tool head Nozzle',
 				type: 'boolean',
 				role: 'state',
 				read: true,
@@ -583,27 +565,7 @@ class Bambulab extends utils.Adapter {
 								};
 							}
 							break;
-
-						case ('lightToolHeadCalibration'):
-							if (state.val === true) {
-								msg = msg = {
-									'print': {
-										'command': 'gcode_line',
-										'param': `M960 S4 P1`,
-										'sequence_id': '0'
-									}
-								};
-							} else if (state.val === false) {
-								msg = msg = {
-									'print': {
-										'command': 'gcode_line',
-										'param': `M960 S4 P0`,
-										'sequence_id': '0'
-									}
-								};
-							}
-							break;
-
+							
 						case ('pause'):
 							msg = {
 								'print': {
