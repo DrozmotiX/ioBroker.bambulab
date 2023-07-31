@@ -152,6 +152,7 @@ class Bambulab extends utils.Adapter {
 		try {
 			if (message.print) {
 				// Modify values of JSON for states which need modification
+				message.print.control = {};
 				if (message.print.cooling_fan_speed != null) {
 					message.print.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
 					message.print.control.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
@@ -178,11 +179,10 @@ class Bambulab extends utils.Adapter {
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
 				if (message.print.gcode_start_time != null) message.print.gcode_start_timeFormatted = new Date(message.print.gcode_start_time * 1000);
 				if (message.print.vt_tray != null && message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
-
 				// Update light control datapoint
 				if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
 					message.print.control.lightChamber = true;
-					message.print.lights_report[0].mode = true
+					message.print.lights_report[0].mode = true;
 				} else if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
 					message.print.control.lightChamber = false;
 					message.print.lights_report[0].mode = false;
@@ -201,7 +201,7 @@ class Bambulab extends utils.Adapter {
 						const urlEN = 'https://wiki.bambulab.com/en/x1/troubleshooting/hmscode/'+full_code;
 
 						let errorDesc = 'No description available in your language';
-						if (errorCodesHMS[full_code.replaceAll('_','').toUpperCase()]['desc'] != null && errorCodesHMS[full_code.replaceAll('_','').toUpperCase()]['desc'] != null){
+						if (errorCodesHMS[full_code.replaceAll('_','').toUpperCase()] != null && errorCodesHMS[full_code.replaceAll('_','').toUpperCase()]['desc'] != null){
 							errorDesc = errorCodesHMS[full_code.replaceAll('_','').toUpperCase()]['desc'];
 						}
 						const errorMessageArray = {'code': 'HMS_'+full_code, 'url-EN': urlEN, 'description': errorDesc};
@@ -511,158 +511,162 @@ class Bambulab extends utils.Adapter {
 
 				//ToDo: Implement ACK based on success message of MQTT in relation to sequence ID.
 				// Handle control states
-				if (checkID[3] === 'control') {
-					switch (checkID[4]) {
-						case ('_customGcode'):
+
+				let stateLocation = 3;
+				if (checkID[3] === 'control') stateLocation = 4;
+
+				switch (checkID[stateLocation]) {
+					case ('_customGcode'):
+						msg = msg = {
+							'print': {
+								'command': 'gcode_line',
+								'param': `${state.val}`,
+								'sequence_id': '0'
+							}
+						};
+						break;
+					case ('lightChamber'):
+						if (state.val === true) {
+							msg = {
+								'system': {
+									'sequence_id': '2003',
+									'command': 'ledctrl',
+									'led_node': 'chamber_light',
+									'led_mode': 'on',
+									'led_on_time': 500,
+									'led_off_time': 500,
+									'loop_times': 0,
+									'interval_time': 0
+								}, 'user_id': '2712364565'
+							};
+						} else if (state.val === false) {
+							msg = {
+								'system': {
+									'sequence_id': '2003',
+									'command': 'ledctrl',
+									'led_node': 'chamber_light',
+									'led_mode': 'off',
+									'led_on_time': 500,
+									'led_off_time': 500,
+									'loop_times': 0,
+									'interval_time': 0
+								}
+							};
+						}
+						break;
+					case ('lightToolHeadLogo'):
+						if (state.val === true) {
 							msg = msg = {
 								'print': {
 									'command': 'gcode_line',
-									'param': `${state.val}`,
+									'param': `M960 S5 P1`,
 									'sequence_id': '0'
 								}
 							};
-							break;
-
-						case ('lightChamber'):
-							if (state.val === true) {
-								msg = {
-									'system': {
-										'sequence_id': '2003',
-										'command': 'ledctrl',
-										'led_node': 'chamber_light',
-										'led_mode': 'on',
-										'led_on_time': 500,
-										'led_off_time': 500,
-										'loop_times': 0,
-										'interval_time': 0
-									}, 'user_id': '2712364565'
-								};
-							} else if (state.val === false) {
-								msg = {
-									'system': {
-										'sequence_id': '2003',
-										'command': 'ledctrl',
-										'led_node': 'chamber_light',
-										'led_mode': 'off',
-										'led_on_time': 500,
-										'led_off_time': 500,
-										'loop_times': 0,
-										'interval_time': 0
-									}
-								};
-							}
-							break;
-
-						case ('lightToolHeadLogo'):
-							if (state.val === true) {
-								msg = msg = {
-									'print': {
-										'command': 'gcode_line',
-										'param': `M960 S5 P1`,
-										'sequence_id': '0'
-									}
-								};
-							} else if (state.val === false) {
-								msg = msg = {
-									'print': {
-										'command': 'gcode_line',
-										'param': `M960 S5 P0`,
-										'sequence_id': '0'
-									}
-								};
-							}
-							break;
-
-						case ('pause'):
-							msg = {
-								'print': {
-									'sequence_id': '0',
-									'command': 'pause'
-								}
-							};
-							break;
-						case ('updateHMSErrorCodeTranslation'):
-							await this.loadHMSerrorCodeTranslations();
-							break;
-
-						case ('stop'):
-							msg = {
-								'print': {
-									'sequence_id': '0',
-									'command': 'stop'
-								}
-							};
-							break;
-
-						case ('resume'):
-							msg = {
-								'print': {
-									'sequence_id': '0',
-									'command': 'resume'
-								}
-							};
-							break;
-
-						case ('fanSpeedChamber'):
-							msg = {
+						} else if (state.val === false) {
+							msg = msg = {
 								'print': {
 									'command': 'gcode_line',
-									'param': `M106 P3 S${state.val * 2.55}`,
+									'param': `M960 S5 P0`,
 									'sequence_id': '0'
 								}
 							};
+						}
+						break;
+					case ('pause'):
+						msg = {
+							'print': {
+								'sequence_id': '0',
+								'command': 'pause'
+							}
+						};
+						break;
+					case ('updateHMSErrorCodeTranslation'):
+						await this.loadHMSerrorCodeTranslations();
+						break;
+					case ('stop'):
+						msg = {
+							'print': {
+								'sequence_id': '0',
+								'command': 'stop'
+							}
+						};
+						break;
+					case ('resume'):
+						msg = {
+							'print': {
+								'sequence_id': '0',
+								'command': 'resume'
+							}
+						};
+						break;
+					case ('fanSpeedChamber'):
+						msg = {
+							'print': {
+								'command': 'gcode_line',
+								'param': `M106 P3 S${state.val * 2.55}`,
+								'sequence_id': '0'
+							}
+						};
 
-							break;
-					}
-				} else if (checkID[3] === 'spd_lvl') {
-					msg = {
-						'print': {
-							'command': 'print_speed',
-							'param': `${state.val}`,
-							'sequence_id': '0'
-						}
-					};
-				} else if (checkID[3] === 'bed_target_temper') {
-					msg = {
-						'print': {
-							'command': 'gcode_line',
-							'param': `M140 S${state.val}`,
-							'sequence_id': '0'
-						}
-					};
-				} else if (checkID[3] === 'nozzle_target_temper') {
-					msg = {
-						'print': {
-							'command': 'gcode_line',
-							'param': `M104 S${state.val}`,
-							'sequence_id': '0'
-						}
-					};
-				} else if (checkID[3] === 'big_fan1_speed') {
-					msg = {
-						'print': {
-							'command': 'gcode_line',
-							'param': `M106 P2 S${state.val * 2.55}`,
-							'sequence_id': '0'
-						}
-					};
-				} else if (checkID[3] === 'big_fan2_speed') {
-					msg = {
-						'print': {
-							'command': 'gcode_line',
-							'param': `M106 P3 S${state.val * 2.55}`,
-							'sequence_id': '0'
-						}
-					};
-				} else if (checkID[3] === 'cooling_fan_speed') {
-					msg = {
-						'print': {
-							'command': 'gcode_line',
-							'param': `M106 P1 S${state.val * 2.55}`,
-							'sequence_id': '0'
-						}
-					};
+						break;
+					case ('spd_lvl'):
+						msg = {
+							'print': {
+								'command': 'print_speed',
+								'param': `${state.val}`,
+								'sequence_id': '0'
+							}
+						};
+						break;
+					case ('bed_target_temper'):
+						msg = {
+							'print': {
+								'command': 'gcode_line',
+								'param': `M140 S${state.val}`,
+								'sequence_id': '0'
+							}
+						};
+						break;
+					case ('nozzle_target_temper'):
+						msg = {
+							'print': {
+								'command': 'gcode_line',
+								'param': `M104 S${state.val}`,
+								'sequence_id': '0'
+							}
+						};
+						break;
+					case ('big_fan1_speed'):
+						msg = {
+							'print': {
+								'command': 'gcode_line',
+								'param': `M106 P2 S${state.val * 2.55}`,
+								'sequence_id': '0'
+							}
+						};
+						break;
+					case ('big_fan2_speed'):
+						msg = {
+							'print': {
+								'command': 'gcode_line',
+								'param': `M106 P3 S${state.val * 2.55}`,
+								'sequence_id': '0'
+							}
+						};
+						break;
+					case ('cooling_fan_speed'):
+						msg = {
+							'print': {
+								'command': 'gcode_line',
+								'param': `M106 P1 S${state.val * 2.55}`,
+								'sequence_id': '0'
+							}
+						};
+						break;
+
 				}
+
 
 				if (msg) {
 					this.publishMQTTmessages(msg);
