@@ -197,14 +197,8 @@ class Bambulab extends utils.Adapter {
 				// ToDo: Check why library is not handling conversion correctly
 				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
 				if (message.print.ams != null && message.print.ams.ams_exist_bits != null && message.print.ams.ams_exist_bits === '1') {
-					// handle conversion for all AMS units
-					for (const unit in message.print.ams.ams){
-						if (message.print.ams.ams[unit] !== null){
-							for (const tray in message.print.ams.ams[unit].tray){
-								if (message.print.ams.ams[unit].tray[tray].bed_temp != null) message.print.ams.ams[unit].tray[tray].bed_temp = parseInt(message.print.ams.ams[unit].tray[tray].bed_temp);
-							}
-						}
-					}
+					// Call function to handle states for AMS unit
+					message.print.ams.ams = this.handleAMSUnits(message);
 				}
 
 				if (message.print.vt_tray) {
@@ -227,6 +221,47 @@ class Bambulab extends utils.Adapter {
 		} catch (e) {
 			this.log.error(`[messageHandler] ${e} | ${e.stack}`);
 		}
+	}
+
+	handleAMSUnits(message){
+		const amsData = message.print.ams.ams;
+		// handle conversion for all AMS units
+		for (const unit in amsData){
+			if (amsData[unit] !== null){
+				for (const tray in amsData[unit].tray){
+
+					if (!amsData[unit].tray[tray].cols) {
+						amsData[unit].tray[tray] =   {
+							'bed_temp': '',
+							'bed_temp_type': '',
+							'cols': [],
+							'drying_temp': '',
+							'drying_time': '',
+							'id': '',
+							'nozzle_temp_max': '',
+							'nozzle_temp_min': '',
+							'remain': 0,
+							'tag_uid': '',
+							'tray_color': '',
+							'tray_diameter': '',
+							'tray_id_name': '',
+							'tray_info_idx': '',
+							'tray_sub_brands': '',
+							'tray_type': '',
+							'tray_uuid': '',
+							'tray_weight': '',
+							'xcam_info': ''
+						};
+						amsData[unit].tray[tray]._filamentPresent = false;
+					} else {
+						amsData[unit].tray[tray]._filamentPresent = true;
+						amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
+					}
+					if (amsData[unit].tray[tray].bed_temp != null) amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
+				}
+			}
+		}
+		return amsData;
 	}
 
 	publishMQTTmessages (msg) {
