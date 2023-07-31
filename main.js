@@ -152,14 +152,41 @@ class Bambulab extends utils.Adapter {
 		try {
 			if (message.print) {
 				// Modify values of JSON for states which need modification
-				if (message.print.cooling_fan_speed != null) message.print.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
-				if (message.print.heatbreak_fan_speed != null) message.print.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
-				if (message.print.stg_cur != null) message.print.stg_cur = convert.stageParser(message.print.stg_cur);
-				if (message.print.big_fan1_speed != null) message.print.big_fan1_speed = convert.fanSpeed(message.print.big_fan1_speed);
-				if (message.print.big_fan2_speed != null) message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
+				if (message.print.cooling_fan_speed != null) {
+					message.print.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
+					message.print.control.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
+				}
+				if (message.print.heatbreak_fan_speed != null) {
+					message.print.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
+					message.print.control.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
+				}
+				if (message.print.stg_cur != null) {
+					message.print.stg_cur = convert.stageParser(message.print.stg_cur);
+					message.print.control.stg_cur = convert.stageParser(message.print.stg_cur);
+				}
+				if (message.print.big_fan1_speed != null) {
+					message.print.big_fan1_speed = convert.fanSpeed(message.print.big_fan1_speed);
+					message.print.control.big_fan1_speed = convert.fanSpeed(message.print.big_fan1_speed);
+				}
+				if (message.print.big_fan2_speed != null) {
+					message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
+					message.print.control.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
+				}
+				if (message.print.spd_lvl != null) message.print.control.spd_lvl = message.print.spd_lvl;
+				if (message.print.bed_target_temper != null) message.print.control.bed_target_temper = message.print.bed_target_temper;
+				if (message.print.nozzle_target_temper != null) message.print.control.nozzle_target_temper = message.print.nozzle_target_temper;
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
 				if (message.print.gcode_start_time != null) message.print.gcode_start_timeFormatted = new Date(message.print.gcode_start_time * 1000);
 				if (message.print.vt_tray != null && message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
+
+				// Update light control datapoint
+				if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
+					message.print.control.lightChamber = true;
+					message.print.lights_report[0].mode = true
+				} else if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
+					message.print.control.lightChamber = false;
+					message.print.lights_report[0].mode = false;
+				}
 
 				// Translate HMS Code & write to state
 				const hmsError = [];
@@ -202,14 +229,6 @@ class Bambulab extends utils.Adapter {
 			// Explore JSON & create states
 			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, false, false, 0);
 			this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);
-
-			// ToDo: manipulate in JSON + move to existing state
-			// Update light control datapoint
-			if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
-				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: true, ack: true});
-			} else if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'off'){
-				this.setStateChanged(`${this.config.serial}.control.lightChamber`, {val: false, ack: true});
-			}
 
 		} catch (e) {
 			this.log.error(`[messageHandler] ${e} | ${e.stack}`);
@@ -301,14 +320,6 @@ class Bambulab extends utils.Adapter {
 				write: true,
 				def: ''
 			},
-			lightChamber : {
-				name: 'Chamber Light',
-				type: 'boolean',
-				role: 'state',
-				read: true,
-				write: true,
-				def: false
-			},
 			lightToolHeadLogo : {
 				name: 'Tool head Logo',
 				type: 'boolean',
@@ -344,14 +355,6 @@ class Bambulab extends utils.Adapter {
 				role: 'button',
 				read: false,
 				write: true
-			},
-			fanSpeedChamber : {
-				name: 'Chamber Fan Speed',
-				type: 'number',
-				role: 'level',
-				read: true,
-				write: true,
-				def: 0
 			},
 		};
 
