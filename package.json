@@ -20,7 +20,7 @@
     "node": ">= 14"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.6.8",
+    "@iobroker/adapter-core": "^3.0.3",
     "axios": "^1.4.0",
     "iobroker-jsonexplorer": "git+https://git@github.com/DutchmanNL/ioBroker-jsonExplorer#main",
     "mqtt": "^4.3.7"
