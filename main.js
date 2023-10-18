@@ -15,7 +15,7 @@ const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer libra
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
 
-let client; // Memroy to store client connection information
+let client; // Memory to store client connection information
 const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
 let language = 'en'; // System language to handle error code translations, default EN
@@ -111,6 +111,9 @@ class Bambulab extends utils.Adapter {
 					// @ts-ignore if system does not exist function will return false and skip
 				} else if (message && message.system){ // Handle values for system messages, used to acknowledge messages
 					this.log.info(`System Message ${JSON.stringify(message)}`);
+				} else if (message && message['t_utc']){ // Handle values for system messages, used to acknowledge messages
+					// this.log.info(`System Message ${JSON.stringify(message)}`);
+					// TimeStamp Message, ignore
 				} else {
 					this.log.error(`Unknown Message ${JSON.stringify(message)}`);
 				}
