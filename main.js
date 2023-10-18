@@ -312,6 +312,13 @@ class Bambulab extends utils.Adapter {
 	createControlStates(){
 
 		const controlStates = {
+			homing : {
+				name: 'Homing print head',
+				type: 'boolean',
+				role: 'button',
+				read: false,
+				write: true,
+			},
 			_customGcode : {
 				name: 'Custom G-Code',
 				type: 'string',
@@ -664,7 +671,18 @@ class Bambulab extends utils.Adapter {
 							}
 						};
 						break;
-
+					case ('homing'):
+						msg = msg = {
+							'print': {
+								'command': 'gcode_line',
+								'param': 'G28 \n',
+								'reason': 'SUCCESS',
+								'result': 'SUCCESS',
+								'sequence_id': '20086',
+								'user_id': '1767420324'
+							}
+						};
+						break;
 				}
 
 
