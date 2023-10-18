@@ -185,7 +185,7 @@ class Bambulab extends utils.Adapter {
 					gcode_start_timeFormatted = gcode_start_timeFormatted.replace('"', '');
 					message.print.gcode_start_timeFormatted = gcode_start_timeFormatted;
 				}
-				if (message.print.vt_tray != null && message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
+				if (message.print.vt_tray != null && message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = +message.print.vt_tray.bed_temp;
 				// Update light control datapoint
 				if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
 					message.print.control.lightChamber = true;
