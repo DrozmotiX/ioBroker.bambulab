@@ -107,12 +107,12 @@ class Bambulab extends utils.Adapter {
 					this.messageHandler(message);
 					// @ts-ignore if system does not exist function will return false and skip
 				} else if (message && message.command){
-					this.log.debug(`Response to control command ${JSON.stringify(message)}`);
+					this.log.info(`Response to control command ${JSON.stringify(message)}`);
 					// @ts-ignore if system does not exist function will return false and skip
 				} else if (message && message.system){ // Handle values for system messages, used to acknowledge messages
-					this.log.debug(`System Message ${JSON.stringify(message)}`);
+					this.log.info(`System Message ${JSON.stringify(message)}`);
 				} else {
-					this.log.debug(`Unknown Message ${JSON.stringify(message)}`);
+					this.log.error(`Unknown Message ${JSON.stringify(message)}`);
 				}
 
 			});
@@ -173,11 +173,18 @@ class Bambulab extends utils.Adapter {
 					message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 					message.print.control.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
 				}
-				if (message.print.spd_lvl != null) message.print.control.spd_lvl = message.print.spd_lvl;
+				if (message.print.spd_lvl != null) {
+					message.print.control.spd_lvl = message.print.spd_lvl;
+					message.print.control.control.spd_lvl = message.print.spd_lvl;
+				}
 				if (message.print.bed_target_temper != null) message.print.control.bed_target_temper = message.print.bed_target_temper;
 				if (message.print.nozzle_target_temper != null) message.print.control.nozzle_target_temper = message.print.nozzle_target_temper;
 				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
-				if (message.print.gcode_start_time != null) message.print.gcode_start_timeFormatted = new Date(message.print.gcode_start_time * 1000);
+				if (message.print.gcode_start_time != null) {
+					let gcode_start_timeFormatted = new Date(message.print.gcode_start_time * 1000).toString();
+					gcode_start_timeFormatted = gcode_start_timeFormatted.replace('"', '');
+					message.print.gcode_start_timeFormatted = gcode_start_timeFormatted;
+				}
 				if (message.print.vt_tray != null && message.print.vt_tray.bed_temp != null) message.print.vt_tray.bed_temp = parseInt(message.print.vt_tray.bed_temp);
 				// Update light control datapoint
 				if (message.print.lights_report && message.print.lights_report[0] && message.print.lights_report[0].mode === 'on'){
