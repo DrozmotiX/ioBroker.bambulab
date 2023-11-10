@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.3",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "iobroker-jsonexplorer": "git+https://git@github.com/DutchmanNL/ioBroker-jsonExplorer#main",
     "mqtt": "^5.0.1"
   },
