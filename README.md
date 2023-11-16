@@ -70,6 +70,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 	### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+* (DutchmanNL) Adjust log level for Unknown Message from error to debug, resolves #39
 * (DutchmanNL) Reduce selection dropdown in admin config to printer series instead of a specific printer type
 ### 0.2.0 (2023-10-18) - Small fixes for new firmware version
 * (DutchmanNL) Button for homing added, fixes #28

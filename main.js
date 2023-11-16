@@ -113,7 +113,7 @@ class Bambulab extends utils.Adapter {
 					// this.log.info(`System Message ${JSON.stringify(message)}`);
 					// TimeStamp Message, ignore
 				} else {
-					this.log.error(`Unknown Message ${JSON.stringify(message)}`);
+					this.log.debug(`Unknown Message ${JSON.stringify(message)}`);
 				}
 
 			});
