@@ -69,7 +69,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS** - Stable release candidate
+### 0.3.0-beta.3 (2023-11-16) - Stable release candidate
 * (DutchmanNL) Add missing definitions to ensure correct creation of states, resolves #39
 * (DutchmanNL) Adjust log level for Unknown Message from error to debug, resolves #39
 * (DutchmanNL) Reduce selection dropdown in admin config to printer series instead of a specific printer type
