@@ -87,10 +87,8 @@ class Bambulab extends utils.Adapter {
 					this.log.debug(`Subscribed to printer data topic by serial | ${this.config.serial}`);
 				});
 
-				// Start interval to request data of P1P series
-				if (this.config.printerModel !== 'X1' && this.config.printerModel !== 'X1-Carbon'){
-					this.requestDatap1pSeries();
-				}
+				// After new firmware release this summer all data must be requested 1 time at adapter start
+				this.requestData();
 			});
 
 			// Receive MQTT messages
@@ -297,8 +295,9 @@ class Bambulab extends utils.Adapter {
 		});
 	}
 
-	requestDatap1pSeries(){
+	requestData(){
 
+		// Prepare MQTT message
 		const msg = {
 			'pushing': {
 				'sequence_id': '1',
@@ -309,11 +308,14 @@ class Bambulab extends utils.Adapter {
 
 		// Try to request data
 		this.publishMQTTmessages(msg);
+
 		// Handle interval
 		if (timeouts['p1pPolling']) {clearTimeout(timeouts['p1pPolling']); timeouts['p1pPolling'] = null;}
 		timeouts['p1pPolling'] = setTimeout(()=> {
 			// Request data for P1p printer series
-			this.requestDatap1pSeries();
+			if (this.config.printerModel !== 'X1' && this.config.printerModel !== 'X1-Carbon'){
+				this.requestData();
+			}
 		}, this.config.requestInterval * 1000);
 
 	}

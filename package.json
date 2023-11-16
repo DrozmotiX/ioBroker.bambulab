@@ -1,6 +1,6 @@
 {
   "name": "iobroker.bambulab",
-  "version": "0.2.0",
+  "version": "0.3.0-beta.0",
   "description": "Connects to Bambulab 3d printers to retrieve data of current print and control main aspects",
   "author": {
     "name": "DutchmanNL",
@@ -64,6 +64,7 @@
     "main.js"
   ],
   "scripts": {
+    "statDev": "dev-server watch --noStart",
     "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
     "test:package": "mocha test/package --exit",
     "test:integration": "mocha test/integration --exit",
