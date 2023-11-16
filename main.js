@@ -309,11 +309,11 @@ class Bambulab extends utils.Adapter {
 		// Try to request data
 		this.publishMQTTmessages(msg);
 
-		// Handle interval
-		if (timeouts['p1pPolling']) {clearTimeout(timeouts['p1pPolling']); timeouts['p1pPolling'] = null;}
-		timeouts['p1pPolling'] = setTimeout(()=> {
+		// Handle an interval only if not X1-Series
+		if (timeouts['dataPolling']) {clearTimeout(timeouts['dataPolling']); timeouts['dataPolling'] = null;}
+		timeouts['dataPolling'] = setTimeout(()=> {
 			// Request data for P1p printer series
-			if (this.config.printerModel !== 'X1' && this.config.printerModel !== 'X1-Carbon'){
+			if (this.config.printerModel !== 'X1' && this.config.printerModel !== 'X1-Carbon' && this.config.printerModel !== 'X1-Series'){
 				this.requestData();
 			}
 		}, this.config.requestInterval * 1000);
@@ -500,7 +500,7 @@ class Bambulab extends utils.Adapter {
 
 			// Close running timers
 			if (timeouts[this.config.serial]) {clearTimeout(timeouts[this.config.serial]); timeouts[this.config.serial] = null;}
-			if (timeouts['p1pPolling']) {clearTimeout(timeouts['p1pPolling']); timeouts[timeouts['p1pPolling']] = null;}
+			if (timeouts['dataPolling']) {clearTimeout(timeouts['dataPolling']); timeouts[timeouts['dataPolling']] = null;}
 
 			// Close MQTT connection if present
 			if (client){

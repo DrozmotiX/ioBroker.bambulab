@@ -28,20 +28,12 @@
 			"lg": 3,
 			"options": [
 				{
-					"label": "P1P",
-					"value": "P1P"
+					"label": "P1-Series",
+					"value": "P1-Series"
 				},
 				{
-					"label": "P1s",
-					"value": "P1s"
-				},
-				{
-					"label": "X1",
-					"value": "X1"
-				},
-				{
-					"label": "X1-Carbon",
-					"value": "X1-Carbon"
+					"label": "X1-Series",
+					"value": "X1-Series"
 				}
 			],
 			"default": "X1",

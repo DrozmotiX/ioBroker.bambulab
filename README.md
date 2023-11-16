@@ -69,6 +69,8 @@ When the adapter crashes or any other Code error happens, this error message tha
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (DutchmanNL) Reduce selection dropdown in admin config to printer series instead of a specific printer type
 ### 0.2.0 (2023-10-18) - Small fixes for new firmware version
 * (DutchmanNL) Button for homing added, fixes #28
 * (DutchmanNL) Bugfix: Translation of HMS-Error codes
