@@ -226,7 +226,7 @@ class Bambulab extends utils.Adapter {
 
 				await this.setStateAsync(`${this.config.serial}.hms.hmsErrorCode`,{val: JSON.stringify(hmsError), ack: true});
 
-				// For some reasons the ams related bed_temp is not converted to number by library when value = 0
+				// For some reason library does not convert the ams related bed_temp to number when value = 0
 				if (message.print.ams != null && message.print.ams.ams_exist_bits != null && message.print.ams.ams_exist_bits === '1') {
 					// Call function to handle states for AMS unit
 					message.print.ams.ams = this.handleAMSUnits(message);
@@ -250,30 +250,30 @@ class Bambulab extends utils.Adapter {
 				for (const tray in amsData[unit].tray){
 
 					if (!amsData[unit].tray[tray].cols) {
-						amsData[unit].tray[tray] =   {
-							'bed_temp': '',
-							'bed_temp_type': '',
-							'cols': [],
-							'drying_temp': '',
-							'drying_time': '',
-							'id': '',
-							'nozzle_temp_max': '',
-							'nozzle_temp_min': '',
-							'remain': 0,
-							'tag_uid': '',
-							'tray_color': '',
-							'tray_diameter': '',
-							'tray_id_name': '',
-							'tray_info_idx': '',
-							'tray_sub_brands': '',
-							'tray_type': '',
-							'tray_uuid': '',
-							'tray_weight': '',
-							'xcam_info': ''
-						};
-						amsData[unit].tray[tray]._filamentPresent = false;
+						// amsData[unit].tray[tray] =   {
+						// 	'bed_temp': '',
+						// 	'bed_temp_type': '',
+						// 	'cols': [],
+						// 	'drying_temp': '',
+						// 	'drying_time': '',
+						// 	'id': '',
+						// 	'nozzle_temp_max': '',
+						// 	'nozzle_temp_min': '',
+						// 	'remain': 0,
+						// 	'tag_uid': '',
+						// 	'tray_color': '',
+						// 	'tray_diameter': '',
+						// 	'tray_id_name': '',
+						// 	'tray_info_idx': '',
+						// 	'tray_sub_brands': '',
+						// 	'tray_type': '',
+						// 	'tray_uuid': '',
+						// 	'tray_weight': '',
+						// 	'xcam_info': ''
+						// };
+						// amsData[unit].tray[tray]._filamentPresent = false;
 					} else {
-						amsData[unit].tray[tray]._filamentPresent = true;
+						// amsData[unit].tray[tray]._filamentPresent = true;
 						amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
 					}
 					if (amsData[unit].tray[tray].bed_temp != null) amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);

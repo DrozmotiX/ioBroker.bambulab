@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "bambulab",
-    "version": "0.3.0-beta.0",
+    "version": "0.3.0-beta.1",
     "news": {
       "0.2.0": {
         "en": "Button for homing added, fixes #28\nBugfix: Translation of HMS-Error codes\nSeveral bugfixes for situations no AMS is used\nRemove control for LED calibration head (could damage hardware)",
