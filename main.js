@@ -178,7 +178,6 @@ class Bambulab extends utils.Adapter {
 				}
 				if (message.print.spd_lvl != null) {
 					message.print.control.spd_lvl = message.print.spd_lvl;
-					message.print.control.control.spd_lvl = message.print.spd_lvl;
 				}
 				if (message.print.bed_target_temper != null) message.print.control.bed_target_temper = message.print.bed_target_temper;
 				if (message.print.nozzle_target_temper != null) message.print.control.nozzle_target_temper = message.print.nozzle_target_temper;
