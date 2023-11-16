@@ -70,8 +70,11 @@ When the adapter crashes or any other Code error happens, this error message tha
 	### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+* (DutchmanNL) Add missing definitions to ensure correct creation of states, resolves #39
 * (DutchmanNL) Adjust log level for Unknown Message from error to debug, resolves #39
 * (DutchmanNL) Reduce selection dropdown in admin config to printer series instead of a specific printer type
+* (DutchmanNL) Update adapter code to support new firmware versions released by bambulab, please ensure your printer is up-to-date! resolves #46, resolves #38, resolves #26,
+
 ### 0.2.0 (2023-10-18) - Small fixes for new firmware version
 * (DutchmanNL) Button for homing added, fixes #28
 * (DutchmanNL) Bugfix: Translation of HMS-Error codes
