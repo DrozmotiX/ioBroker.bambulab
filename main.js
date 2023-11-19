@@ -313,7 +313,11 @@ class Bambulab extends utils.Adapter {
 		if (timeouts['dataPolling']) {clearTimeout(timeouts['dataPolling']); timeouts['dataPolling'] = null;}
 		timeouts['dataPolling'] = setTimeout(()=> {
 			// Request data for P1p printer series
-			if (this.config.printerModel !== 'X1' && this.config.printerModel !== 'X1-Carbon' && this.config.printerModel !== 'X1-Series'){
+			if (this.config.printerModel !== 'X1'
+				&& this.config.printerModel !== 'X1-Carbon'
+				&& this.config.printerModel !== 'X1-Series'
+				&& this.config.printerModel !== 'A1-Series'
+			){
 				this.requestData();
 			}
 		}, this.config.requestInterval * 1000);
