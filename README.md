@@ -75,7 +75,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS** - Release candidate
+### 0.3.0 (2023-11-19) - Release candidate
 * (DutchmanNL) Update dependencies for state handling, resolves #50
 * (DutchmanNL) Adjust log level for Unknown Message from error to debug, resolves #39
 * (DutchmanNL) Add missing definitions to ensure correct creation of states, resolves #39
