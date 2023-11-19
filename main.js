@@ -51,7 +51,7 @@ class Bambulab extends utils.Adapter {
 		this.setState('info.connection', false, true);
 
 		// Download / Update HMS error Codes
-		await this.loadHMSerrorCodeTranslations();
+		await this.loadHMSErrorCodeTranslations();
 
 		// Handle MQTT messages
 		this.mqttMessageHandle();
@@ -116,10 +116,6 @@ class Bambulab extends utils.Adapter {
 					this.log.debug(`Unknown Message ${JSON.stringify(message)}`);
 				}
 
-			});
-
-			client.on('reconnecting',  (topic, message) =>{
-				this.log.info(`Reconnecting ${message.toString()}`);
 			});
 
 			client.on('end',  () =>{
@@ -431,7 +427,7 @@ class Bambulab extends utils.Adapter {
 		}
 	}
 
-	async loadHMSerrorCodeTranslations(){
+	async loadHMSErrorCodeTranslations(){
 		try {
 			this.log.info('Try to get current HMS code translations');
 
@@ -604,7 +600,7 @@ class Bambulab extends utils.Adapter {
 						};
 						break;
 					case ('updateHMSErrorCodeTranslation'):
-						await this.loadHMSerrorCodeTranslations();
+						await this.loadHMSErrorCodeTranslations();
 						break;
 					case ('stop'):
 						msg = {

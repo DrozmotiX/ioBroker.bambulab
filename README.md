@@ -18,7 +18,8 @@
 With credits to [kmxak](https://forum.iobroker.net/user/kmxak), [djalexz](https://forum.iobroker.net/user/djalexz), all other involved and inspired by [this forum thread](https://forum.iobroker.net/topic/61585/bambu-lab-3d-drucker-mqtt-integration)
 this adapter integrates Bambulab 3D-Printers into ioBroker.
 
-Please provide your Printer IP-Address, API token and serial number in adapter settings, these are required for a local connection (no cloud involved) to your printer.
+Please provide your Printer IP-Address, API token and serial number in adapter settings;
+these are required for a local connection (no cloud involved) to your printer.
 These credentials are stored locally and not shared to third parties.
 
 You must select your Printer model, only the X1 allows pushing of messages, P1x series needs to request by interval setting (default every 5 seconds)
@@ -61,7 +62,12 @@ If you like my work, please consider a personal donation
 ## What is Sentry.io and what is reported to the servers of that company?
 Sentry.io is a service for developers to get an overview about errors from their applications. And exactly this is implemented in this adapter.
 
-When the adapter crashes or any other Code error happens, this error message that also appears in the ioBroker log is submitted to Sentry. When you allowed iobroker GmbH to collect diagnostic data then also your installation ID (this is just a unique ID **without** any additional infos about you, email, name or such) is included. This allows Sentry to group errors and show how many unique users are affected by such an error. All of this helps me to provide error free adapters that basically never crashs.
+When the adapter crashes or any other Code error happens,
+this error message that also appears in the ioBroker log is submitted to Sentry.
+When you allow iobroker GmbH to collect diagnostic data, then also your installation ID
+(this is just a unique ID **without** any additional infos about you, email, name or such) is included.
+This allows Sentry to group errors and show how many unique users are affected by such an error.
+All of this helps me to provide error-free adapters that basically never crash.
 
 
 ## Changelog
@@ -69,9 +75,10 @@ When the adapter crashes or any other Code error happens, this error message tha
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### 0.3.0-beta.3 (2023-11-16) - Stable release candidate
-* (DutchmanNL) Add missing definitions to ensure correct creation of states, resolves #39
+### **WORK IN PROGRESS** - Release candidate
+* (DutchmanNL) Update dependencies for state handling, resolves #50
 * (DutchmanNL) Adjust log level for Unknown Message from error to debug, resolves #39
+* (DutchmanNL) Add missing definitions to ensure correct creation of states, resolves #39
 * (DutchmanNL) Reduce selection dropdown in admin config to printer series instead of a specific printer type
 * (DutchmanNL) Update adapter code to support new firmware versions released by bambulab, please ensure your printer is up-to-date! resolves #46, resolves #38, resolves #26,
 
@@ -89,7 +96,7 @@ When the adapter crashes or any other Code error happens, this error message tha
 * (DutchmanNL) Control bed & Nozzle temperature implemented
 * (DutchmanNL) HMS error status indicator states implemented
 * (DutchmanNL) Translations of HMS error codes implemented solves #9
-* (DutchmanNL) Correct definitions for all temperature related states
+* (DutchmanNL) Correct definitions for all temperature-related states
 * (DutchmanNL) Control LED for tooling head Logo and calibration unit
 
 ### 0.1.4 (2023-07-28) - Support P1-series
