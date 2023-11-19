@@ -32,21 +32,21 @@ You must select your Printer model, only the X1 allows pushing of messages, P1x 
 | AMS           | :white_check_mark:      |
 
 ## Supported commands
-| Command            | X1C                 | X1                  | P1P                      | P1S                      |
-|--------------------|---------------------|---------------------|--------------------------|--------------------------|
-| Custom g-code      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
-| Pause              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
-| Resume             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
-| Stop               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
-| Fan-Aux            | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
-| Fan-Chamber        | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
-| Fan-ToolHead       | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
-| Light-Chamber      | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
-| Light-Nozzle       | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
-| Light-Logo         | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing |
-| Temperature-Bed    | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
-| Temperature-Nozzle | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
-| Speed Level        | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing |
+| Command            | X1C                 | X1                  | P1P                      | P1S                      | A1                       |
+|--------------------|---------------------|---------------------|--------------------------|--------------------------|--------------------------|
+| Custom g-code      | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing | :question: needs testing |
+| Pause              | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing | :question: needs testing |
+| Resume             | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing | :question: needs testing |
+| Stop               | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing | :question: needs testing |
+| Fan-Aux            | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing | :question: needs testing |
+| Fan-Chamber        | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing | :question: needs testing |
+| Fan-ToolHead       | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing | :question: needs testing |
+| Light-Chamber      | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing | :question: needs testing |
+| Light-Nozzle       | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing | :question: needs testing |
+| Light-Logo         | :white_check_mark:  | :white_check_mark:  | :question: needs testing | :question: needs testing | :question: needs testing |
+| Temperature-Bed    | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing | :question: needs testing |
+| Temperature-Nozzle | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing | :question: needs testing |
+| Speed Level        | :white_check_mark:  | :white_check_mark:  | :white_check_mark:       | :question: needs testing | :question: needs testing |
 
 ## To-Do
 [ ] Restructure/complete current control states in control folder
