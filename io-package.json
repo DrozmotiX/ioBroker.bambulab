@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "bambulab",
-    "version": "0.3.1-beta.0",
+    "version": "0.3.1",
     "news": {
+      "0.3.1": {
+        "en": "Bugfix control P & A Series\nShow end time as a separate state, resolves #53\nBugfix resolves missing fan speed value, resolves #36",
+        "de": "Bugfix Steuerung P & A Serie\nEndzeit als separater Zustand anzeigen, #53 lösen\nBugfix löst fehlenden Lüfterdrehzahlwert, löst #36",
+        "ru": "Bugfix контроль P & A серии\nПоказать время окончания как отдельное государство, решает #53\nBugfix решает недостающие значения скорости вентилятора, решает #36",
+        "pt": "Controle de Bugfix P & A Series\nMostrar tempo de fim como um estado separado, resolve #53\nBugfix resolve o valor da velocidade do ventilador ausente, resolve #36",
+        "nl": "Bugfix Controle Pá Series\nShow end time as a aparte staat, lost op\nBugfix lost ontbrekende fansnelheidswaarde op",
+        "fr": "Bugfix control P & A Series\nAfficher l'heure de fin en tant qu'état séparé, résout #53\nBugfix résout la valeur de vitesse de ventilateur manquante, résout #36",
+        "it": "Controllo bugfix P & A Series\nMostra l'ora finale come stato separato, risolve #53\nBugfix risolve il valore mancante della velocità del ventilatore, risolve #36",
+        "es": "Control de Bugfix P & A Series\nMostrar el tiempo final como un estado separado, resuelve #53\nBugfix resuelve el valor de velocidad del ventilador perdido, resuelve #36",
+        "pl": "P & A Series\nCzas trwania programu jako odrębny stan wykonuje numer #53\nBugfix rozwiązał brak wartości dla fanów, rozwiązał #36",
+        "uk": "Контроль помилок P & A серії\nПоказати кінець часу як окремий стан, вирішує #53\nВиправлення помилок не містить значення швидкості вентилятора, вирішує #36",
+        "zh-cn": "Bugfix控制 P和A辑\n结束时间作为一个单独国家,第53号行动\nBugfix 决定失踪的热速度,第36号决议"
+      },
       "0.3.0": {
         "en": "Update dependencies for state handling, resolves #50\nAdjust log level for Unknown Message from error to debug, resolves #39\nAdd missing definitions to ensure correct creation of states, resolves #39\nReduce selection dropdown in admin config to printer series instead of a specific printer type\nUpdate adapter code to support new firmware versions released by bambulab, please ensure your printer is up-to-date! resolves #46, resolves #38, resolves #26,",
         "de": "Aktualisieren Sie Abhängigkeiten für die Staatsführung, löst #50\nPassen Sie die Protokollebene für unbekannte Nachricht von Fehler zu Debug an, löst #39\nHinzufügen fehlender Definitionen, um die korrekte Erstellung von Zuständen zu gewährleisten, löst #39\nReduzieren Sie die Auswahl Dropdown in Admin config auf Druckerserie anstelle eines bestimmten Druckertyps\nUpdate-Adaptercode, um neue Firmware-Versionen von bambulab zu unterstützen, stellen Sie bitte sicher, dass Ihr Drucker aktuell ist! löst #46, löst #38, löst #26,",
@@ -80,19 +93,6 @@
         "pl": "dodać kontrolę nad wentylatorem kamery, narzędziem światła głów i pozwala na użycie kodu g-kodowego",
         "uk": "додавати контроль за камерним вентилятором, інструментом заголовка світла і дозволити користувацький g-код",
         "zh-cn": "增加一群狂热的控制,工具头照明,并允许习俗包"
-      },
-      "0.1.1": {
-        "en": "Allow control and minor improvements",
-        "de": "Erlauben Sie Kontrolle und kleinere Verbesserungen",
-        "ru": "Разрешить контроль и небольшие улучшения",
-        "pt": "Permitir controle e pequenas melhorias",
-        "nl": "Sta controle en kleine verbeteringen toe",
-        "fr": "Autoriser le contrôle et les améliorations mineures",
-        "it": "Consenti il ​​controllo e piccoli miglioramenti",
-        "es": "Permitir control y mejoras menores",
-        "pl": "Zezwalaj na kontrolę i drobne ulepszenia",
-        "uk": "Дозволити контроль і незначні покращення",
-        "zh-cn": "允许控制和微小的改进"
       }
     },
     "titleLang": {
