@@ -75,8 +75,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.3.2 (2023-11-20)
 * (DutchmanNL) Show finish time as ISO string
 
 ### 0.3.1 (2023-11-20)

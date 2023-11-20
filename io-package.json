@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "bambulab",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "news": {
+      "0.3.2": {
+        "en": "Show finish time as ISO string",
+        "de": "Zielzeit als ISO-String anzeigen",
+        "ru": "Показать время отделки как строка ISO",
+        "pt": "Mostrar tempo de acabamento como corda ISO",
+        "nl": "Show Fin time as ISO string",
+        "fr": "Afficher le temps de finition comme chaîne ISO",
+        "it": "Mostra il tempo di finitura come stringa ISO",
+        "es": "Mostrar tiempo de acabado como cadena ISO",
+        "pl": "Czas trwania programu",
+        "uk": "Показати час обробки як ISO рядок",
+        "zh-cn": "技术会议"
+      },
       "0.3.1": {
         "en": "Bugfix control P & A Series\nShow end time as a separate state, resolves #53\nBugfix resolves missing fan speed value, resolves #36",
         "de": "Bugfix Steuerung P & A Serie\nEndzeit als separater Zustand anzeigen, #53 lösen\nBugfix löst fehlenden Lüfterdrehzahlwert, löst #36",
@@ -80,19 +93,6 @@
         "pl": "Strona konfiguracyjna w adminowej aktualizacji\nWiadomości informacyjne dotyczące nieprawidłowego typu cieczy\nImplementowane serie drukarki P1-X, przedziały zanieczyszczające wymagane dla tego modelu (na przykład X1 obsługuje ruch danych)",
         "uk": "Сторінка конфігурації в admin оновлений\nПовідомлення про некоректний тип ліжко-температури\nРеалізовано серію принтерів P1-X, інтервал опитування, необхідний для цієї моделі (тільки для обробки даних X1)",
         "zh-cn": "更正页\n关于溶剂类型的信息\n执行P1-X打印机系列,对这一模型进行投票(X1处理数据推动)"
-      },
-      "0.1.3": {
-        "en": "add control for chamber fan, tooling head light and allow custom g-code",
-        "de": "hinzufügen der steuerung für kammerventilator, werkzeugkopflicht und ermöglichen kundenspezifischen g-code",
-        "ru": "добавьте контроль для вентилятора камеры, оснащение головного света и позвольте пользовательский g-code",
-        "pt": "adicionar controle para ventilador de câmara, luz de cabeça de ferramentas e permitir o g-código personalizado",
-        "nl": "voeg de controle toe voor kamerfan, telend hoofdlamp en sta de gebruikelijke g-code toe",
-        "fr": "ajouter le contrôle pour le ventilateur de chambre, la lumière de tête d'outil et permettre le code g personnalisé",
-        "it": "aggiungere il controllo per ventilatore a camera, la luce della testa di utensile e consentire g-code personalizzato",
-        "es": "añadir el control para el ventilador de cámara, la luz de la cabeza de herramientas y permitir el código g personalizado",
-        "pl": "dodać kontrolę nad wentylatorem kamery, narzędziem światła głów i pozwala na użycie kodu g-kodowego",
-        "uk": "додавати контроль за камерним вентилятором, інструментом заголовка світла і дозволити користувацький g-код",
-        "zh-cn": "增加一群狂热的控制,工具头照明,并允许习俗包"
       }
     },
     "titleLang": {
