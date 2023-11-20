@@ -176,7 +176,7 @@ class Bambulab extends utils.Adapter {
 				if (message.print.bed_target_temper != null) message.print.control.bed_target_temper = message.print.bed_target_temper;
 				if (message.print.nozzle_target_temper != null) message.print.control.nozzle_target_temper = message.print.nozzle_target_temper;
 				if (message.print.mc_remaining_time != null) {
-					message.print.finishTime = new Date(new Date().getTime() + (message.print.mc_remaining_time * 60000));
+					message.print.finishTime = (new Date(new Date().getTime() + (message.print.mc_remaining_time * 60000))).toISOString();
 					message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
 				}
 
