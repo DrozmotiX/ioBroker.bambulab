@@ -175,7 +175,11 @@ class Bambulab extends utils.Adapter {
 				}
 				if (message.print.bed_target_temper != null) message.print.control.bed_target_temper = message.print.bed_target_temper;
 				if (message.print.nozzle_target_temper != null) message.print.control.nozzle_target_temper = message.print.nozzle_target_temper;
-				if (message.print.mc_remaining_time != null) message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
+				if (message.print.mc_remaining_time != null) {
+					message.print.finishTime = new Date(new Date().getTime() + (message.print.mc_remaining_time * 60000));
+					message.print.mc_remaining_time = convert.remainingTime(message.print.mc_remaining_time);
+				}
+
 				if (message.print.gcode_start_time != null) {
 					let gcode_start_timeFormatted = new Date(message.print.gcode_start_time * 1000).toString();
 					gcode_start_timeFormatted = gcode_start_timeFormatted.replace('"', '');

@@ -77,7 +77,8 @@ All of this helps me to provide error-free adapters that basically never crash.
 -->
 ### **WORK IN PROGRESS**
 * (DutchmanNL) Bugfix control P & A Series
-* (DutchmanNL) Bugfix resolves missing fan speed value
+* (DutchmanNL) Show end time as a separate state, resolves #53
+* (DutchmanNL) Bugfix resolves missing fan speed value, resolves #36
 
 ### 0.3.0 (2023-11-19) - Release candidate
 * (DutchmanNL) Update dependencies for state handling, resolves #50
