@@ -75,6 +75,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (DutchmanNL) Show finish time as ISO string
+
 ### 0.3.1 (2023-11-20)
 * (DutchmanNL) Bugfix control P & A Series
 * (DutchmanNL) Show end time as a separate state, resolves #53
