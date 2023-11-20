@@ -577,7 +577,7 @@ class Bambulab extends utils.Adapter {
 							msg = msg = {
 								'print': {
 									'command': 'gcode_line',
-									'param': `M960 S5 P1`,
+									'param': `M960 S5 P1 \n`,
 									'sequence_id': '0'
 								}
 							};
@@ -585,7 +585,7 @@ class Bambulab extends utils.Adapter {
 							msg = msg = {
 								'print': {
 									'command': 'gcode_line',
-									'param': `M960 S5 P0`,
+									'param': `M960 S5 P0 \n`,
 									'sequence_id': '0'
 								}
 							};
@@ -622,7 +622,7 @@ class Bambulab extends utils.Adapter {
 						msg = {
 							'print': {
 								'command': 'gcode_line',
-								'param': `M106 P3 S${state.val * 2.55}`,
+								'param': `M106 P3 S${state.val * 2.55} \n`,
 								'sequence_id': '0'
 							}
 						};
@@ -632,7 +632,7 @@ class Bambulab extends utils.Adapter {
 						msg = {
 							'print': {
 								'command': 'print_speed',
-								'param': `${state.val}`,
+								'param': `${state.val} \n`,
 								'sequence_id': '0'
 							}
 						};
@@ -641,7 +641,7 @@ class Bambulab extends utils.Adapter {
 						msg = {
 							'print': {
 								'command': 'gcode_line',
-								'param': `M140 S${state.val}`,
+								'param': `M140 S${state.val} \n`,
 								'sequence_id': '0'
 							}
 						};
@@ -650,7 +650,7 @@ class Bambulab extends utils.Adapter {
 						msg = {
 							'print': {
 								'command': 'gcode_line',
-								'param': `M104 S${state.val}`,
+								'param': `M104 S${state.val} \n`,
 								'sequence_id': '0'
 							}
 						};
@@ -659,7 +659,7 @@ class Bambulab extends utils.Adapter {
 						msg = {
 							'print': {
 								'command': 'gcode_line',
-								'param': `M106 P2 S${state.val * 2.55}`,
+								'param': `M106 P2 S${state.val * 2.55} \n`,
 								'sequence_id': '0'
 							}
 						};
@@ -668,7 +668,7 @@ class Bambulab extends utils.Adapter {
 						msg = {
 							'print': {
 								'command': 'gcode_line',
-								'param': `M106 P3 S${state.val * 2.55}`,
+								'param': `M106 P3 S${state.val * 2.55} \n`,
 								'sequence_id': '0'
 							}
 						};
@@ -677,7 +677,7 @@ class Bambulab extends utils.Adapter {
 						msg = {
 							'print': {
 								'command': 'gcode_line',
-								'param': `M106 P1 S${state.val * 2.55}`,
+								'param': `M106 P1 S${state.val * 2.55} \n`,
 								'sequence_id': '0'
 							}
 						};
