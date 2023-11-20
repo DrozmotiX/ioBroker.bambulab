@@ -75,6 +75,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (DutchmanNL) Bugfix control P & A Series
+* (DutchmanNL) Bugfix resolves missing fan speed value
+
 ### 0.3.0 (2023-11-19) - Release candidate
 * (DutchmanNL) Update dependencies for state handling, resolves #50
 * (DutchmanNL) Adjust log level for Unknown Message from error to debug, resolves #39

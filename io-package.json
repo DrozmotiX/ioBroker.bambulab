@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "bambulab",
-    "version": "0.3.0",
+    "version": "0.3.1-beta.0",
     "news": {
       "0.3.0": {
         "en": "Update dependencies for state handling, resolves #50\nAdjust log level for Unknown Message from error to debug, resolves #39\nAdd missing definitions to ensure correct creation of states, resolves #39\nReduce selection dropdown in admin config to printer series instead of a specific printer type\nUpdate adapter code to support new firmware versions released by bambulab, please ensure your printer is up-to-date! resolves #46, resolves #38, resolves #26,",

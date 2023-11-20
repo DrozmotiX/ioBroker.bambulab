@@ -1,0 +1,84 @@
+{
+  "configType": "customdevice",
+  "manufacturer": "Roborock",
+  "model": "S8 Ultra",
+  "name": "VACL-001",
+  "serial": "B0:4A:39:6F:03:EC",
+  "firmware": "4.3.5_2011.23",
+  "enabled": true,
+  "category": "15",
+  "services": [
+    {
+      "name": "CleaningStart",
+      "subType": 1,
+      "type": "Switch",
+      "characteristics": [
+        {
+          "name": "On",
+          "enabled": true,
+          "inOutFunction": "ioBroker.State",
+          "inOutParameters": "0_userdata.0.Accessories.VACL-001.VACL-001-05-CleaningStart"
+        }
+      ]
+    },
+    {
+      "name": "CleaningStop",
+      "subType": 1,
+      "type": "Switch",
+      "characteristics": [
+        {
+          "name": "On",
+          "enabled": true,
+          "inOutFunction": "ioBroker.State",
+          "inOutParameters": "0_userdata.0.Accessories.VACL-001.VACL-001-06-CleaningStop"
+        }
+      ]
+    },
+    {
+      "name": "ReturnToBase",
+      "subType": 1,
+      "type": "Switch",
+      "characteristics": [
+        {
+          "name": "On",
+          "enabled": true,
+          "inOutFunction": "ioBroker.State",
+          "inOutParameters": "0_userdata.0.Accessories.VACL-001.VACL-001-08-ReturnToBase"
+        }
+      ]
+    },
+    {
+      "name": "Battery",
+      "subType": 1,
+      "type": "Battery",
+      "characteristics": [
+        {
+          "name": "BatteryLevel",
+          "enabled": true,
+          "inOutFunction": "ioBroker.State",
+          "inOutParameters": "0_userdata.0.Accessories.VACL-001.VACL-001-02-BatteryLevel"
+        },
+        {
+          "name": "StatusLowBattery",
+          "enabled": true,
+          "inOutFunction": "ioBroker.State",
+          "inOutParameters": "0_userdata.0.Accessories.VACL-001.VACL-001-03-StatusLowBattery"
+        }
+      ]
+    },
+    {
+      "name": "SuctionSpeed",
+      "subType": 1,
+      "type": "Fan",
+      "characteristics": [
+        {
+          "name": "RotationSpeed",
+          "enabled": true,
+          "inOutFunction": "ioBroker.State",
+          "inOutParameters": "0_userdata.0.Accessories.VACL-001.VACL-001-04-SoundLevel"
+        }
+      ]
+    }
+  ],
+  "groupString": ""
+}
