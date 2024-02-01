@@ -23,7 +23,7 @@
     "@iobroker/adapter-core": "^3.0.3",
     "axios": "^1.6.3",
     "iobroker-jsonexplorer": "0.1.14",
-    "mqtt": "^5.3.4"
+    "mqtt": "^5.3.5"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.7.0",
