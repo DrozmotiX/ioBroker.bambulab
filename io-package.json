@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "bambulab",
-    "version": "0.3.2",
+    "version": "0.3.3-beta.0",
     "news": {
+      "0.3.3-beta.0": {
+        "en": "update state definitions, (solves #77 #58)\nupdate connection handling, show connection error only once (Solves #99 #78 #74)",
+        "de": "aktualisierung von zustandsdefinitionen, (lösungen #77 #58)\nupdate-Verbindungshandling, Verbindungsfehler nur einmal anzeigen (Solves #99 #78 #74)",
+        "ru": "обновление определений состояния (половки #77 #58)\nобновить обработку подключения, показать ошибку соединения только один раз (Солнце #99 #78 #74)",
+        "pt": "atualizar definições de estado, (solves #77 #58)\nmanipulação de conexão de atualização, mostrar erro de conexão apenas uma vez (Solves #99 #78 #74)",
+        "nl": "statusdefinities bijwerken, (oplosst #77 #58)\nupdate verbinding behandeling, tonen verbinding fout slechts eenmaal (Solves #99 #78 #74)",
+        "fr": "mettre à jour les définitions de l'état, (sols #77 #58)\nmettre à jour la gestion de la connexion, afficher l'erreur de connexion une seule fois (Solves #99 #78 #74)",
+        "it": "aggiorna le definizioni di stato, (solves #77 #58)\ngestione della connessione di aggiornamento, errore di visualizzazione solo una volta (Solves #99 #78 #74)",
+        "es": "actualizar las definiciones del estado, (solves #77 #58)\nactualizar el manejo de conexión, mostrar error de conexión sólo una vez (Solves #99 #78 #74)",
+        "pl": "aktualizacji definicji stanu (rozwiązanie # 77 # 58)\nupdate connection handling, show connection error only once (Solves # 99 # 78 # 74)",
+        "uk": "оновлення державних визначень (solves #77 #58)\nоновлення з'єднання, відображення помилки з'єднання тільки один раз (Solves #99 #78 #74)",
+        "zh-cn": "更新状态定义, (解决方案 #77#58)\n更新连接处理, 只显示一次连接错误( Solves # 99 # 78 # 74)"
+      },
       "0.3.2": {
         "en": "Show finish time as ISO string",
         "de": "Zielzeit als ISO-String anzeigen",
@@ -80,19 +93,6 @@
         "pl": "Kody błędów HMS Czytelne dla człowieka, dodane nowe funkcje",
         "uk": "Коди помилок HMS зрозумілі людині, додано нові функції",
         "zh-cn": "HMS错误代码人类可读，添加了新功能"
-      },
-      "0.1.4": {
-        "en": "Configuration page in admin updated\nInformation messages regarding incorrect type of bed-temperatures solved\nImplemented P1-X printer series, polling interval required for this model (only X1 handles data push)",
-        "de": "Konfigurationsseite im Admin aktualisiert\nInformationen Ã1⁄4ber falsche Art von Betttemperaturen gelöst\nImplementierte P1-X-Druckerserie, diese Modelle benötigen einen Abfrageintervall (nur X1 behandelt Datenschub)",
-        "ru": "Страница конфигурации в админе обновлена\nИнформационные сообщения о неправильном типе кроватей решены\nВнедренные P1-X серии принтеров, интервал опроса, необходимый для этой модели (только X1 обрабатывает данные push)",
-        "pt": "Página de configuração no admin atualizada\nMensagens de informação relativas ao tipo incorreto de temperaturas de cama resolvidas\nSérie de impressora P1-X implementada, intervalo de votação necessário para este modelo (apenas X1 lida com o push de dados)",
-        "nl": "Configurant pagina in administratie\nInformatieberichten over onjuiste soort bed-temperatuur opgelost\nGeïmplementeerde P1-X printer series, interval vereist voor dit model",
-        "fr": "Page de configuration dans admin mise à jour\nMessages d'information concernant le type incorrect de température de lit résolus\nSérie d'imprimantes P1-X mises en œuvre, intervalle de sondage requis pour ce modèle (seulement X1 gère la poussée de données)",
-        "it": "Pagina di configurazione in admin aggiornato\nMessaggi informativi relativi al tipo errato di temperatura letto risolto\nSerie di stampanti P1-X, intervallo di polling richiesto per questo modello (solo X1 gestisce la pressione dei dati)",
-        "es": "Página de configuración en admin actualizada\nMensajes de información sobre el tipo incorrecto de cama-temperaturas resueltos\nSerie de impresora P1-X implementada, intervalo de votación requerido para este modelo (sólo X1 maneja el impulso de datos)",
-        "pl": "Strona konfiguracyjna w adminowej aktualizacji\nWiadomości informacyjne dotyczące nieprawidłowego typu cieczy\nImplementowane serie drukarki P1-X, przedziały zanieczyszczające wymagane dla tego modelu (na przykład X1 obsługuje ruch danych)",
-        "uk": "Сторінка конфігурації в admin оновлений\nПовідомлення про некоректний тип ліжко-температури\nРеалізовано серію принтерів P1-X, інтервал опитування, необхідний для цієї моделі (тільки для обробки даних X1)",
-        "zh-cn": "更正页\n关于溶剂类型的信息\n执行P1-X打印机系列,对这一模型进行投票(X1处理数据推动)"
       }
     },
     "titleLang": {

@@ -74,6 +74,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.3.3-beta.0 (2024-10-26) - Bugfixes
+* (DutchmanNL) update state definitions, (solves #77 #58)
+* (DutchmanNL) update connection handling, show connection error only once (Solves #99 #78 #74)
+
 ### 0.3.2 (2023-11-20)
 * (DutchmanNL) Show finish time as ISO string
 
@@ -130,7 +134,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 ## License
 MIT License
 
-Copyright (c) 2023 DutchmanNL <oss@drozmotix.eu>
+Copyright (c) 2024 DutchmanNL <oss@drozmotix.eu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
