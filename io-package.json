@@ -128,7 +128,6 @@
       "bambulab",
       "3d-printing"
     ],
-    "license": "MIT",
     "platform": "Javascript/Node.js",
     "main": "main.js",
     "icon": "bambulab.png",
@@ -153,7 +152,13 @@
       {
         "admin": ">=5.1.13"
       }
-    ]
+    ],
+    "tier": 3,
+    "licenseInformation": {
+      "license": "MIT",
+      "link": "https://github.com/DrozmotiX/ioBroker.bambulab/blob/main/LICENSE",
+      "type": "free"
+    }
   },
   "encryptedNative": [
     "Password",
