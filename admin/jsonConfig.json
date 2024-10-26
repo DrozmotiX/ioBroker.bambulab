@@ -40,7 +40,7 @@
 					"value": "X1-Series"
 				}
 			],
-			"default": "X1",
+			"default": "P1-Series",
 			"help": "Please select your printer model"
 		},
 		"requestInterval": {
@@ -51,6 +51,17 @@
 			"default": 5,
 			"min" : 1,
 			"max": 36000
+		},
+
+		"getDataFiles" : {
+			"newLine": true,
+			"type": "fileSelector",
+			"upload": "/",
+			"label": "Upload g-code file",
+			"help": "Here you can upload files, like g-code, to send to the printer",
+			"sm": 3,
+			"md": 3,
+			"lg": 3
 		}
 	}
 }
