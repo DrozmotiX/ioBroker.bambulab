@@ -10,7 +10,8 @@
   "license": "MIT",
   "keywords": [
     "bambulab",
-    "3d-printing"
+    "3d-printing",
+    "ioBroker"
   ],
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.2",
     "axios": "^1.6.3",
-    "iobroker-jsonexplorer": "0.1.16",
+    "iobroker-jsonexplorer": "^0.1.16",
     "mqtt": "^5.10.1"
   },
   "devDependencies": {
