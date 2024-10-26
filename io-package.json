@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "bambulab",
-    "version": "0.3.3-beta.0",
+    "version": "0.3.3-beta.1",
     "news": {
-      "0.3.3-beta.0": {
+      "0.3.3-beta.1": {
         "en": "update state definitions, (solves #77 #58)\nupdate connection handling, show connection error only once (Solves #99 #78 #74)",
         "de": "aktualisierung von zustandsdefinitionen, (lösungen #77 #58)\nupdate-Verbindungshandling, Verbindungsfehler nur einmal anzeigen (Solves #99 #78 #74)",
         "ru": "обновление определений состояния (половки #77 #58)\nобновить обработку подключения, показать ошибку соединения только один раз (Солнце #99 #78 #74)",
@@ -80,19 +80,6 @@
         "pl": "Button z dodaniem do kogoś, poprawia liczbę 28\nBugfix: Tłumaczenie kodów HMS-Error\nKilka błędów dla sytuacji nie używa się AMS\nPrzewiduje kontrolę nad głową kalibracji LED (could damage hardware)",
         "uk": "Кнопка для гоління додано, фіксує #28\nВиправлення помилок: Переклад HMS-Error\nКілька помилок для ситуацій, які не використовуються AMS\nВилучити контроль за головуванням світлодіодного калібрування",
         "zh-cn": "开除的布顿,包装编号:第28号\nBugfix:HMS-Error码的翻译\n未使用AMS的几批发物品\n取消对LED 图书馆头(可能损坏硬件)的控制"
-      },
-      "0.1.5": {
-        "en": "HMS error codes Human readable, new functionalities added",
-        "de": "HMS-Fehlercodes Menschlich lesbar, neue Funktionen hinzugefügt",
-        "ru": "Коды ошибок HMS Удобочитаемы, добавлены новые функции",
-        "pt": "Códigos de erro HMS Legível por humanos, novas funcionalidades adicionadas",
-        "nl": "HMS-foutcodes Menselijk leesbaar, nieuwe functionaliteiten toegevoegd",
-        "fr": "Codes d'erreur HMS lisibles par l'homme, nouvelles fonctionnalités ajoutées",
-        "it": "Codici di errore HMS Leggibili dall'uomo, nuove funzionalità aggiunte",
-        "es": "Códigos de error de HMS Legibles por humanos, se agregaron nuevas funcionalidades",
-        "pl": "Kody błędów HMS Czytelne dla człowieka, dodane nowe funkcje",
-        "uk": "Коди помилок HMS зрозумілі людині, додано нові функції",
-        "zh-cn": "HMS错误代码人类可读，添加了新功能"
       }
     },
     "titleLang": {

@@ -74,7 +74,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### 0.3.3-beta.0 (2024-10-26) - Bugfixes
+### 0.3.3-beta.1 (2024-10-26) - Bugfixes
 * (DutchmanNL) update state definitions, (solves #77 #58)
 * (DutchmanNL) update connection handling, show connection error only once (Solves #99 #78 #74)
 
