@@ -113,10 +113,10 @@
     ],
     "keywords": [
       "bambulab",
-      "3d-printing"
+      "3d-printing",
+      "ioBroker"
     ],
     "platform": "Javascript/Node.js",
-    "main": "main.js",
     "icon": "bambulab.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.bambulab/main/admin/bambulab.png",
@@ -132,7 +132,7 @@
     },
     "dependencies": [
       {
-        "js-controller": ">=3.3.22"
+        "js-controller": ">=4.0.24"
       }
     ],
     "globalDependencies": [
