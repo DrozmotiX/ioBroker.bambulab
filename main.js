@@ -16,6 +16,11 @@ const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
 
 let client; // Memory to store client connection information
+const clientConnection = {
+	connected: false,
+	connectError: false,
+	initiated: false
+};
 const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
 let language = 'en'; // System language to handle error code translations, default EN
@@ -48,7 +53,7 @@ class Bambulab extends utils.Adapter {
 		}
 
 		// Reset the connection indicator during startup
-		this.setState('info.connection', false, true);
+		await this.setState('info.connection', false, true);
 
 		// Download / Update HMS error Codes
 		await this.loadHMSErrorCodeTranslations();
@@ -64,7 +69,7 @@ class Bambulab extends utils.Adapter {
 	mqttMessageHandle(){
 		try {
 
-			this.log.debug(`Try to connect to printer`);
+			this.log.info(`Try to connect to printer`);
 
 			// Connect to Printer using MQTT
 			client = mqtt.connect(`mqtts://${this.config.host}:8883`, {
@@ -77,12 +82,14 @@ class Bambulab extends utils.Adapter {
 			// Establish connection to printer by MQTT
 			client.on('connect', () => {
 
-				this.log.info(`Printer connected`);
+				if (!clientConnection.connected) this.log.info(`Printer connected`);
 				this.setState('info.connection', true, true);
+				clientConnection.connected = true;
+				clientConnection.connectError = false;
 
 				this.createControlStates();
 
-				// Subscribe on printer topic after connection
+				// Subscribe on a printer topic after connection
 				client.subscribe([`device/${this.config.serial}/report`], () => {
 					this.log.debug(`Subscribed to printer data topic by serial | ${this.config.serial}`);
 				});
@@ -108,32 +115,40 @@ class Bambulab extends utils.Adapter {
 					this.log.info(`Response to control command ${JSON.stringify(message)}`);
 					// @ts-ignore if system does not exist function will return false and skip
 				} else if (message && message.system){ // Handle values for system messages, used to acknowledge messages
-					this.log.info(`System Message ${JSON.stringify(message)}`);
+					this.log.debug(`System Message ${JSON.stringify(message)}`);
 				} else if (message && message['t_utc']){ // Handle values for system messages, used to acknowledge messages
 					// this.log.info(`System Message ${JSON.stringify(message)}`);
 					// TimeStamp Message, ignore
 				} else {
 					this.log.debug(`Unknown Message ${JSON.stringify(message)}`);
 				}
-
+				clientConnection.connected = true;
+				clientConnection.connectError = false;
 			});
 
 			client.on('end',  () =>{
-				this.log.warn(`Connection to Printer closed`);
+				if (clientConnection.connected) this.log.warn(`Connection to Printer closed`);
 				this.setState('info.connection', false, true);
+				clientConnection.connected = false;
+				clientConnection.connectError = true;
+				clientConnection.initiated = false;
 			});
 
 			client.on('error', (error) => {
-				this.log.error(`Connection issue occurred ${error}`);
+				if (!clientConnection.connectError) this.log.error(`Connection issue occurred ${error}`);
 				// Close MQTT connection
 				client.end();
+				if (clientConnection.connected) this.log.warn(`Connection to Printer closed`);
+				this.setState('info.connection', false, true);
 
 				// Try to reconnect
 				if (timeouts[this.config.serial]) {clearTimeout(timeouts[this.config.serial]); timeouts[this.config.serial] = null;}
 				timeouts[this.config.serial] = setTimeout(async function () {
 					client.reconnect();
 				}, 30000);
-
+				clientConnection.connected = false;
+				clientConnection.connectError = true;
+				clientConnection.initiated = false;
 			});
 
 		} catch (e) {
@@ -224,7 +239,7 @@ class Bambulab extends utils.Adapter {
 					};
 				}
 
-				await this.setStateAsync(`${this.config.serial}.hms.hmsErrorCode`,{val: JSON.stringify(hmsError), ack: true});
+				await this.setState(`${this.config.serial}.hms.hmsErrorCode`,{val: JSON.stringify(hmsError), ack: true});
 
 				// For some reason library does not convert the ams related bed_temp to number when value = 0
 				if (message.print.ams != null && message.print.ams.ams_exist_bits != null && message.print.ams.ams_exist_bits === '1') {
@@ -240,6 +255,7 @@ class Bambulab extends utils.Adapter {
 		} catch (e) {
 			this.log.error(`[messageHandler] ${e} | ${e.stack}`);
 		}
+		clientConnection.initiated = true;
 	}
 
 	handleAMSUnits(message){
