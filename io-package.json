@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "bambulab",
-    "version": "0.3.3-beta.1",
+    "version": "0.3.3",
     "news": {
-      "0.3.3-beta.1": {
+      "0.3.3": {
         "en": "update state definitions, (solves #77 #58)\nupdate connection handling, show connection error only once (Solves #99 #78 #74)",
         "de": "aktualisierung von zustandsdefinitionen, (lösungen #77 #58)\nupdate-Verbindungshandling, Verbindungsfehler nur einmal anzeigen (Solves #99 #78 #74)",
         "ru": "обновление определений состояния (половки #77 #58)\nобновить обработку подключения, показать ошибку соединения только один раз (Солнце #99 #78 #74)",

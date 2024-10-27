@@ -74,8 +74,8 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### 0.3.3-beta.1 (2024-10-26) - Bugfixes
-* (DutchmanNL) update state definitions, (solves #77 #58)
+### 0.3.3 (2024-10-27) - Bugfixes
+* (DutchmanNL) update state definitions, (solves [#77](https://github.com/DrozmotiX/ioBroker.bambulab/issues/77) [#58](https://github.com/DrozmotiX/ioBroker.bambulab/issues/58))
 * (DutchmanNL) update connection handling, show connection error only once (Solves #99 #78 #74)
 
 ### 0.3.2 (2023-11-20)
@@ -83,8 +83,8 @@ All of this helps me to provide error-free adapters that basically never crash.
 
 ### 0.3.1 (2023-11-20)
 * (DutchmanNL) Bugfix control P & A Series
-* (DutchmanNL) Show end time as a separate state, resolves #53
-* (DutchmanNL) Bugfix resolves missing fan speed value, resolves #36
+* (DutchmanNL) Show end time as a separate state, resolves [#53](https://github.com/DrozmotiX/ioBroker.bambulab/issues/53)
+* (DutchmanNL) Bugfix resolves missing fan speed value, resolves [#36](https://github.com/DrozmotiX/ioBroker.bambulab/issues/36)
 
 ### 0.3.0 (2023-11-19) - Release candidate
 * (DutchmanNL) Update dependencies for state handling, resolves #50
