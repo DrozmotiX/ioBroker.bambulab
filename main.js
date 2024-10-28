@@ -248,6 +248,13 @@ class Bambulab extends utils.Adapter {
 				}
 			}
 
+			// Translate home_flag to door state
+			if (message.print.home_flag === 14796168) {
+				message.print.doorOpen = true;
+			} else if (message.print.home_flag === 6407560) {
+				message.print.doorOpen = false;
+			}
+
 			// Explore JSON & create states
 			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, false, false, 0);
 			this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);

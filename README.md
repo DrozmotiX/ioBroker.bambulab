@@ -74,6 +74,9 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.3.4 (2024-10-28) - Door Indicator Fixes #115
+* (DutchmanNL) Added doorOpen indicator, Fixes [#115](https://github.com/DrozmotiX/ioBroker.bambulab/issues/115)
+
 ### 0.3.3 (2024-10-27) - Bugfixes
 * (DutchmanNL) update state definitions, (solves [#77](https://github.com/DrozmotiX/ioBroker.bambulab/issues/77) [#58](https://github.com/DrozmotiX/ioBroker.bambulab/issues/58))
 * (DutchmanNL) update connection handling, show connection error only once (Solves #99 #78 #74)
