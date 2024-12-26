@@ -248,12 +248,23 @@ class Bambulab extends utils.Adapter {
 				}
 			}
 
-			// Translate home_flag to door state
-			if (message.print.home_flag === 14796168) {
-				message.print.doorOpen = true;
-			} else if (message.print.home_flag === 6407560) {
-				message.print.doorOpen = false;
-			}
+            // Translate home_flag to door state based on the difference with previous value
+            if (this.previousHomeFlag === null) {
+                this.previousHomeFlag = message.print.home_flag;
+            } else {
+                // Calculate the difference between current and previous home_flag
+                const difference = message.print.home_flag - this.previousHomeFlag;
+
+                // Check if the door is open or closed based on the difference
+                if (difference === 8388608) {
+                    message.print.doorOpen = true;
+                } else if (difference === -8388608) {
+                    message.print.doorOpen = false;
+                }
+
+                // Update the previousHomeFlag
+                this.previousHomeFlag = message.print.home_flag;
+            }
 
 			// Explore JSON & create states
 			const returnJONexplorer = await jsonExplorer.traverseJson(message.print, this.config.serial, false, false, 0);
