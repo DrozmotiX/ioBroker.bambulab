@@ -10,37 +10,37 @@
 			"sm": 12,
 			"md": 6,
 			"lg": 4,
-			"xl": 3
+			"xl": 4
 		},
 		"Password": {
 			"type": "password",
 			"label": "Access Token (see printer network settings)",
 			"newLine": true,
 			"xs": 12,
-			"sm": 6,
-			"md": 4,
+			"sm": 12,
+			"md": 6,
 			"lg": 4,
-			"xl": 3
+			"xl": 4
 		},
 		"serial": {
 			"type": "text",
 			"label": "Serial number of device (see printer network settings)",
 			"newLine": false,
 			"xs": 12,
-			"sm": 6,
-			"md": 4,
+			"sm": 12,
+			"md": 6,
 			"lg": 4,
-			"xl": 3
+			"xl": 4
 		},
 		"printerModel": {
 			"newLine": true,
 			"type": "select",
 			"label": "Printer Model",
 			"xs": 12,
-			"sm": 3,
-			"md": 3,
-			"lg": 3,
-			"xl": 3,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4,
 			"options": [
 				{
 					"label": "A1-Series",
@@ -63,10 +63,10 @@
 			"label": "Seconds between data polling",
 			"help": "Only used for P1x series",
 			"xs": 12,
-			"sm": 3,
-			"md": 3,
-			"lg": 2,
-			"xl": 2,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4,
 			"default": 5,
 			"min" : 1,
 			"max": 36000
@@ -78,9 +78,11 @@
 			"upload": "/",
 			"label": "Upload g-code file",
 			"help": "Here you can upload files, like g-code, to send to the printer",
-			"sm": 3,
-			"md": 3,
-			"lg": 3
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4
 		}
 	}
 }
