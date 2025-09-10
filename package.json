@@ -38,6 +38,7 @@
     "@types/node": "^18.19.59",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsdoc": "^55.2.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
     "typescript": "~5.7.2"

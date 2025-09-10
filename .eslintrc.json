@@ -6,7 +6,7 @@
 		"mocha": true
 	},
 	"extends": ["eslint:recommended"],
-	"plugins": [],
+	"plugins": ["jsdoc"],
 	"rules": {
 		"indent": [
 			"error",
@@ -34,7 +34,8 @@
 				"allowTemplateLiterals": true
 			}
 		],
-		"semi": ["error", "always"]
+		"semi": ["error", "always"],
+		"jsdoc/require-param-description": "warn"
 	},
 	"parserOptions": {
 		"ecmaVersion": "latest"

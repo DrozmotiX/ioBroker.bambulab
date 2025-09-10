@@ -27,7 +27,7 @@ let language = 'en'; // System language to handle error code translations, defau
 
 class Bambulab extends utils.Adapter {
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options configuration
 	 */
 	constructor(options) {
 		super({
@@ -158,6 +158,7 @@ class Bambulab extends utils.Adapter {
 
 	/**
 	 * Handle MQTT messages to ioBroker states
+	 * @param {Object} message - MQTT message object received from printer
 	 */
 	async messageHandler (message) {
 
@@ -520,7 +521,7 @@ class Bambulab extends utils.Adapter {
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
-	 * @param {() => void} callback
+	 * @param {() => void} callback - Callback function to call when cleanup is complete
 	 */
 	onUnload(callback) {
 		try {
@@ -543,8 +544,8 @@ class Bambulab extends utils.Adapter {
 
 	/**
 	 * Is called if a subscribed state changes
-	 * @param {string} id
-	 * @param {ioBroker.State | null | undefined} state
+	 * @param {string} id - The ID of the state that changed
+	 * @param {ioBroker.State | null | undefined} state - The new state object or null if deleted
 	 */
 	async onStateChange(id, state) {
 		if (state && state.val != null) {
@@ -739,7 +740,7 @@ class Bambulab extends utils.Adapter {
 if (require.main !== module) {
 	// Export the constructor in compact mode
 	/**
-	 * @param {Partial<utils.AdapterOptions>} [options={}]
+	 * @param {Partial<utils.AdapterOptions>} [options={}] - Adapter options configuration
 	 */
 	module.exports = (options) => new Bambulab(options);
 } else {
