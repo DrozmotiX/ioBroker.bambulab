@@ -83,7 +83,7 @@ When modifying adapter logic in main.js:
 ### Most Frequently Modified Files
 ```
 main.js                     - Core adapter logic and MQTT handling
-lib/state_attr.js          - State definitions and attributes  
+lib/state_attr.js          - State definitions and attributes, definition of allowed roles to be used available at https://github.com/ioBroker/ioBroker.docs/blob/master/docs/en/dev/stateroles.md
 io-package.json            - Adapter metadata and configuration
 admin/jsonConfig.json      - Admin UI configuration
 README.md                  - Documentation updates
@@ -99,7 +99,7 @@ tsconfig.json             - TypeScript configuration
 
 ### Generated/Build Files (Never Modify Directly)
 ```
-package-lock.json         - Dependency lock file
+package-lock.json         - Dependency lock file, must always be in sync with package.json by executing npm i before commit
 node_modules/             - Installed dependencies
 admin/i18n/               - Translation files (updated via npm run translate)
 ```
@@ -109,7 +109,7 @@ admin/i18n/               - Translation files (updated via npm run translate)
 ### Core Adapter Files
 - **main.js** - Main adapter implementation (JavaScript)
 - **lib/converter.js** - Utility functions for data conversion  
-- **lib/state_attr.js** - State attribute definitions for ioBroker objects
+- **lib/state_attr.js** - State attribute definitions for ioBroker objects, definition of allowed roles to be used available at https://github.com/ioBroker/ioBroker.docs/blob/master/docs/en/dev/stateroles.md
 - **lib/adapter-config.d.ts** - TypeScript type definitions for configuration
 
 ### Configuration and Admin
@@ -182,3 +182,8 @@ The project includes optimal VSCode settings:
 - HMS error code translations from e.bambulab.com (optional, adapter works without)
 - npm registry for dependency installation
 - GitHub for Git operations and CI/CD
+
+### State value to set for "xxx" has to be type "xxx" but received type "xxx"
+- Log shows error like: State value to set for "bambulab.0.00M09A3B1400374.ams.ams.0.info" has to be type "number" but received type "string"
+- This means a wrong definition of the state "type" is set in lib/state_attr.js and should be adjust to "has to be type "xxx" were xxx defines the proper type and but received type "xxx" show the current defined type
+- 
