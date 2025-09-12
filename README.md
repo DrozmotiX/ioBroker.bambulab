@@ -74,6 +74,35 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+#### Bug fixes & Type Definitions
+* (DutchmanNL & Copilot) Fix type mismatches for finishTime, big_fan2_speed, and k states resolving type error logs
+* (DutchmanNL & Copilot) Fix wrong type definitions for 'id' and 'info' state attributes
+* (T-electroJo) Temporary fix for 'State value to set for "bambulab.xxx.k" has to be type "number" but received type "string"'
+
+#### Framework & Development Updates
+* (DutchmanNL & Copilot) Migrate to ESLint 9 and @iobroker/eslint-config for improved code quality
+* (DutchmanNL & Copilot) Update @iobroker/testing framework to version 5.1.1 with improved testing capabilities
+* (DutchmanNL & Copilot) Remove Node.js 18.x from testing matrix, focus on Node.js 20.x and 22.x
+* (DutchmanNL & Copilot) Update GitHub workflow to use Node 20.x for deploy (was 16.x)
+* (DutchmanNL & Copilot) Clean up redundant testing dependencies now provided by @iobroker/testing framework
+* (DutchmanNL & Copilot) Add missing JSDoc parameter descriptions and fix linting warnings
+* (DutchmanNL & Copilot) Add comprehensive GitHub Copilot development instructions
+
+#### Admin UI Improvements  
+* (DutchmanNL & Copilot) Implement responsive design for admin jsonConfig following ioBroker standards
+* (DutchmanNL & Copilot) Fix responsive design configuration errors in admin UI
+* (DutchmanNL & Copilot) Update admin configuration with proper responsive design attributes
+* (DutchmanNL & Copilot) Fix repository checker issues and improve admin UI compatibility
+
+#### Dependency Updates
+* (dependabot) Bump @types/node from 18.19.59 to 22.13.7
+* (dependabot) Bump axios from 1.11.0 to 1.12.1 
+* (dependabot) Bump typescript from 5.6.3 to 5.7.2
+* (dependabot) Bump mqtt from 5.10.1 to 5.10.3
+* (dependabot) Bump cross-spawn from 7.0.3 to 7.0.6
+* (dependabot) Bump axios from 1.7.7 to 1.7.8
+
 ### 0.3.4 (2024-10-28) - Door Indicator Fixes #115
 * (DutchmanNL) Added doorOpen indicator, Fixes [#115](https://github.com/DrozmotiX/ioBroker.bambulab/issues/115)
 
