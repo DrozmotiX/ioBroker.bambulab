@@ -14,7 +14,8 @@
 		},
 		"Password": {
 			"type": "password",
-			"label": "Access Token (see printer network settings)",
+			"label": "Access Token",
+			"help": "API token from printer network settings - see README for detailed instructions per printer model",
 			"newLine": true,
 			"xs": 12,
 			"sm": 12,
@@ -24,7 +25,8 @@
 		},
 		"serial": {
 			"type": "text",
-			"label": "Serial number of device (see printer network settings)",
+			"label": "Serial number of device",
+			"help": "Device serial number from printer network settings - required for authentication",
 			"newLine": false,
 			"xs": 12,
 			"sm": 12,
