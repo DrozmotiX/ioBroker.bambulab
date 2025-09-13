@@ -74,6 +74,11 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.4.0 (2025-09-13)
+* (DutchmanNL) Add missing state definitions to resolve adapter warnings (#181)
+* (DutchmanNL) Empty finishTime and avoid time calculation when not printing (#179)
+* (DutchmanNL) Fix MQTT reconnection to prevent maximum call stack size exceeded error (#177)
+
 ### 0.3.5 (2025-09-13)
 * (DutchmanNL & Copilot) Fix several type mismatches #143 #139 #130
 * (DutchmanNL) Updated missing definitions for full MQTT API incl H2D
@@ -88,11 +93,6 @@ All of this helps me to provide error-free adapters that basically never crash.
 
 ### 0.3.2 (2023-11-20)
 * (DutchmanNL) Show finish time as ISO string
-
-### 0.3.1 (2023-11-20)
-* (DutchmanNL) Bugfix control P & A Series
-* (DutchmanNL) Show end time as a separate state, resolves [#53](https://github.com/DrozmotiX/ioBroker.bambulab/issues/53)
-* (DutchmanNL) Bugfix resolves missing fan speed value, resolves [#36](https://github.com/DrozmotiX/ioBroker.bambulab/issues/36)
 
 ## License
 MIT License

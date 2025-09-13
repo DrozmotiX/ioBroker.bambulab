@@ -1,4 +1,9 @@
 # Older changes
+## 0.3.1 (2023-11-20)
+* (DutchmanNL) Bugfix control P & A Series
+* (DutchmanNL) Show end time as a separate state, resolves [#53](https://github.com/DrozmotiX/ioBroker.bambulab/issues/53)
+* (DutchmanNL) Bugfix resolves missing fan speed value, resolves [#36](https://github.com/DrozmotiX/ioBroker.bambulab/issues/36)
+
 ## 0.3.0 (2023-11-19) - Release candidate
 * (DutchmanNL) Update dependencies for state handling, resolves #50
 * (DutchmanNL) Adjust log level for Unknown Message from error to debug, resolves #39
