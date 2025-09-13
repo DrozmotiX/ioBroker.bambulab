@@ -200,6 +200,9 @@ class Bambulab extends utils.Adapter {
                     message.print.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
                     message.print.control.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
                 }
+                // Store original stg_cur value for printer state checking before conversion
+                const originalStgCur = message.print.stg_cur;
+
                 if (message.print.stg_cur != null) {
                     message.print.stg_cur = convert.stageParser(message.print.stg_cur);
                     message.print.control.stg_cur = convert.stageParser(message.print.stg_cur);
@@ -224,7 +227,7 @@ class Bambulab extends utils.Adapter {
                 if (message.print.mc_remaining_time != null) {
                     // Only calculate finish time when printer is actively printing (not idle/offline)
                     // stg_cur values: -2 = Offline, -1 = Idle, 0+ = various printing/working states
-                    if (message.print.stg_cur != null && message.print.stg_cur >= 0) {
+                    if (originalStgCur != null && originalStgCur >= 0) {
                         message.print.finishTime = new Date(
                             new Date().getTime() + message.print.mc_remaining_time * 60000,
                         ).toISOString();
