@@ -8,7 +8,7 @@
     "Seconds between data polling": "Secondes entre les interrogations de données",
     "Only used for P1x series": "Utilisé uniquement pour la série P1x",
     "Access Token": "Access Token",
-    "API token from printer network settings - see README for detailed instructions per printer model": "API token from printer network settings - see README for detailed instructions per printer model",
-    "Serial number of device": "Serial number of device",
-    "Device serial number from printer network settings - required for authentication": "Device serial number from printer network settings - required for authentication"
+    "API token from printer network settings - see README for detailed instructions per printer model": "Jeton API des paramètres réseau de l'imprimante - voir le README pour des instructions détaillées selon le modèle d'imprimante",
+    "Serial number of device": "Numéro de série de l'appareil",
+    "Device serial number from printer network settings - required for authentication": "Numéro de série de l'appareil depuis les paramètres réseau de l'imprimante - requis pour l'authentification"
 }
