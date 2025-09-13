@@ -16,3 +16,4 @@ updates:
       time: "04:00"
       timezone: Europe/Berlin
     open-pull-requests-limit: 30
+    target_branch: "dependabot"
