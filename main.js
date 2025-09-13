@@ -25,6 +25,10 @@ const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
 let language = 'en'; // System language to handle error code translations, default EN
 
+// Array of G-code commands that should be blocked during printing for safety
+const blockedCommandsDuringPrinting = ['G0', 'G1', 'G28', 'G90', 'G91'];
+let currentPrintingState = null; // Track current printing state for safety checks
+
 class Bambulab extends utils.Adapter {
     /**
      * @param {Partial<utils.AdapterOptions>} [options] - Adapter configuration options
@@ -202,6 +206,9 @@ class Bambulab extends utils.Adapter {
                 }
                 // Store original stg_cur value for printer state checking before conversion
                 const originalStgCur = message.print.stg_cur;
+
+                // Update current printing state for safety checks
+                currentPrintingState = originalStgCur;
 
                 if (message.print.stg_cur != null) {
                     message.print.stg_cur = convert.stageParser(message.print.stg_cur);
@@ -642,6 +649,41 @@ class Bambulab extends utils.Adapter {
      * @param {string} id - State ID that changed
      * @param {ioBroker.State | null | undefined} state - New state value
      */
+    /**
+     * Check if printer is currently in a state where dangerous G-code commands should be blocked
+     *
+     * @returns {boolean} True if dangerous G-code should be blocked
+     */
+    isPrintingOrActiveState() {
+        // Block dangerous commands when printer is actively working
+        // Based on stg_cur values:
+        //   -2 = Offline (safe)
+        //   -1 = Idle (safe)
+        //    0+ = Active working states (potentially dangerous)
+        return currentPrintingState != null && currentPrintingState >= 0;
+    }
+
+    /**
+     * Check if a G-code command should be blocked during printing
+     *
+     * @param {string|number} gcodeParam - The G-code command parameter
+     * @returns {boolean} True if command should be blocked
+     */
+    shouldBlockGcodeCommand(gcodeParam) {
+        if (!this.isPrintingOrActiveState()) {
+            return false; // Allow all commands when not actively working
+        }
+
+        // Convert to string and check if any blocked command is present
+        const upperParam = String(gcodeParam).toUpperCase().trim();
+        return blockedCommandsDuringPrinting.some(
+            blockedCmd =>
+                upperParam.startsWith(`${blockedCmd} `) ||
+                upperParam === blockedCmd ||
+                upperParam.startsWith(`${blockedCmd}\n`),
+        );
+    }
+
     async onStateChange(id, state) {
         if (state && state.val != null) {
             // Only act on trigger if value is not Acknowledged
@@ -660,6 +702,14 @@ class Bambulab extends utils.Adapter {
 
                 switch (checkID[stateLocation]) {
                     case '_customGcode':
+                        // Check if this G-code command should be blocked during printing
+                        if (this.shouldBlockGcodeCommand(state.val)) {
+                            this.log.warn(
+                                `Blocked dangerous G-code command "${state.val}" during active printing/working state (stg_cur: ${currentPrintingState}). Command ignored for safety.`,
+                            );
+                            return; // Exit without sending the command
+                        }
+
                         msg = msg = {
                             print: {
                                 command: 'gcode_line',
@@ -809,6 +859,14 @@ class Bambulab extends utils.Adapter {
                         };
                         break;
                     case 'homing':
+                        // Block homing (G28) command during active printing/working state
+                        if (this.isPrintingOrActiveState()) {
+                            this.log.warn(
+                                `Blocked homing command (G28) during active printing/working state (stg_cur: ${currentPrintingState}). Command ignored for safety.`,
+                            );
+                            return; // Exit without sending the command
+                        }
+
                         msg = msg = {
                             print: {
                                 command: 'gcode_line',
