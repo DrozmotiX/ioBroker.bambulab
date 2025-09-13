@@ -22,7 +22,26 @@ Please provide your Printer IP-Address, API token and serial number in adapter s
 these are required for a local connection (no cloud involved) to your printer.
 These credentials are stored locally and not shared to third parties.
 
-You must select your Printer model, only the X1 allows pushing of messages, P1x series needs to request by interval setting (default every 5 seconds)
+## Finding the API Token and Serial Number
+
+The location of the API token and serial number depends on your printer model:
+
+### A1/A1 mini Series
+1. Navigate to **Settings** → **Network** on your printer display
+2. Enable **"LAN Mode Only"** (nur Lan-Modus)
+3. Once enabled, IP address, access token, and serial number will be displayed
+
+### P1S Series  
+1. Navigate to **Settings** → **Network** on your printer display
+2. The access token is directly visible in network settings (no LAN mode required)
+3. Serial number can be found in the same menu or in device information
+
+### X1/X1C Series
+1. Navigate to **Settings** → **Network** on your printer display  
+2. The access token is directly visible in network settings
+3. Serial number can be found in the same menu or in device information
+
+**Note:** You must select your Printer model correctly in the adapter settings. Only the X1 series allows pushing of messages, P1x series needs to request by interval setting (default every 5 seconds)
 
 ## Supported models
 | Printer-Model | Status                  |
