@@ -226,7 +226,14 @@ class Bambulab extends utils.Adapter {
                 }
                 if (message.print.mc_remaining_time != null) {
                     // Only calculate finish time when printer is actively printing (not idle/offline)
-                    // stg_cur values: -2 = Offline, -1 = Idle, 0+ = various printing/working states
+                    // stg_cur values:
+                    //   -2 = Offline
+                    //   -1 = Idle
+                    //    0 = Preparing
+                    //    1 = Printing
+                    //    2 = Paused
+                    //    3 = Completed
+                    //    4+ = Other working states (update as needed)
                     if (originalStgCur != null && originalStgCur >= 0) {
                         message.print.finishTime = new Date(
                             new Date().getTime() + message.print.mc_remaining_time * 60000,
