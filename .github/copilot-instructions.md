@@ -7,7 +7,7 @@ Always reference these instructions first and fallback to search or bash command
 ## Working Effectively
 
 ### Prerequisites and Setup
-- Node.js version 18 or higher (engines requirement in package.json)
+- Node.js version 20 or higher (engines requirement in package.json)
 - npm package manager (comes with Node.js)
 
 ### Bootstrap, Build, and Test the Repository
@@ -137,6 +137,7 @@ admin/i18n/               - Translation files (updated via npm run translate)
 3. Add tests in test/ directory following existing patterns
 4. Run `npm run lint && npm run test` to validate changes
 5. Test integration with `npm run test:integration`
+6. Update readme entry with reference to issue #xxx and user friendly short description of the fix
 
 ### Updating Dependencies
 - `npm install <package>` to add new dependencies
@@ -186,4 +187,22 @@ The project includes optimal VSCode settings:
 ### State value to set for "xxx" has to be type "xxx" but received type "xxx"
 - Log shows error like: State value to set for "bambulab.0.00M09A3B1400374.ams.ams.0.info" has to be type "number" but received type "string"
 - This means a wrong definition of the state "type" is set in lib/state_attr.js and should be adjust to "has to be type "xxx" were xxx defines the proper type and but received type "xxx" show the current defined type
-- 
+
+
+### xxx unknown, send this information to the developer ==> xxx : xxx
+- for each data type a definition must be added to stateAttr.js
+- the information behind log information "==>" is relevant as it means "stateName" : value
+- must result in a new entry in stateAttr.js to define this state
+- Example error & solution: reactivePower unknown, send this information to the developer ==> reactivePower : 0
+```
+reactivePower: {
+    name: 'Zählerstand Bezug Gesamt',
+    type: 'number',
+    role: 'value.power.consumption',
+    unit: 'kWh',
+    factor: 10000000000,
+},
+```
+- Always ensure "role" definitions is according to ioBroker documentation: https://github.com/ioBroker/ioBroker.docs/blob/master/docs/en/dev/stateroles.md
+- Always ensure the type is in line with the value, if multiple types are known by issue use "mixed". typedytector can be used to support this: https://github.com/ioBroker/ioBroker.type-detector
+- Try to add a user friendly name descrbing purpose of the state, use web/documentation or API reference for proper information
