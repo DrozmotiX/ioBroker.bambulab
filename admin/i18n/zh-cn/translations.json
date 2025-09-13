@@ -8,7 +8,7 @@
     "Seconds between data polling": "数据轮询之间的秒数",
     "Only used for P1x series": "仅用于P1x系列",
     "Access Token": "Access Token",
-    "API token from printer network settings - see README for detailed instructions per printer model": "API token from printer network settings - see README for detailed instructions per printer model",
-    "Serial number of device": "Serial number of device",
-    "Device serial number from printer network settings - required for authentication": "Device serial number from printer network settings - required for authentication"
+    "API token from printer network settings - see README for detailed instructions per printer model": "来自打印机网络设置的 API 令牌——请参阅 README 获取各型号打印机的详细说明",
+    "Serial number of device": "设备序列号",
+    "Device serial number from printer network settings - required for authentication": "来自打印机网络设置的设备序列号——认证时必需"
 }
