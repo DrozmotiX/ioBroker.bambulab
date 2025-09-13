@@ -194,11 +194,11 @@ class Bambulab extends utils.Adapter {
                 message.print.control = {};
                 if (message.print.cooling_fan_speed != null) {
                     message.print.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
-                    message.print.control.cooling_fan_speed = convert.fanSpeed(message.print.cooling_fan_speed);
+                    message.print.control.cooling_fan_speed = message.print.cooling_fan_speed;
                 }
                 if (message.print.heatbreak_fan_speed != null) {
                     message.print.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
-                    message.print.control.heatbreak_fan_speed = convert.fanSpeed(message.print.heatbreak_fan_speed);
+                    message.print.control.heatbreak_fan_speed = message.print.heatbreak_fan_speed;
                 }
                 // Store original stg_cur value for printer state checking before conversion
                 const originalStgCur = message.print.stg_cur;
@@ -209,11 +209,11 @@ class Bambulab extends utils.Adapter {
                 }
                 if (message.print.big_fan1_speed != null) {
                     message.print.big_fan1_speed = convert.fanSpeed(message.print.big_fan1_speed);
-                    message.print.control.big_fan1_speed = convert.fanSpeed(message.print.big_fan1_speed);
+                    message.print.control.big_fan1_speed = message.print.big_fan1_speed;
                 }
                 if (message.print.big_fan2_speed != null) {
                     message.print.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
-                    message.print.control.big_fan2_speed = convert.fanSpeed(message.print.big_fan2_speed);
+                    message.print.control.big_fan2_speed = message.print.big_fan2_speed;
                 }
                 if (message.print.spd_lvl != null) {
                     message.print.control.spd_lvl = message.print.spd_lvl;
