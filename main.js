@@ -67,7 +67,21 @@ class Bambulab extends utils.Adapter {
      */
     mqttMessageHandle() {
         try {
+            // Prevent multiple concurrent connection attempts
+            if (clientConnection.initiated) {
+                this.log.debug(`MQTT connection already in progress, skipping`);
+                return;
+            }
+
             this.log.info(`Try to connect to printer`);
+            clientConnection.initiated = true;
+
+            // Properly close existing client if present
+            if (client) {
+                client.removeAllListeners();
+                client.end();
+                client = null;
+            }
 
             // Connect to Printer using MQTT
             client = mqtt.connect(`mqtts://${this.config.host}:8883`, {
@@ -85,6 +99,7 @@ class Bambulab extends utils.Adapter {
                 this.setState('info.connection', true, true);
                 clientConnection.connected = true;
                 clientConnection.connectError = false;
+                clientConnection.initiated = false; // Reset initiated flag on successful connection
 
                 this.createControlStates();
 
@@ -149,13 +164,14 @@ class Bambulab extends utils.Adapter {
                 }
                 this.setState('info.connection', false, true);
 
-                // Try to reconnect
+                // Try to reconnect by creating a new client instead of using reconnect()
                 if (timeouts[this.config.serial]) {
                     clearTimeout(timeouts[this.config.serial]);
                     timeouts[this.config.serial] = null;
                 }
-                timeouts[this.config.serial] = setTimeout(async function () {
-                    client.reconnect();
+                timeouts[this.config.serial] = setTimeout(() => {
+                    // Create a new MQTT connection instead of reconnecting the ended client
+                    this.mqttMessageHandle();
                 }, 30000);
                 clientConnection.connected = false;
                 clientConnection.connectError = true;
