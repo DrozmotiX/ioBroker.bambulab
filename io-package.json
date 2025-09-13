@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "bambulab",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "news": {
+      "0.3.5": {
+        "en": "Fix several type mismatches #143 #139 #130\nUpdated missing definitions for full MQTT API incl H2D\nFix repository checker issues and improve admin UI compatibility",
+        "de": "Mehrere Typinkompatibilitäten beheben #143 #139 #130\nFehlende Definitionen für die vollständige MQTT-API inkl. H2D aktualisiert\nProbleme mit dem Repository-Checker behoben und Kompatibilität der Admin-Oberfläche verbessert",
+        "ru": "Исправлены несколько несоответствий типов #143 #139 #130\nОбновлены отсутствующие определения для полной MQTT API, включая H2D\nИсправлены ошибки проверки репозитория и улучшена совместимость с административным интерфейсом",
+        "pt": "Corrigidas várias incompatibilidades de tipos #143 #139 #130\nDefinições ausentes para a API MQTT completa, incluindo H2D, foram atualizadas\nCorrigidos problemas do verificador de repositório e melhorada a compatibilidade da interface administrativa",
+        "nl": "Meerdere typeverschillen opgelost #143 #139 #130\nOntbrekende definities voor de volledige MQTT-API inclusief H2D bijgewerkt\nProblemen met de repository-checker opgelost en compatibiliteit van de admininterface verbeterd",
+        "fr": "Correction de plusieurs incompatibilités de types #143 #139 #130\nMise à jour des définitions manquantes pour l’API MQTT complète, y compris H2D\nCorrection des problèmes du vérificateur de dépôt et amélioration de la compatibilité de l’interface d’administration",
+        "it": "Corrette diverse incompatibilità di tipo #143 #139 #130\nAggiornate le definizioni mancanti per l’intera API MQTT, inclusa H2D\nRisolti i problemi del controllo del repository e migliorata la compatibilità dell’interfaccia amministrativa",
+        "es": "Corregidas varias incompatibilidades de tipos #143 #139 #130\nActualizadas las definiciones faltantes para la API MQTT completa, incluyendo H2D\nSolucionados los problemas del verificador de repositorios y mejorada la compatibilidad con la interfaz de administración",
+        "pl": "Naprawiono kilka niezgodności typów #143 #139 #130\nZaktualizowano brakujące definicje dla pełnej API MQTT, w tym H2D\nNaprawiono problemy z weryfikatorem repozytorium i poprawiono kompatybilność interfejsu administracyjnego",
+        "uk": "Виправлено кілька невідповідностей типів #143 #139 #130\nОновлено відсутні визначення для повної MQTT API, включаючи H2D\nВиправлено проблеми з перевіркою репозиторію та покращено сумісність адміністративного інтерфейсу",
+        "zh-cn": "修复多个类型不匹配的问题 #143 #139 #130\n更新了完整 MQTT API（包括 H2D）中缺失的定义\n修复了仓库检查器的问题，并提升了管理界面的兼容性"
+      },
       "0.3.4": {
         "en": "Added doorOpen indicator",
         "de": "Tür Indikator hinzugefügt",
@@ -80,19 +93,6 @@
         "pl": "Niezapomniane definicje mające na celu zapewnienie odpowiedniego stworzenia stanów, rozwiązały się #39\nAdjust log level for Unknown Message from error to debug (ang.)\nReduce selection dropdown in admin config to print series zamiast konkretnego drukarza\nUpdate adapter Code to support new firmware version, wydany przez bambulab, please your printer is up-to-date! Rozwiązał #46, rozwiązał #38, rozwiązał #26,",
         "uk": "Додати відсутні визначення для забезпечення коректного створення держав, вирішень #39\nРегулювання рівня входу для невідомого повідомлення від помилки до видалення, вирішує #39\nЗнижувати виділення випадання в конфігурації адміністратора замість певного типу принтера\nОновлення коду адаптера для підтримки нових версій прошивки, випущених bambulababab, будь ласка, переконайтеся, що ваш принтер є актуальним! вирішує #46, вирішує #38, вирішує #26,",
         "zh-cn": "添加关于确保正确建立国家的定义,第39号行动\n第39号行动\n减少对打印机系列的排减量,而不是特定的打印机类型\n最新调整守则,支持巴萨姆勒布发行的新警觉版本,请确保你的打印机最新! 第46号决议,第38号决议,第26号决议,"
-      },
-      "0.2.0": {
-        "en": "Button for homing added, fixes #28\nBugfix: Translation of HMS-Error codes\nSeveral bugfixes for situations no AMS is used\nRemove control for LED calibration head (could damage hardware)",
-        "de": "Button zum Homing hinzugefügt, fixes #28\nBugfix: Übersetzung von HMS-Error-Codes\nMehrere Bugfixes für Situationen, in denen kein AMS verwendet wird\nEntfernen Sie der Steuerung für LED-Kalibrierkopf ",
-        "ru": "Кнопка для худения добавлена, исправления #28\nBugfix: Перевод кодов HMS-Error\nНесколько исправлений для ситуаций не используются AMS\nУдалить контроль для LED калибровки головы",
-        "pt": "Botão para homenagem adicionado, correções #28\nBugfix: Tradução de códigos HMS-Error\nVários correções de bugs para situações que nenhum AMS é usado\nRemova o controle para a cabeça de calibração do diodo emissor de luz",
-        "nl": "Button voor homing toegevoegd, fixes #28\nVertaling van HMS-Error codes\nVerschillende bugfixes voor situaties waarin geen AMS gebruikt wordt\nVerwijder controle over LED kalibratie hoofd",
-        "fr": "Bouton pour le homing ajouté, corrige #28\nBugfix: Traduction des codes HMS-Error\nPlusieurs bugfixes pour des situations aucun AMS n'est utilisé\nRetirer le contrôle de la tête d'étalonnage LED",
-        "it": "Pulsante per homing aggiunto, correzioni #28\nBugfix: Traduzione dei codici HMS-Error\nDiversi bugfix per situazioni che nessun AMS viene utilizzato\nRimuovere il controllo per la testa di calibrazione LED ",
-        "es": "Button for homing added, fixes #28\nBugfix: Traducción de códigos HMS-Error\nVarios bugfixes para situaciones que no se utiliza AMS\nQuitar el control para la cabeza de calibración LED",
-        "pl": "Button z dodaniem do kogoś, poprawia liczbę 28\nBugfix: Tłumaczenie kodów HMS-Error\nKilka błędów dla sytuacji nie używa się AMS\nPrzewiduje kontrolę nad głową kalibracji LED (could damage hardware)",
-        "uk": "Кнопка для гоління додано, фіксує #28\nВиправлення помилок: Переклад HMS-Error\nКілька помилок для ситуацій, які не використовуються AMS\nВилучити контроль за головуванням світлодіодного калібрування",
-        "zh-cn": "开除的布顿,包装编号:第28号\nBugfix:HMS-Error码的翻译\n未使用AMS的几批发物品\n取消对LED 图书馆头(可能损坏硬件)的控制"
       }
     },
     "titleLang": {

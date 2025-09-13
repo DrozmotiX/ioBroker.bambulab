@@ -74,27 +74,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
-* (DutchmanNL & Copilot) Fix type mismatches for finishTime, big_fan2_speed, and k states resolving type error logs
-* (DutchmanNL & Copilot) Fix wrong type definitions for 'id' and 'info' state attributes
-* (T-electroJo) Temporary fix for 'State value to set for "bambulab.xxx.k" has to be type "number" but received type "string"'
-* (DutchmanNL & Copilot) Migrate to ESLint 9 and @iobroker/eslint-config for improved code quality
-* (DutchmanNL & Copilot) Update @iobroker/testing framework to version 5.1.1 with improved testing capabilities
-* (DutchmanNL & Copilot) Remove Node.js 18.x from testing matrix, focus on Node.js 20.x and 22.x
-* (DutchmanNL & Copilot) Update GitHub workflow to use Node 20.x for deploy (was 16.x)
-* (DutchmanNL & Copilot) Clean up redundant testing dependencies now provided by @iobroker/testing framework
-* (DutchmanNL & Copilot) Add missing JSDoc parameter descriptions and fix linting warnings
-* (DutchmanNL & Copilot) Add comprehensive GitHub Copilot development instructions  
-* (DutchmanNL & Copilot) Implement responsive design for admin jsonConfig following ioBroker standards
-* (DutchmanNL & Copilot) Fix responsive design configuration errors in admin UI
-* (DutchmanNL & Copilot) Update admin configuration with proper responsive design attributes
+### 0.3.5 (2025-09-13)
+* (DutchmanNL & Copilot) Fix several type mismatches #143 #139 #130
+* (DutchmanNL) Updated missing definitions for full MQTT API incl H2D
 * (DutchmanNL & Copilot) Fix repository checker issues and improve admin UI compatibility
-* (dependabot) Bump @types/node from 18.19.59 to 22.13.7
-* (dependabot) Bump axios from 1.11.0 to 1.12.1 
-* (dependabot) Bump typescript from 5.6.3 to 5.7.2
-* (dependabot) Bump mqtt from 5.10.1 to 5.10.3
-* (dependabot) Bump cross-spawn from 7.0.3 to 7.0.6
-* (dependabot) Bump axios from 1.7.7 to 1.7.8
 
 ### 0.3.4 (2024-10-28) - Door Indicator Fixes #115
 * (DutchmanNL) Added doorOpen indicator, Fixes [#115](https://github.com/DrozmotiX/ioBroker.bambulab/issues/115)
@@ -111,55 +94,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 * (DutchmanNL) Show end time as a separate state, resolves [#53](https://github.com/DrozmotiX/ioBroker.bambulab/issues/53)
 * (DutchmanNL) Bugfix resolves missing fan speed value, resolves [#36](https://github.com/DrozmotiX/ioBroker.bambulab/issues/36)
 
-### 0.3.0 (2023-11-19) - Release candidate
-* (DutchmanNL) Update dependencies for state handling, resolves #50
-* (DutchmanNL) Adjust log level for Unknown Message from error to debug, resolves #39
-* (DutchmanNL) Add missing definitions to ensure correct creation of states, resolves #39
-* (DutchmanNL) Reduce selection dropdown in admin config to printer series instead of a specific printer type
-* (DutchmanNL) Update adapter code to support new firmware versions released by bambulab, please ensure your printer is up-to-date! resolves #46, resolves #38, resolves #26,
-
-### 0.2.0 (2023-10-18) - Small fixes for new firmware version
-* (DutchmanNL) Button for homing added, fixes #28
-* (DutchmanNL) Bugfix: Translation of HMS-Error codes
-* (DutchmanNL) Several bugfixes for situations no AMS is used
-* (DutchmanNL) Remove control for LED calibration head (could damage hardware)
-
-### 0.1.5 (2023-07-29) - HMS error codes Human readable, new functionalities added
-#### Several state locations have been changed, advise to completely remove adapter & reinstall to upgrade
-* (DutchmanNL) State for human-readable start time added
-* (DutchmanNL) Speed level control implemented solves #10
-* (DutchmanNL) Capability to control all fans implemented
-* (DutchmanNL) Control bed & Nozzle temperature implemented
-* (DutchmanNL) HMS error status indicator states implemented
-* (DutchmanNL) Translations of HMS error codes implemented solves #9
-* (DutchmanNL) Correct definitions for all temperature-related states
-* (DutchmanNL) Control LED for tooling head Logo and calibration unit
-
-### 0.1.4 (2023-07-28) - Support P1-series
-* (DutchmanNL) Configuration page in admin updated
-* (DutchmanNL) Information messages regarding incorrect type of bed-temperatures solved
-* (DutchmanNL) Implemented P1-X printer series, polling interval required for this model (only X1 handles data push)
-
-### 0.1.3 (2023-07-27) - Add new control options
-* (DutchmanNL) add control for chamber fan, tooling head light and allow custom g-code
-
-### 0.1.1 - Minor improvements
-* (DutchmanNL) Translations added
-* (DutchmanNL) Debug logging improved
-* (DutchmanNL) Minor code improvements
-* (DutchmanNL) Control states implemented
-* (DutchmanNL) Test & release workflows updated
-* (DutchmanNL) Encryption of token and device serial improved
-
-### 0.1.0 initial release
-* (DutchmanNL) initial release
-* During startup adapter throws warnings, these can be ignored and will be solved in =< 0.5.0
-* Control start/stop/resume and light available in >= 0.1.1
-
 ## License
 MIT License
 
-Copyright (c) 2024 DutchmanNL <oss@drozmotix.eu>
+Copyright (c) 2025 DutchmanNL <oss@drozmotix.eu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
