@@ -3,7 +3,7 @@
     "Printer IP address": "IP-Adresse Ihres Druckers",
     "Access Token": "Zugangs-Token",
     "API token from printer network settings - see README for detailed instructions per printer model": "API-Token aus den Drucker-Netzwerkeinstellungen - siehe README für detaillierte Anweisungen je Druckermodell",
-    "Serial number of device": "Seriennummer des Gerätes", 
+    "Serial number of device": "Seriennummer des Gerätes",
     "Device serial number from printer network settings - required for authentication": "Geräte-Seriennummer aus den Drucker-Netzwerkeinstellungen - erforderlich für Authentifizierung",
     "Printer Model": "Druckermodell",
     "Please select your printer model": "Bitte wählen Sie Ihr Druckermodell aus",

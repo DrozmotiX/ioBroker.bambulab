@@ -161,11 +161,17 @@
   },
   "encryptedNative": [
     "Password",
-    "serial"
+    "serial",
+    "cloudPassword",
+    "octoEverywhereToken",
+    "octoEverywhereSecret"
   ],
   "protectedNative": [
     "Password",
-    "serial"
+    "serial",
+    "cloudPassword",
+    "octoEverywhereToken",
+    "octoEverywhereSecret"
   ],
   "native": {
     "host": "192.168.1.100",
@@ -173,7 +179,12 @@
     "serial": "",
     "Password": "",
     "printerModel": "X1",
-    "requestInterval": 5
+    "requestInterval": 5,
+    "useCloudConnection": false,
+    "cloudEmail": "",
+    "cloudPassword": "",
+    "octoEverywhereToken": "",
+    "octoEverywhereSecret": ""
   },
   "objects": [],
   "instanceObjects": [
