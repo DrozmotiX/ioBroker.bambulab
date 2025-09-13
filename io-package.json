@@ -186,7 +186,8 @@
     "serial": "",
     "Password": "",
     "printerModel": "X1",
-    "requestInterval": 5
+    "requestInterval": 5,
+    "printers": []
   },
   "objects": [],
   "instanceObjects": [
