@@ -603,7 +603,20 @@ class Bambulab extends utils.Adapter {
                 }
             }
         } catch (e) {
-            this.log.error(`[loadHMSerroCodeTranslations] ${e} | ${e.stack}`);
+            if (e.code === 'ECONNABORTED' || e.message.includes('timeout')) {
+                this.log.warn(
+                    `Translation definitions not updated, cannot connect to Bambulab documentation (timeout)`,
+                );
+                this.log.debug(`[loadHMSErrorCodeTranslations] Timeout details: ${e.message}`);
+            } else if (e.code === 'ENOTFOUND' || e.code === 'ECONNREFUSED') {
+                this.log.warn(
+                    `Translation definitions not updated, cannot connect to Bambulab documentation (network error)`,
+                );
+                this.log.debug(`[loadHMSErrorCodeTranslations] Network error details: ${e.message}`);
+            } else {
+                this.log.warn(`Translation definitions not updated, error downloading from Bambulab documentation`);
+                this.log.debug(`[loadHMSErrorCodeTranslations] Error details: ${e.message} | ${e.stack}`);
+            }
         }
     }
 
