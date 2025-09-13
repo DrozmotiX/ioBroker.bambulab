@@ -93,6 +93,9 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (DutchmanNL & Copilot) Block dangerous G-code commands during printing for safety (#185)
+
 ### 0.4.0 (2025-09-13)
 * (DutchmanNL) Add missing state definitions to resolve adapter warnings (#181)
 * (DutchmanNL) Empty finishTime and avoid time calculation when not printing (#179)
