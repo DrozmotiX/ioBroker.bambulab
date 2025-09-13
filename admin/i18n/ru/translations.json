@@ -6,5 +6,9 @@
     "Printer Model": "Модель принтера",
     "Please select your printer model": "Пожалуйста, выберите модель вашего принтера",
     "Seconds between data polling": "Секунд между опросом данных",
-    "Only used for P1x series": "Используется только для серии P1x"
+    "Only used for P1x series": "Используется только для серии P1x",
+    "Access Token": "Access Token",
+    "API token from printer network settings - see README for detailed instructions per printer model": "API token from printer network settings - see README for detailed instructions per printer model",
+    "Serial number of device": "Serial number of device",
+    "Device serial number from printer network settings - required for authentication": "Device serial number from printer network settings - required for authentication"
 }

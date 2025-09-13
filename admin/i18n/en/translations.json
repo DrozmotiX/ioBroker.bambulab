@@ -1,8 +1,10 @@
 {
 	"bambulab adapter settings": "Adapter settings for bambulab",
 	"Printer IP address": "Ip-Address of your printer",
-	"Access Token (see printer network settings)": "Token, see printer network settings",
-	"Serial number of device (see printer network settings)": "Serial number of Printer, see printer settings",
+	"Access Token": "Access Token",
+	"API token from printer network settings - see README for detailed instructions per printer model": "API token from printer network settings - see README for detailed instructions per printer model",
+	"Serial number of device": "Serial number of device",
+	"Device serial number from printer network settings - required for authentication": "Device serial number from printer network settings - required for authentication",
 	"Printer Model": "Printer Model",
 	"Please select your printer model": "Please select your printer model",
 	"Seconds between data polling": "Seconds between data polling",
