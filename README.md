@@ -93,8 +93,11 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.4.1 (2025-09-13)
+* (DutchmanNL & Copilot) Fix HMS error code translations timeout error handling (#183)
 * (DutchmanNL & Copilot) Block dangerous G-code commands during printing for safety (#185)
+* (DutchmanNL & Copilot) Fix P1S fan speed display issues - double conversion and incorrect mapping (#184)
+* (DutchmanNL & Copilot) Add comprehensive API token location documentation for all Bambulab printer models (#182)
 
 ### 0.4.0 (2025-09-13)
 * (DutchmanNL) Add missing state definitions to resolve adapter warnings (#181)
@@ -112,9 +115,6 @@ All of this helps me to provide error-free adapters that basically never crash.
 ### 0.3.3 (2024-10-27) - Bugfixes
 * (DutchmanNL) update state definitions, (solves [#77](https://github.com/DrozmotiX/ioBroker.bambulab/issues/77) [#58](https://github.com/DrozmotiX/ioBroker.bambulab/issues/58))
 * (DutchmanNL) update connection handling, show connection error only once (Solves #99 #78 #74)
-
-### 0.3.2 (2023-11-20)
-* (DutchmanNL) Show finish time as ISO string
 
 ## License
 MIT License

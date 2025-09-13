@@ -1,4 +1,7 @@
 # Older changes
+## 0.3.2 (2023-11-20)
+* (DutchmanNL) Show finish time as ISO string
+
 ## 0.3.1 (2023-11-20)
 * (DutchmanNL) Bugfix control P & A Series
 * (DutchmanNL) Show end time as a separate state, resolves [#53](https://github.com/DrozmotiX/ioBroker.bambulab/issues/53)
