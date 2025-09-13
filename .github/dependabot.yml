@@ -6,9 +6,7 @@ updates:
       interval: monthly
       time: "04:00"
       timezone: Europe/Berlin
-    open-pull-requests-limit: 5
-    assignees:
-      - DrozmotiX
+    open-pull-requests-limit: 30
     versioning-strategy: increase
 
   - package-ecosystem: github-actions
@@ -17,6 +15,4 @@ updates:
       interval: monthly
       time: "04:00"
       timezone: Europe/Berlin
-    open-pull-requests-limit: 5
-    assignees:
-      - DrozmotiX
+    open-pull-requests-limit: 30
