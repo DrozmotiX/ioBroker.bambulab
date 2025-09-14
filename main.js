@@ -14,6 +14,7 @@ const { default: axios } = require('axios'); // Http request library
 const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer library
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
+const BambuLabCloud = require('./lib/cloud'); // Load cloud integration module
 
 let client; // Memory to store client connection information
 const clientConnection = {
@@ -24,6 +25,7 @@ const clientConnection = {
 const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
 let language = 'en'; // System language to handle error code translations, default EN
+let cloudIntegration = null; // Cloud integration instance
 
 // Array of G-code commands that should be blocked during printing for safety
 const blockedCommandsDuringPrinting = ['G0', 'G1', 'G28', 'G90', 'G91'];
@@ -62,8 +64,26 @@ class Bambulab extends utils.Adapter {
         // Download / Update HMS error Codes
         await this.loadHMSErrorCodeTranslations();
 
-        // Handle MQTT messages
-        this.mqttMessageHandle();
+        // Check if cloud connection is enabled
+        if (this.config.useCloudConnection && this.config.cloudEmail && this.config.cloudPassword) {
+            this.log.info('Cloud connection enabled, initializing cloud integration...');
+
+            // Initialize cloud integration
+            cloudIntegration = new BambuLabCloud(this, this.config);
+            const cloudStarted = await cloudIntegration.start();
+
+            if (cloudStarted) {
+                this.setState('info.connection', true, true);
+                this.log.info('Cloud integration initialized successfully');
+            } else {
+                this.log.error('Failed to initialize cloud integration, falling back to direct MQTT');
+                this.mqttMessageHandle();
+            }
+        } else {
+            this.log.info('Using direct MQTT connection');
+            // Handle MQTT messages (original implementation)
+            this.mqttMessageHandle();
+        }
     }
 
     /**
@@ -393,12 +413,18 @@ class Bambulab extends utils.Adapter {
     publishMQTTmessages(msg) {
         this.log.debug(`Publish message ${JSON.stringify(msg)}`);
 
-        const topic = `device/${this.config.serial}/request`;
-        client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, error => {
-            if (error) {
-                console.error(error);
-            }
-        });
+        if (cloudIntegration && this.config.useCloudConnection) {
+            // Use cloud integration for publishing
+            cloudIntegration.publishMessage(msg);
+        } else {
+            // Use direct MQTT connection
+            const topic = `device/${this.config.serial}/request`;
+            client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, error => {
+                if (error) {
+                    console.error(error);
+                }
+            });
+        }
     }
 
     requestData() {
@@ -642,6 +668,12 @@ class Bambulab extends utils.Adapter {
             if (timeouts['dataPolling']) {
                 clearTimeout(timeouts['dataPolling']);
                 timeouts[timeouts['dataPolling']] = null;
+            }
+
+            // Stop cloud integration if active
+            if (cloudIntegration) {
+                cloudIntegration.stop();
+                cloudIntegration = null;
             }
 
             // Close MQTT connection if present

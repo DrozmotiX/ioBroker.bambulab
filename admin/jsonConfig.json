@@ -34,6 +34,65 @@
 			"lg": 4,
 			"xl": 4
 		},
+		"useCloudConnection": {
+			"type": "checkbox",
+			"label": "Use Bambu Lab Cloud Connection",
+			"help": "Connect via Bambu Lab Cloud instead of direct MQTT. Requires cloud account credentials.",
+			"newLine": true,
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4
+		},
+		"cloudEmail": {
+			"type": "text",
+			"label": "Cloud Account Email",
+			"help": "Your Bambu Lab account email address",
+			"hidden": "!data.useCloudConnection",
+			"newLine": false,
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4
+		},
+		"cloudPassword": {
+			"type": "password",
+			"label": "Cloud Account Password",
+			"help": "Your Bambu Lab account password",
+			"hidden": "!data.useCloudConnection",
+			"newLine": false,
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4
+		},
+		"octoEverywhereToken": {
+			"type": "password",
+			"label": "OctoEverywhere Auth Token (Optional)",
+			"help": "Optional OctoEverywhere token for WebSocket proxy connection",
+			"hidden": "!data.useCloudConnection",
+			"newLine": true,
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4
+		},
+		"octoEverywhereSecret": {
+			"type": "password",
+			"label": "OctoEverywhere Auth Secret (Optional)",
+			"help": "Optional OctoEverywhere secret for WebSocket proxy connection",
+			"hidden": "!data.useCloudConnection",
+			"newLine": false,
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4
+		},
 		"printerModel": {
 			"newLine": true,
 			"type": "select",
