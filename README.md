@@ -93,6 +93,9 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (DutchmanNL & Copilot) Add missing state attribute definitions for hd2 printer during printing (heigh, platform, tool, mapping) - fixes #194
+
 ### 0.4.1 (2025-09-13)
 * (DutchmanNL & Copilot) Fix HMS error code translations timeout error handling (#183)
 * (DutchmanNL & Copilot) Block dangerous G-code commands during printing for safety (#185)
