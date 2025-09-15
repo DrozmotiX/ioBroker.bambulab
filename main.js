@@ -15,19 +15,25 @@ const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer libra
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
 
-let client; // Memory to store client connection information
+// Memory to store multiple client connection information
+const clients = {}; // Object to store MQTT clients by printer serial
+const clientConnections = {}; // Object to store connection states by printer serial
+const timeouts = {}; // Object array containing all running timers
+const errorCodesHMS = {}; // Object array of translated error codes
+let language = 'en'; // System language to handle error code translations, default EN
+
+// Single printer backward compatibility variables
+let client; // Memory to store single client connection information
 const clientConnection = {
     connected: false,
     connectError: false,
     initiated: false,
 };
-const timeouts = {}; // Object array containing all running timers
-const errorCodesHMS = {}; // Object array of translated error codes
-let language = 'en'; // System language to handle error code translations, default EN
 
 // Array of G-code commands that should be blocked during printing for safety
 const blockedCommandsDuringPrinting = ['G0', 'G1', 'G28', 'G90', 'G91'];
-let currentPrintingState = null; // Track current printing state for safety checks
+const currentPrintingStates = {}; // Track current printing state for safety checks per printer
+let currentPrintingState = null; // Single printer compatibility
 
 class Bambulab extends utils.Adapter {
     /**
@@ -63,27 +69,210 @@ class Bambulab extends utils.Adapter {
         // Download / Update HMS error Codes
         await this.loadHMSErrorCodeTranslations();
 
-        // Initialize printers configuration - handle backward compatibility
+        // Initialize printers configuration
         await this.initializePrinters();
 
-        // Handle MQTT messages
-        this.mqttMessageHandle();
+        // Handle MQTT messages for all configured printers
+        this.connectAllPrinters();
     }
 
     /**
      * Initialize printers configuration - handle backward compatibility
      */
     async initializePrinters() {
-        // Check if we have old single printer config and no printers array
-        if (this.config.host && this.config.Password && this.config.serial && !this.config.printers) {
-            // Keep old configuration for backward compatibility
-            this.log.info('Using single printer configuration (backward compatibility mode)');
+        // Check if we have old single printer config that needs migration
+        if (this.config.host && this.config.Password && this.config.serial) {
+            // Migrate old single printer config to new multi-printer format
+            this.log.info('Migrating old single printer configuration to new multi-printer format');
+
+            const printers = [
+                {
+                    ip: this.config.host,
+                    password: this.config.Password,
+                    serial: this.config.serial,
+                    model: this.config.printerModel || 'P1-Series',
+                    enabled: true,
+                },
+            ];
+
+            // Save migrated configuration
+            await this.extendForeignObjectAsync(`system.adapter.${this.namespace}`, {
+                native: {
+                    ...this.config,
+                    printers: printers,
+                    // Clear old single printer config
+                    host: undefined,
+                    Password: undefined,
+                    serial: undefined,
+                    printerModel: undefined,
+                },
+            });
+
+            // Update internal config
+            this.config.printers = printers;
+        }
+
+        // Ensure printers array exists
+        if (!this.config.printers || !Array.isArray(this.config.printers)) {
+            this.config.printers = [];
+        }
+
+        this.log.info(`Initialized with ${this.config.printers.length} configured printers`);
+    }
+
+    /**
+     * Connect to all configured printers
+     */
+    connectAllPrinters() {
+        if (!this.config.printers || this.config.printers.length === 0) {
+            this.log.warn('No printers configured');
             return;
         }
 
-        // If we have printers array, log the count
-        if (this.config.printers && this.config.printers.length > 0) {
-            this.log.info(`Multi-printer mode: ${this.config.printers.length} printers configured`);
+        for (const printer of this.config.printers) {
+            if (printer.enabled !== false) {
+                // Default to enabled
+                this.connectToPrinter(printer);
+            }
+        }
+    }
+
+    /**
+     * Connect to a specific printer
+     *
+     * @param {object} printer - Printer configuration
+     */
+    connectToPrinter(printer) {
+        if (!printer.serial || !printer.ip || !printer.password) {
+            this.log.error(`Invalid printer configuration for ${printer.ip}: missing required fields`);
+            return;
+        }
+
+        try {
+            // Initialize connection state for this printer
+            if (!clientConnections[printer.serial]) {
+                clientConnections[printer.serial] = {
+                    connected: false,
+                    connectError: false,
+                    initiated: false,
+                };
+            }
+
+            // Prevent multiple concurrent connection attempts
+            if (clientConnections[printer.serial].initiated) {
+                this.log.debug(`MQTT connection already in progress for printer ${printer.serial}, skipping`);
+                return;
+            }
+
+            this.log.info(`Try to connect to printer ${printer.ip} (${printer.serial})`);
+            clientConnections[printer.serial].initiated = true;
+
+            // Properly close existing client if present
+            if (clients[printer.serial]) {
+                clients[printer.serial].removeAllListeners();
+                clients[printer.serial].end();
+                clients[printer.serial] = null;
+            }
+
+            // Connect to Printer using MQTT
+            clients[printer.serial] = mqtt.connect(`mqtts://${printer.ip}:8883`, {
+                username: 'bblp',
+                password: printer.password,
+                reconnectPeriod: 30,
+                rejectUnauthorized: false,
+            });
+
+            const client = clients[printer.serial];
+
+            // Establish connection to printer by MQTT
+            client.on('connect', () => {
+                if (!clientConnections[printer.serial].connected) {
+                    this.log.info(`Printer ${printer.ip} (${printer.serial}) connected`);
+                }
+                this.setState(`${printer.serial}.info.connection`, true, true);
+                clientConnections[printer.serial].connected = true;
+                clientConnections[printer.serial].connectError = false;
+                clientConnections[printer.serial].initiated = false; // Reset initiated flag on successful connection
+
+                this.createControlStates(printer);
+
+                // Subscribe on a printer topic after connection
+                client.subscribe([`device/${printer.serial}/report`], () => {
+                    this.log.debug(`Subscribed to printer data topic by serial | ${printer.serial}`);
+                });
+
+                // After new firmware release this summer all data must be requested 1 time at adapter start
+                this.requestData(printer);
+            });
+
+            // Receive MQTT messages
+            client.on('message', (topic, message) => {
+                this.handleMqttMessage(printer, topic, message);
+            });
+
+            // Handle connection errors
+            client.on('error', error => {
+                if (!clientConnections[printer.serial].connectError) {
+                    this.log.error(
+                        `MQTT connection error for printer ${printer.ip} (${printer.serial}): ${error.message}`,
+                    );
+                    clientConnections[printer.serial].connectError = true;
+                    clientConnections[printer.serial].connected = false;
+                    clientConnections[printer.serial].initiated = false;
+                }
+                this.setState(`${printer.serial}.info.connection`, false, true);
+            });
+
+            // Handle connection close
+            client.on('close', () => {
+                if (clientConnections[printer.serial].connected) {
+                    this.log.warn(`Connection to printer ${printer.ip} (${printer.serial}) closed`);
+                }
+                clientConnections[printer.serial].connected = false;
+                clientConnections[printer.serial].initiated = false;
+                this.setState(`${printer.serial}.info.connection`, false, true);
+            });
+
+            // Handle connection offline
+            client.on('offline', () => {
+                this.log.debug(`Printer ${printer.ip} (${printer.serial}) is offline`);
+                clientConnections[printer.serial].connected = false;
+                clientConnections[printer.serial].initiated = false;
+                this.setState(`${printer.serial}.info.connection`, false, true);
+            });
+        } catch (error) {
+            this.log.error(`Failed to connect to printer ${printer.ip} (${printer.serial}): ${error.message}`);
+            if (clientConnections[printer.serial]) {
+                clientConnections[printer.serial].connectError = true;
+                clientConnections[printer.serial].connected = false;
+                clientConnections[printer.serial].initiated = false;
+            }
+        }
+    }
+
+    /**
+     * Handle incoming MQTT messages from a specific printer
+     *
+     * @param {object} printer - Printer configuration
+     * @param {string} topic - MQTT topic
+     * @param {Buffer} message - MQTT message
+     */
+    handleMqttMessage(printer, topic, message) {
+        // Parse the message and create states with printer serial prefix
+        // This is where the existing message handling logic will be adapted
+        // for the multi-printer scenario
+        this.log.debug(`Received MQTT message from ${printer.serial} on topic ${topic}`);
+
+        // TODO: Implement message parsing with printer prefix
+        // For now, just log the message
+        try {
+            const parsedMessage = JSON.parse(message.toString());
+            this.log.debug(`Parsed message: ${JSON.stringify(parsedMessage)}`);
+
+            // Create states with printer serial as prefix
+            jsonExplorer.storeKeyValue(printer.serial, parsedMessage, this);
+        } catch (error) {
+            this.log.debug(`Failed to parse message from ${printer.serial}: ${error.message}`);
         }
     }
 
@@ -109,9 +298,7 @@ class Bambulab extends utils.Adapter {
                 break;
             default:
                 this.log.warn(`Unknown command: ${obj.command}`);
-                if (obj.callback) {
-                    this.sendTo(obj.from, obj.command, { error: 'Unknown command' }, obj.callback);
-                }
+                this.sendTo(obj.from, obj.command, { error: 'Unknown command' }, obj.callback);
         }
     }
 
@@ -122,20 +309,48 @@ class Bambulab extends utils.Adapter {
      */
     async handleAddUpdatePrinter(obj) {
         try {
-            const { ip, password, serial } = obj.message;
+            const { ip, password, serial, model } = obj.message;
 
             if (!ip || !password || !serial) {
                 this.sendTo(obj.from, obj.command, { error: 'Missing required fields' }, obj.callback);
                 return;
             }
 
-            this.log.info(`Adding/updating printer: ${ip} (${serial})`);
-            this.sendTo(
-                obj.from,
-                obj.command,
-                { success: true, message: 'Printer configuration saved. Please restart the adapter to apply changes.' },
-                obj.callback,
-            );
+            // Initialize printers array if it doesn't exist
+            if (!this.config.printers) {
+                this.config.printers = [];
+            }
+
+            // Check if printer already exists
+            const existingIndex = this.config.printers.findIndex(p => p.serial === serial || p.ip === ip);
+
+            const printerConfig = {
+                ip: ip,
+                password: password,
+                serial: serial,
+                model: model || 'P1-Series',
+                enabled: true,
+            };
+
+            if (existingIndex >= 0) {
+                // Update existing printer
+                this.config.printers[existingIndex] = printerConfig;
+                this.log.info(`Updated printer configuration for ${ip} (${serial})`);
+            } else {
+                // Add new printer
+                this.config.printers.push(printerConfig);
+                this.log.info(`Added new printer configuration for ${ip} (${serial})`);
+            }
+
+            // Save configuration
+            await this.extendForeignObjectAsync(`system.adapter.${this.namespace}`, {
+                native: { printers: this.config.printers },
+            });
+
+            // Connect to the printer
+            this.connectToPrinter(printerConfig);
+
+            this.sendTo(obj.from, obj.command, { success: true }, obj.callback);
         } catch (error) {
             this.log.error(`Error adding/updating printer: ${error.message}`);
             this.sendTo(obj.from, obj.command, { error: error.message }, obj.callback);
@@ -150,13 +365,48 @@ class Bambulab extends utils.Adapter {
     async handleDeletePrinter(obj) {
         try {
             const { ip } = obj.message;
-            this.log.info(`Deleting printer: ${ip}`);
-            this.sendTo(
-                obj.from,
-                obj.command,
-                { success: true, message: 'Printer deleted. Please restart the adapter to apply changes.' },
-                obj.callback,
-            );
+
+            if (!ip) {
+                this.sendTo(obj.from, obj.command, { error: 'Missing IP address' }, obj.callback);
+                return;
+            }
+
+            if (!this.config.printers) {
+                this.sendTo(obj.from, obj.command, { error: 'No printers configured' }, obj.callback);
+                return;
+            }
+
+            // Find printer to delete
+            const printerIndex = this.config.printers.findIndex(p => p.ip === ip);
+            if (printerIndex === -1) {
+                this.sendTo(obj.from, obj.command, { error: 'Printer not found' }, obj.callback);
+                return;
+            }
+
+            const printer = this.config.printers[printerIndex];
+
+            // Disconnect and cleanup
+            if (clients[printer.serial]) {
+                clients[printer.serial].removeAllListeners();
+                clients[printer.serial].end();
+                delete clients[printer.serial];
+            }
+            delete clientConnections[printer.serial];
+            delete currentPrintingStates[printer.serial];
+
+            // Remove from configuration
+            this.config.printers.splice(printerIndex, 1);
+
+            // Save configuration
+            await this.extendForeignObjectAsync(`system.adapter.${this.namespace}`, {
+                native: { printers: this.config.printers },
+            });
+
+            // Delete all states for this printer
+            await this.delObjectAsync(printer.serial, { recursive: true });
+
+            this.log.info(`Deleted printer configuration for ${ip} (${printer.serial})`);
+            this.sendTo(obj.from, obj.command, { success: true }, obj.callback);
         } catch (error) {
             this.log.error(`Error deleting printer: ${error.message}`);
             this.sendTo(obj.from, obj.command, { error: error.message }, obj.callback);
@@ -172,19 +422,27 @@ class Bambulab extends utils.Adapter {
         try {
             const printersTable = [];
 
-            // For now, show current single printer config as table entry if it exists
-            if (this.config.host && this.config.Password && this.config.serial) {
-                const connectionState = clientConnection.connected ? 'Connected' : 'Disconnected';
-                const printState =
-                    currentPrintingState !== null ? this.getPrintStateText(currentPrintingState) : 'Unknown';
+            if (this.config.printers) {
+                for (const printer of this.config.printers) {
+                    const connectionState = clientConnections[printer.serial]
+                        ? clientConnections[printer.serial].connected
+                            ? 'Connected'
+                            : 'Disconnected'
+                        : 'Disconnected';
 
-                printersTable.push({
-                    ip: this.config.host,
-                    serial: this.config.serial,
-                    model: this.config.printerModel || 'Unknown',
-                    connectState: connectionState,
-                    printState: printState,
-                });
+                    const printState =
+                        currentPrintingStates[printer.serial] !== undefined
+                            ? this.getPrintStateText(currentPrintingStates[printer.serial])
+                            : 'Unknown';
+
+                    printersTable.push({
+                        ip: printer.ip,
+                        serial: printer.serial,
+                        model: printer.model,
+                        connectState: connectionState,
+                        printState: printState,
+                    });
+                }
             }
 
             this.sendTo(obj.from, obj.command, { printersTable }, obj.callback);
