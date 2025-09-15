@@ -33,25 +33,22 @@ describe('Type Conversion Tests', () => {
 
     describe('JsonExplorer modify function', () => {
         it('should convert string to integer using TOINTEGER', () => {
-            const jsonExplorerModule = require('../node_modules/iobroker-jsonexplorer/jsonExplorer');
-            // Access the private modify function through reflection
-            const modifyFunction = jsonExplorerModule.__proto__.constructor.prototype.modify;
-            if (modifyFunction) {
-                const result = modifyFunction('TOINTEGER', '42');
-                expect(result).to.equal(42);
-                expect(typeof result).to.equal('number');
-            }
+            // Use the public API: create an instance and call the public method
+            // jsonExplorer exposes a class; create an instance and use its public method
+            const explorer = new jsonExplorer(mockAdapter, stateAttr);
+            // The public API: explorer.applyModify(modifier, value)
+            const result = explorer.applyModify('TOINTEGER', '42');
+            expect(result).to.equal(42);
+            expect(typeof result).to.equal('number');
         });
 
         it('should convert string to float using TOFLOAT', () => {
-            const jsonExplorerModule = require('../node_modules/iobroker-jsonexplorer/jsonExplorer');
-            // Access the private modify function through reflection
-            const modifyFunction = jsonExplorerModule.__proto__.constructor.prototype.modify;
-            if (modifyFunction) {
-                const result = modifyFunction('TOFLOAT', '42.5');
-                expect(result).to.equal(42.5);
-                expect(typeof result).to.equal('number');
-            }
+            // Use the public API: create an instance and call the public method
+            const explorer = new jsonExplorer(mockAdapter, stateAttr);
+            // The public API: explorer.applyModify(modifier, value)
+            const result = explorer.applyModify('TOFLOAT', '42.5');
+            expect(result).to.equal(42.5);
+            expect(typeof result).to.equal('number');
         });
     });
 
