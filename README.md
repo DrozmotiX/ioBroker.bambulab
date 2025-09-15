@@ -95,6 +95,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 -->
 ### **WORK IN PROGRESS**
 * (DutchmanNL & Copilot) Fix type conversion errors by replacing deprecated 'tonumber' with proper TOINTEGER/TOFLOAT modifiers (#197)
+* (DutchmanNL & Copilot) Add missing state attribute definitions for hd2 printer during printing (heigh, platform, tool, mapping) - fixes #194
 
 ### 0.4.1 (2025-09-13)
 * (DutchmanNL & Copilot) Fix HMS error code translations timeout error handling (#183)
