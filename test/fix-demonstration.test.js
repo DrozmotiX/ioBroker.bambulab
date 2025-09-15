@@ -10,23 +10,8 @@ describe('Type Conversion Fix Demonstration', () => {
         delete require.cache[jsonExplorerPath];
         const jsonExplorer = require('iobroker-jsonexplorer');
         
-        // Access the modify function - we need to simulate how it processes values
-        // Since it's a private function, we'll recreate the logic for testing
-        modifyFunction = function(method, value) {
-            let result = null;
-            const methodUC = method.toUpperCase();
-            switch (methodUC) {
-                case 'TOINTEGER':
-                    result = parseInt(value);
-                    break;
-                case 'TOFLOAT':
-                    result = parseFloat(value);
-                    break;
-                default:
-                    result = value;
-            }
-            return result;
-        };
+        // Use the actual modify function from the library
+        modifyFunction = jsonExplorer.modify;
     });
 
     it('should properly convert fan speed string values to integers', () => {
