@@ -213,13 +213,11 @@ class Bambulab extends utils.Adapter {
      */
     async messageHandler(message) {
         try {
-            if (message.print) {
-
             // Implement message buffer to avoid processing too many messages in a short time
             if (clientConnection.messageBuffer === false) {
                 try {
                     this.log.debug(`Message buffer inactive, message processing`);
-                    if(this.config.messageBuffer > 0) {
+                    if (this.config.messageBuffer > 0) {
                         clientConnection.messageBuffer = true;
                         timeouts['messageBuffer'] = setTimeout(() => {
                             // Request data for P1p printer series
@@ -229,48 +227,40 @@ class Bambulab extends utils.Adapter {
                 } catch (e) {
                     this.log.error(`[MQTT Message handler] ${e}`);
                 }
-
             } else {
                 this.log.debug(`Message buffer active, skipping message processing`);
-                return // Ignore Message
+                return; // Ignore Message
             }
+
+            if (message.print) {
                 try {
-                    this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`)
-                } catch (error) {
-
-                }
-
-                try {
-                    this.log.debug(`Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`)
-                } catch (error) {
-
-                }
+                    this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`);
+                } catch (error) {}
 
                 try {
-                    this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`)
-                } catch (error) {
-
-                }
-
-                try {
-                    this.log.debug(`Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`)
-                } catch (error) {
-
-                }
-
+                    this.log.debug(
+                        `Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`,
+                    );
+                } catch (error) {}
 
                 try {
-                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`)
-                } catch (error) {
+                    this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`);
+                } catch (error) {}
 
-                }
+                try {
+                    this.log.debug(
+                        `Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`,
+                    );
+                } catch (error) {}
 
+                try {
+                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`);
+                } catch (error) {}
 
                 function decodeExtruderTemp(raw) {
                     if (raw > 500) return Math.round(raw / 58100);
                     return raw; // Already realistic
                 }
-
 
                 // Modify values of JSON for states which need modification
                 message.print.control = {};
@@ -726,7 +716,6 @@ class Bambulab extends utils.Adapter {
             if (client) {
                 client.end();
             }
-
 
             callback();
         } catch (e) {
