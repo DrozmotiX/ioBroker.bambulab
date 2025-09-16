@@ -93,9 +93,11 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
-* (DutchmanNL & Copilot) Fix type conversion errors by replacing deprecated 'tonumber' with proper TOINTEGER/TOFLOAT modifiers (#197)
-* (DutchmanNL & Copilot) Add missing state attribute definitions for hd2 printer during printing (heigh, platform, tool, mapping) - fixes #194
+### 0.4.1 (2025-09-16)
+* (DutchmanNL) Improve error messages if printer is offline or not reachable. #xxx
+* (DutchmanNL) Solve several type definition issues. #203, #202, #201, #200, #199, #198
+* (DutchmanNL & Copilot) Fix type conversion errors by replacing deprecated `tonumber` with proper `TOINTEGER`/`TOFLOAT` modifiers. #197
+* (DutchmanNL & Copilot) Add missing state attribute definitions for HD2 printer during printing (height, platform, tool, mapping). Fixes #194
 
 ### 0.4.1 (2025-09-13)
 * (DutchmanNL & Copilot) Fix HMS error code translations timeout error handling (#183)
