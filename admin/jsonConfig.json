@@ -48,7 +48,11 @@
 					"label": "A1-Series",
 					"value": "A1-Series"
 				},
-				{
+                {
+                    "label": "H2D-Series",
+                    "value": "H2D-Series"
+                },
+                {
 					"label": "P1-Series",
 					"value": "P1-Series"
 				},
