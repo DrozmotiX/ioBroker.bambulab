@@ -173,7 +173,8 @@
     "serial": "",
     "Password": "",
     "printerModel": "X1",
-    "requestInterval": 5
+    "requestInterval": 5,
+    "messageBuffer": 5
   },
   "objects": [],
   "instanceObjects": [

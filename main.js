@@ -21,6 +21,7 @@ const clientConnection = {
     connectError: false,
     initiated: false,
     reconnectMessageShown: false, // Track if we've shown the reconnection message
+    messageBuffer: false, // Track if message buffer is active
 };
 const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
@@ -214,6 +215,25 @@ class Bambulab extends utils.Adapter {
         try {
             if (message.print) {
 
+            // Implement message buffer to avoid processing too many messages in a short time
+            if (clientConnection.messageBuffer === false) {
+                try {
+                    this.log.debug(`Message buffer inactive, message processing`);
+                    if(this.config.messageBuffer > 0) {
+                        clientConnection.messageBuffer = true;
+                        timeouts['messageBuffer'] = setTimeout(() => {
+                            // Request data for P1p printer series
+                            clientConnection.messageBuffer = false;
+                        }, this.config.messageBuffer * 1000);
+                    }
+                } catch (e) {
+                    this.log.error(`[MQTT Message handler] ${e}`);
+                }
+
+            } else {
+                this.log.debug(`Message buffer active, skipping message processing`);
+                return // Ignore Message
+            }
                 try {
                     this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`)
                 } catch (error) {
@@ -697,10 +717,16 @@ class Bambulab extends utils.Adapter {
                 timeouts[timeouts['dataPolling']] = null;
             }
 
+            if (timeouts['messageBuffer']) {
+                clearTimeout(timeouts['messageBuffer']);
+                timeouts['messageBuffer'] = null;
+            }
+
             // Close MQTT connection if present
             if (client) {
                 client.end();
             }
+
 
             callback();
         } catch (e) {
