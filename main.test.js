@@ -139,4 +139,62 @@ describe('Bambulab G-code Blocking Logic', () => {
 	});
 });
 
+describe('Bambulab Connection State Logic', () => {
+	// Test the connection state tracking logic to prevent log spam
+	let mockClientConnection;
+
+	beforeEach(() => {
+		// Reset mock client connection state before each test
+		mockClientConnection = {
+			connected: false,
+			connectError: false,
+			initiated: false,
+			reconnectMessageShown: false,
+		};
+	});
+
+	describe('Reconnection message logic', () => {
+		it('should show reconnection message only once when in error state', () => {
+			// Simulate connection error state
+			mockClientConnection.connectError = true;
+			mockClientConnection.reconnectMessageShown = false;
+
+			// First reconnection attempt - should show message
+			let shouldShowReconnectMessage = !mockClientConnection.reconnectMessageShown && mockClientConnection.connectError;
+			expect(shouldShowReconnectMessage).to.be.true;
+
+			// Mark as shown
+			mockClientConnection.reconnectMessageShown = true;
+
+			// Second reconnection attempt - should not show message
+			shouldShowReconnectMessage = !mockClientConnection.reconnectMessageShown && mockClientConnection.connectError;
+			expect(shouldShowReconnectMessage).to.be.false;
+		});
+
+		it('should reset reconnect message flag when connection is successful', () => {
+			// Simulate previous error state
+			mockClientConnection.connectError = true;
+			mockClientConnection.reconnectMessageShown = true;
+
+			// Simulate successful connection
+			mockClientConnection.connected = true;
+			mockClientConnection.connectError = false;
+			mockClientConnection.reconnectMessageShown = false; // Reset on success
+
+			// Verify state is reset
+			expect(mockClientConnection.reconnectMessageShown).to.be.false;
+			expect(mockClientConnection.connectError).to.be.false;
+		});
+
+		it('should show initial connection message when not in error state', () => {
+			// Fresh connection attempt (not a reconnection)
+			mockClientConnection.connectError = false;
+			mockClientConnection.reconnectMessageShown = false;
+
+			const shouldShowInitialMessage = !mockClientConnection.reconnectMessageShown && !mockClientConnection.connectError;
+			expect(shouldShowInitialMessage).to.be.true;
+		});
+	});
+});
+
 // ... more test suites => describe

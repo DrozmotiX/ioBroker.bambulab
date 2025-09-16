@@ -20,6 +20,7 @@ const clientConnection = {
     connected: false,
     connectError: false,
     initiated: false,
+    reconnectMessageShown: false, // Track if we've shown the reconnection message
 };
 const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
@@ -77,7 +78,20 @@ class Bambulab extends utils.Adapter {
                 return;
             }
 
-            this.log.info(`Try to connect to printer`);
+            // Only log connection attempt if we haven't shown the reconnect message yet
+            if (!clientConnection.reconnectMessageShown) {
+                if (clientConnection.connectError) {
+                    this.log.info(
+                        `Attempting to reconnect to printer - will retry automatically every 30 seconds until connection is restored`,
+                    );
+                    clientConnection.reconnectMessageShown = true;
+                } else {
+                    this.log.info(`Try to connect to printer`);
+                }
+            } else {
+                this.log.debug(`Retrying connection to printer`);
+            }
+
             clientConnection.initiated = true;
 
             // Properly close existing client if present
@@ -98,12 +112,13 @@ class Bambulab extends utils.Adapter {
             // Establish connection to printer by MQTT
             client.on('connect', () => {
                 if (!clientConnection.connected) {
-                    this.log.info(`Printer connected`);
+                    this.log.info(`Printer connected successfully`);
                 }
                 this.setState('info.connection', true, true);
                 clientConnection.connected = true;
                 clientConnection.connectError = false;
                 clientConnection.initiated = false; // Reset initiated flag on successful connection
+                clientConnection.reconnectMessageShown = false; // Reset for future disconnections
 
                 this.createControlStates();
 
@@ -149,7 +164,9 @@ class Bambulab extends utils.Adapter {
 
             client.on('end', () => {
                 if (clientConnection.connected) {
-                    this.log.warn(`Connection to Printer closed`);
+                    this.log.warn(
+                        `Printer connection lost - this could be due to printer being powered off or network issues`,
+                    );
                 }
                 this.setState('info.connection', false, true);
                 clientConnection.connected = false;
@@ -159,12 +176,14 @@ class Bambulab extends utils.Adapter {
 
             client.on('error', error => {
                 if (!clientConnection.connectError) {
-                    this.log.error(`Connection issue occurred ${error}`);
+                    this.log.error(`Connection issue occurred: ${error} - printer may be powered off or unreachable`);
                 }
                 // Close MQTT connection
                 client.end();
                 if (clientConnection.connected) {
-                    this.log.warn(`Connection to Printer closed`);
+                    this.log.warn(
+                        `Printer connection lost - this could be due to printer being powered off or network issues`,
+                    );
                 }
                 this.setState('info.connection', false, true);
 
