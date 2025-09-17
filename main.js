@@ -213,44 +213,46 @@ class Bambulab extends utils.Adapter {
     async messageHandler(message) {
         try {
             if (message.print) {
-
                 try {
-                    this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`)
-                } catch (error) {
-
+                    this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`);
+                } catch {
+                    // Ignore extraction errors for debug logging
                 }
 
                 try {
-                    this.log.debug(`Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`)
-                } catch (error) {
-
+                    this.log.debug(
+                        `Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`,
+                    );
+                } catch {
+                    // Ignore extraction errors for debug logging
                 }
 
                 try {
-                    this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`)
-                } catch (error) {
-
+                    this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`);
+                } catch {
+                    // Ignore extraction errors for debug logging
                 }
 
                 try {
-                    this.log.debug(`Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`)
-                } catch (error) {
-
+                    this.log.debug(
+                        `Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`,
+                    );
+                } catch {
+                    // Ignore extraction errors for debug logging
                 }
-
 
                 try {
-                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`)
-                } catch (error) {
-
+                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`);
+                } catch {
+                    // Ignore extraction errors for debug logging
                 }
-
 
                 function decodeExtruderTemp(raw) {
-                    if (raw > 500) return Math.round(raw / 58100);
+                    if (raw > 500) {
+                        return Math.round(raw / 58100);
+                    }
                     return raw; // Already realistic
                 }
-
 
                 // Modify values of JSON for states which need modification
                 message.print.control = {};
