@@ -3,10 +3,15 @@
     "Printer IP address": "IP-Adresse Ihres Druckers",
     "Access Token": "Zugangs-Token",
     "API token from printer network settings - see README for detailed instructions per printer model": "API-Token aus den Drucker-Netzwerkeinstellungen - siehe README für detaillierte Anweisungen je Druckermodell",
-    "Serial number of device": "Seriennummer des Gerätes", 
+    "Serial number of device": "Seriennummer des Gerätes",
     "Device serial number from printer network settings - required for authentication": "Geräte-Seriennummer aus den Drucker-Netzwerkeinstellungen - erforderlich für Authentifizierung",
     "Printer Model": "Druckermodell",
     "Please select your printer model": "Bitte wählen Sie Ihr Druckermodell aus",
     "Seconds between data polling": "Sekunden zwischen der Datenabfrage",
-    "Only used for P1x series": "Wird nur für die P1x-Serie verwendet"
+    "Only used for P1x series": "Wird nur für die P1x-Serie verwendet",
+    "A1-Series": "A1-Series",
+    "Here you can upload files, like g-code, to send to the printer": "Here you can upload files, like g-code, to send to the printer",
+    "P1-Series": "P1-Series",
+    "Upload g-code file": "Upload g-code file",
+    "X1-Series": "X1-Series"
 }

@@ -10,5 +10,10 @@
     "Access Token": "Access Token",
     "API token from printer network settings - see README for detailed instructions per printer model": "API-token uit de netwerkinstellingen van de printer - zie README voor gedetailleerde instructies per printermodel",
     "Serial number of device": "Serienummer van apparaat",
-    "Device serial number from printer network settings - required for authentication": "Serienummer van het apparaat uit de netwerkinstellingen van de printer - vereist voor authenticatie"
+    "Device serial number from printer network settings - required for authentication": "Serienummer van het apparaat uit de netwerkinstellingen van de printer - vereist voor authenticatie",
+    "A1-Series": "A1-Series",
+    "Here you can upload files, like g-code, to send to the printer": "Here you can upload files, like g-code, to send to the printer",
+    "P1-Series": "P1-Series",
+    "Upload g-code file": "Upload g-code file",
+    "X1-Series": "X1-Series"
 }
