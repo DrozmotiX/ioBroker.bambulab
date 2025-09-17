@@ -9,9 +9,9 @@
     "Please select your printer model": "Bitte wählen Sie Ihr Druckermodell aus",
     "Seconds between data polling": "Sekunden zwischen der Datenabfrage",
     "Only used for P1x series": "Wird nur für die P1x-Serie verwendet",
-    "A1-Series": "A1-Series",
-    "Here you can upload files, like g-code, to send to the printer": "Here you can upload files, like g-code, to send to the printer",
-    "P1-Series": "P1-Series",
-    "Upload g-code file": "Upload g-code file",
-    "X1-Series": "X1-Series"
+    "A1-Series": "A1-Serie",
+    "Here you can upload files, like g-code, to send to the printer": "Hier können Sie Dateien, wie z. B. G-Code, hochladen, um sie an den Drucker zu senden",
+    "P1-Series": "P1-Serie",
+    "Upload g-code file": "G-Code-Datei hochladen",
+    "X1-Series": "X1-Serie"
 }

@@ -11,9 +11,9 @@
     "API token from printer network settings - see README for detailed instructions per printer model": "来自打印机网络设置的 API 令牌——请参阅 README 获取各型号打印机的详细说明",
     "Serial number of device": "设备序列号",
     "Device serial number from printer network settings - required for authentication": "来自打印机网络设置的设备序列号——认证时必需",
-    "A1-Series": "A1-Series",
-    "Here you can upload files, like g-code, to send to the printer": "Here you can upload files, like g-code, to send to the printer",
-    "P1-Series": "P1-Series",
-    "Upload g-code file": "Upload g-code file",
-    "X1-Series": "X1-Series"
+    "A1-Series": "A1系列",
+    "Here you can upload files, like g-code, to send to the printer": "您可以在此上传文件（如G代码）发送到打印机",
+    "P1-Series": "P1系列",
+    "Upload g-code file": "上传G代码文件",
+    "X1-Series": "X1系列"
 }

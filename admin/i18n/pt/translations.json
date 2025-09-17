@@ -11,9 +11,9 @@
     "API token from printer network settings - see README for detailed instructions per printer model": "Token da API das configurações de rede da impressora - veja o README para instruções detalhadas por modelo de impressora",
     "Serial number of device": "Número de série do dispositivo",
     "Device serial number from printer network settings - required for authentication": "Número de série do dispositivo das configurações de rede da impressora - necessário para autenticação",
-    "A1-Series": "A1-Series",
-    "Here you can upload files, like g-code, to send to the printer": "Here you can upload files, like g-code, to send to the printer",
-    "P1-Series": "P1-Series",
-    "Upload g-code file": "Upload g-code file",
-    "X1-Series": "X1-Series"
+    "A1-Series": "Série A1",
+    "Here you can upload files, like g-code, to send to the printer": "Aqui você pode carregar arquivos, como G-code, para enviar à impressora",
+    "P1-Series": "Série P1",
+    "Upload g-code file": "Carregar arquivo G-code",
+    "X1-Series": "Série X1"
 }
