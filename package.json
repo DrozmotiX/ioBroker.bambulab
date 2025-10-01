@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.3.2",
-    "axios": "^1.12.1",
+    "axios": "^1.12.2",
     "iobroker-jsonexplorer": "^0.1.16",
     "mqtt": "^5.10.3"
   },
