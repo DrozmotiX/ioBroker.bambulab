@@ -37,7 +37,7 @@
     "@iobroker/testing": "^5.1.0",
     "@tsconfig/node18": "^18.2.4",
     "@types/node": "^24.3.1",
-    "mocha": "^11.7.2",
+    "mocha": "^11.7.5",
     "typescript": "~5.9.2"
   },
   "main": "main.js",
