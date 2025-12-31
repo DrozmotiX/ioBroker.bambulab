@@ -125,7 +125,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 ## License
 MIT License
 
-Copyright (c) 2025 DutchmanNL <oss@drozmotix.eu>
+Copyright (c) 2025-2026 DutchmanNL <oss@drozmotix.eu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
