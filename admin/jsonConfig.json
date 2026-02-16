@@ -1,90 +1,107 @@
 {
-	"i18n": true,
-	"type": "panel",
-	"items": {
-		"host": {
-			"type": "text",
-			"label": "Printer IP address",
-			"newLine": true,
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
-		},
-		"Password": {
-			"type": "password",
-			"label": "Access Token",
-			"help": "API token from printer network settings - see README for detailed instructions per printer model",
-			"newLine": true,
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
-		},
-		"serial": {
-			"type": "text",
-			"label": "Serial number of device",
-			"help": "Device serial number from printer network settings - required for authentication",
-			"newLine": false,
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
-		},
-		"printerModel": {
-			"newLine": true,
-			"type": "select",
-			"label": "Printer Model",
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4,
-			"options": [
-				{
-					"label": "A1-Series",
-					"value": "A1-Series"
-				},
-				{
-					"label": "P1-Series",
-					"value": "P1-Series"
-				},
-				{
-					"label": "X1-Series",
-					"value": "X1-Series"
-				}
-			],
-			"default": "P1-Series",
-			"help": "Please select your printer model"
-		},
-		"requestInterval": {
-			"type": "number",
-			"label": "Seconds between data polling",
-			"help": "Only used for P1x series",
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4,
-			"default": 5,
-			"min" : 1,
-			"max": 36000
-		},
+    "i18n": true,
+    "type": "panel",
+    "items": {
+        "host": {
+            "type": "text",
+            "label": "Printer IP address",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4
+        },
+        "Password": {
+            "type": "password",
+            "label": "Access Token",
+            "help": "API token from printer network settings - see README for detailed instructions per printer model",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4
+        },
+        "serial": {
+            "type": "text",
+            "label": "Serial number of device",
+            "help": "Device serial number from printer network settings - required for authentication",
+            "newLine": false,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4
+        },
+        "printerModel": {
+            "newLine": true,
+            "type": "select",
+            "label": "Printer Model",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4,
+            "options": [
+                {
+                    "label": "A1-Series",
+                    "value": "A1-Series"
+                },
+                {
+                    "label": "H2D-Series",
+                    "value": "H2D-Series"
+                },
+                {
+                    "label": "P1-Series",
+                    "value": "P1-Series"
+                },
+                {
+                    "label": "X1-Series",
+                    "value": "X1-Series"
+                }
+            ],
+            "default": "P1-Series",
+            "help": "Please select your printer model"
+        },
+        "requestInterval": {
+            "type": "number",
+            "label": "Seconds between data polling",
+            "help": "Only used for P1x series",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4,
+            "default": 5,
+            "min": 1,
+            "max": 36000
+        },
 
-		"getDataFiles" : {
-			"newLine": true,
-			"type": "fileSelector",
-			"upload": "/",
-			"label": "Upload g-code file",
-			"help": "Here you can upload files, like g-code, to send to the printer",
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
-		}
-	}
+        "getDataFiles": {
+            "newLine": true,
+            "type": "fileSelector",
+            "upload": "/",
+            "label": "Upload g-code file",
+            "help": "Here you can upload files, like g-code, to send to the printer",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4
+        },
+        "messageBuffer": {
+            "type": "number",
+            "label": "Message buffer",
+            "help": "Only process data every X seconds, reduces CPU load. 0 = every second",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4,
+            "default": 5,
+            "min": 1,
+            "max": 36000
+        }
+    }
 }

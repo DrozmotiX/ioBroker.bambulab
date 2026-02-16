@@ -21,6 +21,7 @@ const clientConnection = {
     connectError: false,
     initiated: false,
     reconnectMessageShown: false, // Track if we've shown the reconnection message
+    messageBuffer: false, // Track if message buffer is active
 };
 const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
@@ -212,45 +213,54 @@ class Bambulab extends utils.Adapter {
      */
     async messageHandler(message) {
         try {
+            // Implement message buffer to avoid processing too many messages in a short time
+            if (clientConnection.messageBuffer === false) {
+                try {
+                    this.log.debug(`Message buffer inactive, message processing`);
+                    if (this.config.messageBuffer > 0) {
+                        clientConnection.messageBuffer = true;
+                        timeouts['messageBuffer'] = setTimeout(() => {
+                            // Request data for P1p printer series
+                            clientConnection.messageBuffer = false;
+                        }, this.config.messageBuffer * 1000);
+                    }
+                } catch (e) {
+                    this.log.error(`[MQTT Message handler] ${e}`);
+                }
+            } else {
+                this.log.debug(`Message buffer active, skipping message processing`);
+                return; // Ignore Message
+            }
+
             if (message.print) {
+                try {
+                    this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`);
+                } catch (error) {}
 
                 try {
-                    this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`)
-                } catch (error) {
-
-                }
-
-                try {
-                    this.log.debug(`Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`)
-                } catch (error) {
-
-                }
+                    this.log.debug(
+                        `Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`,
+                    );
+                } catch (error) {}
 
                 try {
-                    this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`)
-                } catch (error) {
-
-                }
+                    this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`);
+                } catch (error) {}
 
                 try {
-                    this.log.debug(`Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`)
-                } catch (error) {
-
-                }
-
+                    this.log.debug(
+                        `Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`,
+                    );
+                } catch (error) {}
 
                 try {
-                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`)
-                } catch (error) {
-
-                }
-
+                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`);
+                } catch (error) {}
 
                 function decodeExtruderTemp(raw) {
                     if (raw > 500) return Math.round(raw / 58100);
                     return raw; // Already realistic
                 }
-
 
                 // Modify values of JSON for states which need modification
                 message.print.control = {};
@@ -479,12 +489,7 @@ class Bambulab extends utils.Adapter {
         }
         timeouts['dataPolling'] = setTimeout(() => {
             // Request data for P1p printer series
-            if (
-                this.config.printerModel !== 'X1' &&
-                this.config.printerModel !== 'X1-Carbon' &&
-                this.config.printerModel !== 'X1-Series' &&
-                this.config.printerModel !== 'A1-Series'
-            ) {
+            if (this.config.printerModel === 'P1-Series') {
                 this.requestData();
             }
         }, this.config.requestInterval * 1000);
@@ -700,6 +705,11 @@ class Bambulab extends utils.Adapter {
             if (timeouts['dataPolling']) {
                 clearTimeout(timeouts['dataPolling']);
                 timeouts[timeouts['dataPolling']] = null;
+            }
+
+            if (timeouts['messageBuffer']) {
+                clearTimeout(timeouts['messageBuffer']);
+                timeouts['messageBuffer'] = null;
             }
 
             // Close MQTT connection if present
