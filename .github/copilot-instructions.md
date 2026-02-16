@@ -47,14 +47,61 @@ Always reference these instructions first and fallback to search or bash command
 - **IMPORTANT**: Requires initial setup with `dev-server setup` command before first use.
 - Use this for live development and testing of adapter changes after setup.
 
-## Manual Validation Scenarios
+## MANDATORY Validation Workflow
 
-After making changes to the adapter, ALWAYS run these validation steps:
+**CRITICAL**: Before ANY commit or code change is finalized, you MUST run this validation sequence in order:
+
+### Standard Validation Steps (ALWAYS Required)
+1. **Linting** (FIRST - Always run first):
+   ```bash
+   npm run lint
+   ```
+   - **MUST PASS** - Zero tolerance for linting errors
+   - CI will fail immediately if linting errors exist
+   - Fix all errors before proceeding to next steps
+   - Common fixes:
+     - Remove unused parameters from catch blocks: `catch (error) {}` → `catch {}`
+     - Add curly braces to single-line if statements
+     - Follow ESLint rules: tab indentation, single quotes, semicolons
+
+2. **Unit & Package Tests** (SECOND - After linting passes):
+   ```bash
+   npm run test
+   ```
+   - Runs `test:js` (unit tests) and `test:package` (package validation)
+   - All 77 tests must pass (20 unit + 57 package validation)
+   - Takes ~1 second to complete
+
+3. **Integration Tests** (OPTIONAL - For adapter logic changes):
+   ```bash
+   npm run test:integration
+   ```
+   - Only run when modifying core adapter functionality
+   - Takes ~44 seconds to complete
+   - Verifies adapter starts correctly with ioBroker infrastructure
+
+### Validation Order Summary
+```
+┌─────────────────────────────────────────────────────────┐
+│  MANDATORY VALIDATION SEQUENCE (Before Every Commit)    │
+├─────────────────────────────────────────────────────────┤
+│  1. npm run lint          [MUST PASS - CI Blocker]     │
+│  2. npm run test          [MUST PASS - 77 tests]       │
+│  3. npm run test:integration [Optional - if needed]    │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Why This Order Matters
+- **Linting first** catches syntax and style issues immediately (fastest feedback)
+- **Tests second** verify functional correctness after code is syntactically valid
+- **Integration last** performs expensive full-stack validation only when needed
+
+### After making changes to the adapter, ALWAYS run these validation steps:
 
 ### Core Functionality Testing
-1. **Adapter Startup**: Run `npm run test:integration` to verify the adapter can start without errors.
-2. **Linting**: Run `npm run lint` to ensure code style compliance.
-3. **All Tests**: Run `npm run test` to verify no regressions in existing functionality.
+1. **Linting**: Run `npm run lint` to ensure code style compliance - MUST PASS.
+2. **All Tests**: Run `npm run test` to verify no regressions in existing functionality.
+3. **Adapter Startup**: Run `npm run test:integration` to verify the adapter can start without errors (optional).
 
 ### Adapter-Specific Validation
 When modifying adapter logic in main.js:
@@ -135,9 +182,51 @@ admin/i18n/               - Translation files (updated via npm run translate)
 1. Modify main.js for core adapter logic
 2. Update lib/state_attr.js for new state definitions
 3. Add tests in test/ directory following existing patterns
-4. Run `npm run lint && npm run test` to validate changes
-5. Test integration with `npm run test:integration`
+4. **Run mandatory validation sequence**:
+   ```bash
+   npm run lint    # MUST PASS first
+   npm run test    # MUST PASS second
+   ```
+5. Test integration with `npm run test:integration` (if adapter logic changed)
 6. Update readme entry with reference to issue #xxx and user friendly short description of the fix
+
+### Common Linting Fixes
+When `npm run lint` fails, apply these common fixes:
+
+1. **Empty catch blocks with unused error parameter**:
+   ```javascript
+   // ❌ Wrong - unused parameter
+   try {
+       doSomething();
+   } catch (error) {}
+   
+   // ✅ Correct - remove parameter, add comment
+   try {
+       doSomething();
+   } catch {
+       // Ignore errors if data not available
+   }
+   ```
+
+2. **Missing curly braces on if statements**:
+   ```javascript
+   // ❌ Wrong - no braces
+   if (condition) return value;
+   
+   // ✅ Correct - add braces
+   if (condition) {
+       return value;
+   }
+   ```
+
+3. **Unused variables**:
+   - Remove unused variables or prefix with underscore: `_unused`
+   - Or use the value: log it, return it, or pass it along
+
+4. **Code style issues**:
+   - Use tabs for indentation (not spaces)
+   - Use single quotes for strings (not double quotes)
+   - Add semicolons at end of statements
 
 ### Updating Dependencies
 - `npm install <package>` to add new dependencies

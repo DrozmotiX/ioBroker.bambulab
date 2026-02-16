@@ -100,6 +100,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 * (DutchmanNL) Implemented a buffer system to reduce CPU usage and improve performance (#145)
 * (DutchmanNL & Copilot) Fix type conversion errors by replacing deprecated `tonumber` with proper `TOINTEGER`/`TOFLOAT` modifiers. #197
 * (DutchmanNL & Copilot) Add missing state attribute definitions for HD2 printer during printing (height, platform, tool, mapping). Fixes #194
+* (DutchmanNL & Copilot) Fix repository checker issues: update devDependencies to latest versions and correct news entries
 
 ### 0.4.1 (2025-09-13)
 * (DutchmanNL & Copilot) Fix HMS error code translations timeout error handling (#183)
