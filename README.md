@@ -93,6 +93,18 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.4.2 (2025-09-16)
+* (DutchmanNL) Improve error messages if printer is offline or not reachable. #xxx
+* (DutchmanNL) Solve several type definition issues. #203, #202, #201, #200, #199, #198
+* (DutchmanNL & Copilot) Fix type conversion errors by replacing deprecated `tonumber` with proper `TOINTEGER`/`TOFLOAT` modifiers. #197
+* (DutchmanNL & Copilot) Add missing state attribute definitions for HD2 printer during printing (height, platform, tool, mapping). Fixes #194
+
+### 0.4.1 (2025-09-13)
+* (DutchmanNL & Copilot) Fix HMS error code translations timeout error handling (#183)
+* (DutchmanNL & Copilot) Block dangerous G-code commands during printing for safety (#185)
+* (DutchmanNL & Copilot) Fix P1S fan speed display issues - double conversion and incorrect mapping (#184)
+* (DutchmanNL & Copilot) Add comprehensive API token location documentation for all Bambulab printer models (#182)
+
 ### 0.4.0 (2025-09-13)
 * (DutchmanNL) Add missing state definitions to resolve adapter warnings (#181)
 * (DutchmanNL) Empty finishTime and avoid time calculation when not printing (#179)
@@ -110,13 +122,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 * (DutchmanNL) update state definitions, (solves [#77](https://github.com/DrozmotiX/ioBroker.bambulab/issues/77) [#58](https://github.com/DrozmotiX/ioBroker.bambulab/issues/58))
 * (DutchmanNL) update connection handling, show connection error only once (Solves #99 #78 #74)
 
-### 0.3.2 (2023-11-20)
-* (DutchmanNL) Show finish time as ISO string
-
 ## License
 MIT License
 
-Copyright (c) 2025 DutchmanNL <oss@drozmotix.eu>
+Copyright (c) 2025-2026 DutchmanNL <oss@drozmotix.eu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

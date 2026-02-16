@@ -20,10 +20,15 @@ const clientConnection = {
     connected: false,
     connectError: false,
     initiated: false,
+    reconnectMessageShown: false, // Track if we've shown the reconnection message
 };
 const timeouts = {}; // Object array containing all running timers
 const errorCodesHMS = {}; // Object array of translated error codes
 let language = 'en'; // System language to handle error code translations, default EN
+
+// Array of G-code commands that should be blocked during printing for safety
+const blockedCommandsDuringPrinting = ['G0', 'G1', 'G28', 'G90', 'G91'];
+let currentPrintingState = null; // Track current printing state for safety checks
 
 class Bambulab extends utils.Adapter {
     /**
@@ -73,7 +78,20 @@ class Bambulab extends utils.Adapter {
                 return;
             }
 
-            this.log.info(`Try to connect to printer`);
+            // Only log connection attempt if we haven't shown the reconnect message yet
+            if (!clientConnection.reconnectMessageShown) {
+                if (clientConnection.connectError) {
+                    this.log.info(
+                        `Attempting to reconnect to printer - will retry automatically every 30 seconds until connection is restored`,
+                    );
+                    clientConnection.reconnectMessageShown = true;
+                } else {
+                    this.log.info(`Try to connect to printer`);
+                }
+            } else {
+                this.log.debug(`Retrying connection to printer`);
+            }
+
             clientConnection.initiated = true;
 
             // Properly close existing client if present
@@ -94,12 +112,13 @@ class Bambulab extends utils.Adapter {
             // Establish connection to printer by MQTT
             client.on('connect', () => {
                 if (!clientConnection.connected) {
-                    this.log.info(`Printer connected`);
+                    this.log.info(`Printer connected successfully`);
                 }
                 this.setState('info.connection', true, true);
                 clientConnection.connected = true;
                 clientConnection.connectError = false;
                 clientConnection.initiated = false; // Reset initiated flag on successful connection
+                clientConnection.reconnectMessageShown = false; // Reset for future disconnections
 
                 this.createControlStates();
 
@@ -145,7 +164,9 @@ class Bambulab extends utils.Adapter {
 
             client.on('end', () => {
                 if (clientConnection.connected) {
-                    this.log.warn(`Connection to Printer closed`);
+                    this.log.warn(
+                        `Printer connection lost - this could be due to printer being powered off or network issues`,
+                    );
                 }
                 this.setState('info.connection', false, true);
                 clientConnection.connected = false;
@@ -155,12 +176,14 @@ class Bambulab extends utils.Adapter {
 
             client.on('error', error => {
                 if (!clientConnection.connectError) {
-                    this.log.error(`Connection issue occurred ${error}`);
+                    this.log.error(`Connection issue occurred: ${error} - printer may be powered off or unreachable`);
                 }
                 // Close MQTT connection
                 client.end();
                 if (clientConnection.connected) {
-                    this.log.warn(`Connection to Printer closed`);
+                    this.log.warn(
+                        `Printer connection lost - this could be due to printer being powered off or network issues`,
+                    );
                 }
                 this.setState('info.connection', false, true);
 
@@ -190,6 +213,45 @@ class Bambulab extends utils.Adapter {
     async messageHandler(message) {
         try {
             if (message.print) {
+
+                try {
+                    this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`)
+                } catch (error) {
+
+                }
+
+                try {
+                    this.log.debug(`Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`)
+                } catch (error) {
+
+                }
+
+                try {
+                    this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`)
+                } catch (error) {
+
+                }
+
+                try {
+                    this.log.debug(`Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`)
+                } catch (error) {
+
+                }
+
+
+                try {
+                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`)
+                } catch (error) {
+
+                }
+
+
+                function decodeExtruderTemp(raw) {
+                    if (raw > 500) return Math.round(raw / 58100);
+                    return raw; // Already realistic
+                }
+
+
                 // Modify values of JSON for states which need modification
                 message.print.control = {};
                 if (message.print.cooling_fan_speed != null) {
@@ -202,6 +264,9 @@ class Bambulab extends utils.Adapter {
                 }
                 // Store original stg_cur value for printer state checking before conversion
                 const originalStgCur = message.print.stg_cur;
+
+                // Update current printing state for safety checks
+                currentPrintingState = originalStgCur;
 
                 if (message.print.stg_cur != null) {
                     message.print.stg_cur = convert.stageParser(message.print.stg_cur);
@@ -655,6 +720,41 @@ class Bambulab extends utils.Adapter {
      * @param {string} id - State ID that changed
      * @param {ioBroker.State | null | undefined} state - New state value
      */
+    /**
+     * Check if printer is currently in a state where dangerous G-code commands should be blocked
+     *
+     * @returns {boolean} True if dangerous G-code should be blocked
+     */
+    isPrintingOrActiveState() {
+        // Block dangerous commands when printer is actively working
+        // Based on stg_cur values:
+        //   -2 = Offline (safe)
+        //   -1 = Idle (safe)
+        //    0+ = Active working states (potentially dangerous)
+        return currentPrintingState != null && currentPrintingState >= 0;
+    }
+
+    /**
+     * Check if a G-code command should be blocked during printing
+     *
+     * @param {string|number} gcodeParam - The G-code command parameter
+     * @returns {boolean} True if command should be blocked
+     */
+    shouldBlockGcodeCommand(gcodeParam) {
+        if (!this.isPrintingOrActiveState()) {
+            return false; // Allow all commands when not actively working
+        }
+
+        // Convert to string and check if any blocked command is present
+        const upperParam = String(gcodeParam).toUpperCase().trim();
+        return blockedCommandsDuringPrinting.some(
+            blockedCmd =>
+                upperParam.startsWith(`${blockedCmd} `) ||
+                upperParam === blockedCmd ||
+                upperParam.startsWith(`${blockedCmd}\n`),
+        );
+    }
+
     async onStateChange(id, state) {
         if (state && state.val != null) {
             // Only act on trigger if value is not Acknowledged
@@ -673,6 +773,14 @@ class Bambulab extends utils.Adapter {
 
                 switch (checkID[stateLocation]) {
                     case '_customGcode':
+                        // Check if this G-code command should be blocked during printing
+                        if (this.shouldBlockGcodeCommand(state.val)) {
+                            this.log.warn(
+                                `Blocked dangerous G-code command "${state.val}" during active printing/working state (stg_cur: ${currentPrintingState}). Command ignored for safety.`,
+                            );
+                            return; // Exit without sending the command
+                        }
+
                         msg = msg = {
                             print: {
                                 command: 'gcode_line',
@@ -822,6 +930,14 @@ class Bambulab extends utils.Adapter {
                         };
                         break;
                     case 'homing':
+                        // Block homing (G28) command during active printing/working state
+                        if (this.isPrintingOrActiveState()) {
+                            this.log.warn(
+                                `Blocked homing command (G28) during active printing/working state (stg_cur: ${currentPrintingState}). Command ignored for safety.`,
+                            );
+                            return; // Exit without sending the command
+                        }
+
                         msg = msg = {
                             print: {
                                 command: 'gcode_line',
