@@ -242,7 +242,7 @@ class Bambulab extends utils.Adapter {
                 }
 
                 try {
-                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`);
+                    this.log.debug(`Nozzle temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`);
                 } catch {
                     // Ignore extraction errors for debug logging
                 }
