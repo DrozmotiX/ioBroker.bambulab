@@ -93,6 +93,9 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs
+
 ### 0.4.3 (2025-09-16)
 * (DutchmanNL) Improve error messages if printer is offline or not reachable.
 * (DutchmanNL) Added HD2 printer to the selection menu for easier access (#142)
