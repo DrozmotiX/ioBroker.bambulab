@@ -108,8 +108,13 @@
             "uk": "Підключається до 3d-принтерів Bambulab для отримання даних поточного друку та контролю основних аспектів",
             "zh-cn": "连接到 Bambulab 3D 打印机以检索当前打印的数据并控制主要方面"
         },
-        "authors": ["DutchmanNL <oss@drozmotix.eu>"],
-        "keywords": ["bambulab", "3d-printing"],
+        "authors": [
+            "DutchmanNL <oss@drozmotix.eu>"
+        ],
+        "keywords": [
+            "bambulab",
+            "3d-printing"
+        ],
         "platform": "Javascript/Node.js",
         "icon": "bambulab.png",
         "enabled": true,
@@ -141,8 +146,14 @@
             "type": "free"
         }
     },
-    "encryptedNative": ["Password", "serial"],
-    "protectedNative": ["Password", "serial"],
+    "encryptedNative": [
+        "Password",
+        "serial"
+    ],
+    "protectedNative": [
+        "Password",
+        "serial"
+    ],
     "native": {
         "host": "192.168.1.100",
         "port": 8883,

@@ -1,12 +1,19 @@
 {
-	"bambulab adapter settings": "Adapter settings for bambulab",
-	"Printer IP address": "Ip-Address of your printer",
-	"Access Token": "Access Token",
+	"A1-Series": "A1-Series",
 	"API token from printer network settings - see README for detailed instructions per printer model": "API token from printer network settings - see README for detailed instructions per printer model",
-	"Serial number of device": "Serial number of device",
+	"Access Token": "Access Token",
 	"Device serial number from printer network settings - required for authentication": "Device serial number from printer network settings - required for authentication",
-	"Printer Model": "Printer Model",
+	"H2D-Series": "H2D-Series",
+	"Here you can upload files, like g-code, to send to the printer": "Here you can upload files, like g-code, to send to the printer",
+	"Message buffer": "Message buffer",
+	"Only process data every X seconds, reduces CPU load. 0 = every second": "Only process data every X seconds, reduces CPU load. 0 = every second",
+	"Only used for P1x series": "Only used for P1x series",
+	"P1-Series": "P1-Series",
 	"Please select your printer model": "Please select your printer model",
+	"Printer IP address": "Ip-Address of your printer",
+	"Printer Model": "Printer Model",
 	"Seconds between data polling": "Seconds between data polling",
-	"Only used for P1x series": "Only used for P1x series"
+	"Serial number of device": "Serial number of device",
+	"Upload g-code file": "Upload g-code file",
+	"X1-Series": "X1-Series"
 }

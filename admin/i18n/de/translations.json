@@ -1,12 +1,19 @@
 {
-    "bambulab adapter settings": "Adaptereinstellungen für Bambulab",
-    "Printer IP address": "IP-Adresse Ihres Druckers",
-    "Access Token": "Zugangs-Token",
+    "A1-Series": "A1-Serie",
     "API token from printer network settings - see README for detailed instructions per printer model": "API-Token aus den Drucker-Netzwerkeinstellungen - siehe README für detaillierte Anweisungen je Druckermodell",
-    "Serial number of device": "Seriennummer des Gerätes", 
+    "Access Token": "Zugangs-Token",
     "Device serial number from printer network settings - required for authentication": "Geräte-Seriennummer aus den Drucker-Netzwerkeinstellungen - erforderlich für Authentifizierung",
-    "Printer Model": "Druckermodell",
+    "H2D-Series": "H2D-Serie",
+    "Here you can upload files, like g-code, to send to the printer": "Hier können Sie Dateien, wie z. B. G-Code, hochladen, um sie an den Drucker zu senden",
+    "Message buffer": "Nachrichtenpuffer",
+    "Only process data every X seconds, reduces CPU load. 0 = every second": "Daten nur alle X Sekunden verarbeiten, reduziert CPU-Last. 0 = jede Sekunde",
+    "Only used for P1x series": "Wird nur für die P1x-Serie verwendet",
+    "P1-Series": "P1-Serie",
     "Please select your printer model": "Bitte wählen Sie Ihr Druckermodell aus",
+    "Printer IP address": "IP-Adresse Ihres Druckers",
+    "Printer Model": "Druckermodell",
     "Seconds between data polling": "Sekunden zwischen der Datenabfrage",
-    "Only used for P1x series": "Wird nur für die P1x-Serie verwendet"
+    "Serial number of device": "Seriennummer des Gerätes",
+    "Upload g-code file": "G-Code-Datei hochladen",
+    "X1-Series": "X1-Serie"
 }

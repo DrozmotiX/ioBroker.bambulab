@@ -31,10 +31,130 @@ Always reference these instructions first and fallback to search or bash command
    - Expects network access to Bambulab servers (will show connection errors but adapter should start successfully).
 
 ### Translation Management
-- `npm run translate` -- Updates translation files from base English text
-- Automatically generates translations for admin UI in 10 languages
-- Updates both io-package.json and admin/i18n/ translation files
-- Run after making any text changes in admin configuration
+
+**CRITICAL**: Translation files must stay synchronized with `admin/jsonConfig.json`. Orphaned keys or missing translations will cause UI issues and PR review delays.
+
+#### Overview
+- **Location**: `admin/i18n/{lang}/translations.json` for 11 languages (de, en, es, fr, it, nl, pl, pt, ru, uk, zh-cn)
+- **Source of truth**: `admin/jsonConfig.json` - all `label` and `help` properties must have translations
+- **Command**: `npm run translate` - auto-generates translations but does NOT remove orphaned keys
+- **Formatting**: English uses tabs, other languages use 4 spaces (per ioBroker standards)
+
+#### Critical Rules
+1. **Keys must match exactly**: Every label/help text in `jsonConfig.json` must exist in all translation files
+2. **No orphaned keys**: Translation files must NOT contain keys that don't exist in `jsonConfig.json`
+3. **Native language required**: All translations must be in the target language (no English fallbacks)
+4. **Alphabetical sorting**: Keys must be sorted alphabetically to prevent merge conflicts
+
+#### Workflow for Translation Updates
+
+**When modifying `admin/jsonConfig.json`:**
+
+1. **Make your changes** to labels, help texts, or add new UI elements
+2. **Run automatic translation**:
+   ```bash
+   npm run translate
+   ```
+   This updates io-package.json and adds new keys to translation files, but **does NOT remove orphaned keys**
+
+3. **Run validation script** to check for issues:
+   ```javascript
+   // Create validation script
+   const fs = require('fs');
+   const jsonConfig = JSON.parse(fs.readFileSync('admin/jsonConfig.json', 'utf8'));
+   
+   function extractTexts(obj, texts = new Set()) {
+       if (typeof obj === 'object' && obj !== null) {
+           if (obj.label) texts.add(obj.label);
+           if (obj.help) texts.add(obj.help);
+           for (const key in obj) {
+               extractTexts(obj[key], texts);
+           }
+       }
+       return texts;
+   }
+   
+   const requiredTexts = extractTexts(jsonConfig);
+   const languages = ['de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'uk', 'zh-cn'];
+   
+   languages.forEach(lang => {
+       const translations = JSON.parse(fs.readFileSync(`admin/i18n/${lang}/translations.json`, 'utf8'));
+       const translationKeys = new Set(Object.keys(translations));
+       
+       const missing = Array.from(requiredTexts).filter(text => !translationKeys.has(text));
+       const orphaned = Array.from(translationKeys).filter(key => !requiredTexts.has(key));
+       
+       console.log(`\n=== ${lang} ===`);
+       if (missing.length > 0) {
+           console.log('❌ Missing keys:', missing);
+       }
+       if (orphaned.length > 0) {
+           console.log('❌ Orphaned keys (REMOVE THESE):', orphaned);
+       }
+       if (missing.length === 0 && orphaned.length === 0) {
+           console.log('✅ All keys match!');
+       }
+   });
+   ```
+
+4. **Remove orphaned keys manually** - if validation shows orphaned keys, remove them from all translation files
+5. **Add missing translations** - if validation shows missing keys, add proper native language translations
+6. **Verify all languages** - ensure all 11 languages pass validation
+7. **Run mandatory validation**:
+   ```bash
+   npm run lint    # Must pass
+   npm run test    # Must pass
+   ```
+
+#### Common Pitfalls (Lessons from PR #202)
+
+❌ **Don't do this:**
+- Leave orphaned keys like "Access Token (see printer network settings)" when they're no longer in jsonConfig.json
+- Use English text as "translations" (e.g., `"Message buffer": "Message buffer"` in German file)
+- Skip validation script - this leads to 10+ review comments asking to remove orphaned keys
+- Rely only on `npm run translate` - it doesn't remove old keys
+
+✅ **Do this:**
+- Always run validation script to check for orphaned keys
+- Remove ALL orphaned keys before committing
+- Provide proper native language translations
+- Alphabetically sort all translation files
+- Verify all 11 languages match jsonConfig.json exactly
+
+#### Example: Adding a New UI Element
+
+```javascript
+// 1. Add to admin/jsonConfig.json
+{
+    "newFeature": {
+        "type": "checkbox",
+        "label": "Enable new feature",
+        "help": "This enables the new feature for testing"
+    }
+}
+
+// 2. Run: npm run translate
+// 3. Run validation script
+// 4. If needed, manually add native translations:
+
+// admin/i18n/de/translations.json
+{
+    "Enable new feature": "Neue Funktion aktivieren",
+    "This enables the new feature for testing": "Dies aktiviert die neue Funktion zum Testen"
+}
+
+// 5. Verify: All 11 languages have both keys
+// 6. Run: npm run lint && npm run test
+```
+
+#### Translation Validation Must Pass Before Commit
+
+Before committing any changes to admin UI or translations:
+1. ✅ Validation script shows "All keys match!" for all 11 languages
+2. ✅ No orphaned keys exist in any translation file
+3. ✅ All translations are in native language (no English fallbacks)
+4. ✅ `npm run lint` passes
+5. ✅ `npm run test` passes
 
 ### TypeScript Type Checking - KNOWN ISSUES
 - `npm run check` -- Currently fails with 10 TypeScript errors. DO NOT expect this to pass.
