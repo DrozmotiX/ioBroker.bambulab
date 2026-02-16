@@ -95,6 +95,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 -->
 ### **WORK IN PROGRESS**
 * (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs
+* (DutchmanNL & Copilot) Synchronize admin translations with jsonConfig.json - add missing translations and remove orphaned keys (#202)
 
 ### 0.4.3 (2025-09-16)
 * (DutchmanNL) Improve error messages if printer is offline or not reachable.
