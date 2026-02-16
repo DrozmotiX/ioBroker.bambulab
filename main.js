@@ -235,30 +235,42 @@ class Bambulab extends utils.Adapter {
             if (message.print) {
                 try {
                     this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`);
-                } catch (error) {}
+                } catch {
+                    // Ignore if extruder info is not available
+                }
 
                 try {
                     this.log.debug(
                         `Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`,
                     );
-                } catch (error) {}
+                } catch {
+                    // Ignore if extruder info is not available
+                }
 
                 try {
                     this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`);
-                } catch (error) {}
+                } catch {
+                    // Ignore if extruder info is not available
+                }
 
                 try {
                     this.log.debug(
                         `Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`,
                     );
-                } catch (error) {}
+                } catch {
+                    // Ignore if extruder info is not available
+                }
 
                 try {
                     this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`);
-                } catch (error) {}
+                } catch {
+                    // Ignore if nozzle_temper is not available
+                }
 
                 function decodeExtruderTemp(raw) {
-                    if (raw > 500) return Math.round(raw / 58100);
+                    if (raw > 500) {
+                        return Math.round(raw / 58100);
+                    }
                     return raw; // Already realistic
                 }
 
