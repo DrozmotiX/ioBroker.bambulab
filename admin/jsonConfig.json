@@ -1,90 +1,268 @@
 {
 	"i18n": true,
-	"type": "panel",
+	"type": "tabs",
 	"items": {
-		"host": {
-			"type": "text",
-			"label": "Printer IP address",
-			"newLine": true,
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
-		},
-		"Password": {
-			"type": "password",
-			"label": "Access Token",
-			"help": "API token from printer network settings - see README for detailed instructions per printer model",
-			"newLine": true,
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
-		},
-		"serial": {
-			"type": "text",
-			"label": "Serial number of device",
-			"help": "Device serial number from printer network settings - required for authentication",
-			"newLine": false,
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
-		},
-		"printerModel": {
-			"newLine": true,
-			"type": "select",
-			"label": "Printer Model",
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4,
-			"options": [
-				{
-					"label": "A1-Series",
-					"value": "A1-Series"
+		"_options": {
+			"type": "panel",
+			"label": "Main settings", 
+			"items": {
+				"howToConnect": {
+					"type": "header",
+					"text": "Connection Information",
+					"size": 1
 				},
-				{
-					"label": "P1-Series",
-					"value": "P1-Series"
+				"headerHowToConnect-details-1": {
+					"newLine": true,
+					"type": "staticText",
+					"text": "This adapter allows you to manage multiple Bambulab printers from a single instance, saving 40-60MB RAM per additional printer connection.",
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
 				},
-				{
-					"label": "X1-Series",
-					"value": "X1-Series"
+				"headerHowToConnect-details-2": {
+					"newLine": true,
+					"type": "staticText",
+					"text": "Each printer requires an IP address, access token, and serial number from the printer's network settings.",
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
+				},
+				"requestInterval": {
+					"newLine": true,
+					"type": "number",
+					"label": "Default seconds between data polling",
+					"help": "Only used for P1x series - can be overridden per printer",
+					"xs": 12,
+					"sm": 12,
+					"md": 6,
+					"lg": 4,
+					"xl": 4,
+					"default": 5,
+					"min": 1,
+					"max": 36000
+				},
+				"getDataFiles": {
+					"newLine": true,
+					"type": "fileSelector",
+					"upload": "/",
+					"label": "Upload g-code file",
+					"help": "Here you can upload files, like g-code, to send to the printer",
+					"xs": 12,
+					"sm": 12,
+					"md": 6,
+					"lg": 4,
+					"xl": 4
 				}
-			],
-			"default": "P1-Series",
-			"help": "Please select your printer model"
+			}
 		},
-		"requestInterval": {
-			"type": "number",
-			"label": "Seconds between data polling",
-			"help": "Only used for P1x series",
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4,
-			"default": 5,
-			"min" : 1,
-			"max": 36000
-		},
-
-		"getDataFiles" : {
-			"newLine": true,
-			"type": "fileSelector",
-			"upload": "/",
-			"label": "Upload g-code file",
-			"help": "Here you can upload files, like g-code, to send to the printer",
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
+		"printers": {
+			"type": "panel",
+			"label": "Printers",
+			"items": {
+				"details-1": {
+					"newLine": true,
+					"type": "staticText",
+					"text": "Adapter must be running to use the add/remove/modify buttons below.",
+					"hidden": "_alive",
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12
+				},
+				"printerIP": {
+					"newLine": true,
+					"type": "text",
+					"xs": 12,
+					"sm": 3,
+					"md": 3,
+					"lg": 3,
+					"label": "Printer IP Address",
+					"doNotSave": true,
+					"default": ""
+				},
+				"printerPassword": {
+					"type": "password", 
+					"label": "Access Token",
+					"help": "API token from printer network settings - see README for detailed instructions per printer model",
+					"doNotSave": true,
+					"default": "",
+					"xs": 12,
+					"sm": 3,
+					"md": 3,
+					"lg": 3
+				},
+				"printerSerial": {
+					"type": "text",
+					"label": "Serial Number",
+					"help": "Device serial number from printer network settings - required for authentication", 
+					"doNotSave": true,
+					"default": "",
+					"xs": 12,
+					"sm": 2,
+					"md": 2,
+					"lg": 2
+				},
+				"printerModel": {
+					"type": "select",
+					"label": "Printer Model",
+					"doNotSave": true,
+					"default": "P1-Series",
+					"xs": 12,
+					"sm": 2,
+					"md": 2,
+					"lg": 2,
+					"options": [
+						{
+							"label": "A1-Series",
+							"value": "A1-Series"
+						},
+						{
+							"label": "P1-Series", 
+							"value": "P1-Series"
+						},
+						{
+							"label": "X1-Series",
+							"value": "X1-Series"
+						}
+					],
+					"help": "Please select your printer model"
+				},
+				"_addUpdatePrinter": {
+					"newLine": true,
+					"type": "sendTo",
+					"label": "Add/Update Printer",
+					"variant": "outlined",
+					"showProcess": true,
+					"command": "_addUpdatePrinter",
+					"jsonData": "{ \"ip\": \"${data.printerIP}\", \"password\": \"${data.printerPassword}\", \"serial\": \"${data.printerSerial}\", \"model\": \"${data.printerModel}\" }",
+					"useNative": true,
+					"disabled": "data.printerIP==='' || data.printerPassword==='' || data.printerSerial===''",
+					"hidden": "!_alive",
+					"xs": 12,
+					"sm": 6,
+					"md": 6,
+					"lg": 6
+				},
+				"deletePrinter": {
+					"type": "sendTo",
+					"label": "Delete Printer",
+					"variant": "outlined",
+					"showProcess": true,
+					"command": "deletePrinter",
+					"jsonData": "{ \"ip\": \"${data.printerIP}\"}",
+					"useNative": true,
+					"disabled": "data.printerIP===''",
+					"hidden": "!_alive",
+					"xs": 12,
+					"sm": 6,
+					"md": 6,
+					"lg": 6,
+					"confirm": {
+						"text": "Are you sure to delete this printer? All states will be removed",
+						"title": "Confirm printer deletion",
+						"ok": "Delete Printer",
+						"cancel": "Cancel",
+						"type": "warning"
+					}
+				},
+				"header": {
+					"newLine": true,
+					"type": "header",
+					"size": 1,
+					"text": "Configured Printers"
+				},
+				"loadPrinters": {
+					"newLine": true,
+					"type": "sendTo",
+					"hidden": "!_alive",
+					"command": "loadPrinters",
+					"jsonData": "{}",
+					"label": "Refresh Printer List",
+					"useNative": true,
+					"variant": "outlined",
+					"showProcess": true,
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12
+				},
+				"printersTable": {
+					"type": "table",
+					"noDelete": true,
+					"newLine": true,
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"showSecondAddAt": 5,
+					"items": [
+						{
+							"type": "text",
+							"readOnly": true,
+							"attr": "ip",
+							"width": "20%",
+							"title": "IP Address",
+							"tooltip": "Printer IP Address",
+							"filter": false,
+							"sort": false,
+							"default": "",
+							"validatorNoSaveOnError": true
+						},
+						{
+							"type": "text",
+							"readOnly": true,
+							"attr": "serial",
+							"width": "25%",
+							"title": "Serial Number",
+							"tooltip": "Printer Serial Number",
+							"filter": false,
+							"sort": false,
+							"default": "",
+							"validatorNoSaveOnError": true
+						},
+						{
+							"type": "text",
+							"readOnly": true,
+							"attr": "model",
+							"width": "15%",
+							"title": "Model",
+							"tooltip": "Printer Model",
+							"filter": false,
+							"sort": false,
+							"default": "",
+							"validatorNoSaveOnError": true
+						},
+						{
+							"type": "text",
+							"readOnly": true,
+							"attr": "connectState",
+							"width": "20%",
+							"title": "Connection Status",
+							"tooltip": "Current connection status",
+							"filter": false,
+							"sort": false,
+							"default": "Disconnected",
+							"validatorNoSaveOnError": true
+						},
+						{
+							"type": "text",
+							"readOnly": true,
+							"attr": "printState",
+							"width": "20%",
+							"title": "Print Status",
+							"tooltip": "Current print status",
+							"filter": false,
+							"sort": false,
+							"default": "Unknown",
+							"validatorNoSaveOnError": true
+						}
+					]
+				}
+			}
 		}
 	}
 }
