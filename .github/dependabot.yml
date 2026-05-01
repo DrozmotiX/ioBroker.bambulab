@@ -10,6 +10,10 @@ updates:
       cronjob: "25 2 13 * *"
     open-pull-requests-limit: 30
     versioning-strategy: "increase"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
 
   - package-ecosystem: "github-actions"
     directory: "/"
