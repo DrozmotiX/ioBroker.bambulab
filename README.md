@@ -122,6 +122,8 @@ All of this helps me to provide error-free adapters that basically never crash.
 * (DutchmanNL) Updated missing definitions for full MQTT API incl H2D
 * (DutchmanNL & Copilot) Fix repository checker issues and improve admin UI compatibility
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 MIT License
 
