@@ -660,7 +660,7 @@ class Bambulab extends utils.Adapter {
                 this.log.info(`No Local translation available, version ${onlineTran.ver} downloaded`);
                 this.setStateAsync(`info.hmsErrorCodeTranslations`, { val: JSON.stringify(onlineTranObj), ack: true });
                 await loadTranslationsToMemory(onlineTranObj);
-            } else if (currentTran.val != null && currentTran.val !== '') {
+            } else if (typeof currentTran.val === 'string' && currentTran.val !== '') {
                 const currentTranObj = JSON.parse(currentTran.val);
                 // Check if new version is available
                 if (currentTranObj.ver !== onlineTran.ver) {
