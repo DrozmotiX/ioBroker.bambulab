@@ -14,6 +14,7 @@ const { default: axios } = require('axios'); // Http request library
 const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer library
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
+const { canonicalizeSerial, decodeH2NozzleTemperatures, decodeH2ChamberTemperatures } = require('./lib/h2');
 
 let client; // Memory to store client connection information
 const clientConnection = {
@@ -124,18 +125,20 @@ class Bambulab extends utils.Adapter {
                 this.createControlStates();
 
                 // Subscribe on a printer topic after connection
-                client.subscribe([`device/${this.config.serial}/report`], () => {
-                    this.log.debug(`Subscribed to printer data topic by serial | ${this.config.serial}`);
+                const mqttSerial = canonicalizeSerial(this.config.serial);
+                client.subscribe([`device/${mqttSerial}/report`], () => {
+                    this.log.debug(`Subscribed to printer data topic by serial | ${mqttSerial}`);
+                    this.requestVersion();
+                    this.requestData();
                 });
-
-                // After new firmware release this summer all data must be requested 1 time at adapter start
-                this.requestData();
             });
 
             // Receive MQTT messages
-            client.on('message', (topic, message) => {
+            client.on('message', async (topic, message) => {
                 // Parse string to an JSON object
-                message = JSON.parse(message.toString());
+                const parsedMessage = JSON.parse(message.toString());
+                message = parsedMessage;
+                const printerInfo = parsedMessage.info;
 
                 // @ts-expect-error if print does not exist function will return false and skip
                 if (message && message.print && message && message.print.result) {
@@ -145,7 +148,10 @@ class Bambulab extends utils.Adapter {
                 } else if (message && message.print) {
                     this.log.debug(`Printer Message ${JSON.stringify(message)}`);
                     this.messageHandler(message);
-                    // @ts-expect-error if system does not exist function will return false and skip
+                } else if (printerInfo && printerInfo.command === 'get_version') {
+                    this.log.debug(`Printer version message ${JSON.stringify(message)}`);
+                    await jsonExplorer.traverseJson(printerInfo, `${this.config.serial}.firmware`, false, false, 0);
+                    // @ts-expect-error if command does not exist function will return false and skip
                 } else if (message && message.command) {
                     this.log.info(`Response to control command ${JSON.stringify(message)}`);
                     // @ts-expect-error if system does not exist function will return false and skip
@@ -233,46 +239,8 @@ class Bambulab extends utils.Adapter {
             }
 
             if (message.print) {
-                try {
-                    this.log.debug(`Extruder R temp: ${message.print.device.extruder.info[0].temp}`);
-                } catch {
-                    // Ignore if extruder info is not available
-                }
-
-                try {
-                    this.log.debug(
-                        `Extruder R temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[0].temp)}`,
-                    );
-                } catch {
-                    // Ignore if extruder info is not available
-                }
-
-                try {
-                    this.log.debug(`Extruder L temp: ${message.print.device.extruder.info[1].temp}`);
-                } catch {
-                    // Ignore if extruder info is not available
-                }
-
-                try {
-                    this.log.debug(
-                        `Extruder L temp decoded: ${decodeExtruderTemp(message.print.device.extruder.info[1].temp)}`,
-                    );
-                } catch {
-                    // Ignore if extruder info is not available
-                }
-
-                try {
-                    this.log.debug(`Nozzel temp: ${decodeExtruderTemp(message.print.nozzle_temper)}`);
-                } catch {
-                    // Ignore if nozzle_temper is not available
-                }
-
-                function decodeExtruderTemp(raw) {
-                    if (raw > 500) {
-                        return Math.round(raw / 58100);
-                    }
-                    return raw; // Already realistic
-                }
+                Object.assign(message.print, decodeH2NozzleTemperatures(message.print.device?.extruder?.info));
+                Object.assign(message.print, decodeH2ChamberTemperatures(message.print.device?.ctc?.info?.temp));
 
                 // Modify values of JSON for states which need modification
                 message.print.control = {};
@@ -473,7 +441,7 @@ class Bambulab extends utils.Adapter {
     publishMQTTmessages(msg) {
         this.log.debug(`Publish message ${JSON.stringify(msg)}`);
 
-        const topic = `device/${this.config.serial}/request`;
+        const topic = `device/${canonicalizeSerial(this.config.serial)}/request`;
         client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, error => {
             if (error) {
                 console.error(error);
@@ -485,10 +453,9 @@ class Bambulab extends utils.Adapter {
         // Prepare MQTT message
         const msg = {
             pushing: {
-                sequence_id: '1',
+                sequence_id: '0',
                 command: 'pushall',
             },
-            user_id: '1234567890',
         };
 
         // Try to request data
@@ -505,6 +472,10 @@ class Bambulab extends utils.Adapter {
                 this.requestData();
             }
         }, this.config.requestInterval * 1000);
+    }
+
+    requestVersion() {
+        this.publishMQTTmessages({ info: { sequence_id: '0', command: 'get_version' } });
     }
 
     createControlStates() {

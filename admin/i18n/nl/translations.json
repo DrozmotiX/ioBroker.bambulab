@@ -3,6 +3,7 @@
     "API token from printer network settings - see README for detailed instructions per printer model": "API-token uit de netwerkinstellingen van de printer - zie README voor gedetailleerde instructies per printermodel",
     "Access Token": "Access Token",
     "Device serial number from printer network settings - required for authentication": "Serienummer van het apparaat uit de netwerkinstellingen van de printer - vereist voor authenticatie",
+    "H2C-Series": "H2C-serie",
     "H2D-Series": "H2D-serie",
     "Here you can upload files, like g-code, to send to the printer": "Hier kunt u bestanden, zoals G-code, uploaden om naar de printer te sturen",
     "Message buffer": "Berichtenbuffer",

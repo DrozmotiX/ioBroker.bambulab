@@ -3,6 +3,7 @@
     "API token from printer network settings - see README for detailed instructions per printer model": "来自打印机网络设置的 API 令牌——请参阅 README 获取各型号打印机的详细说明",
     "Access Token": "Access Token",
     "Device serial number from printer network settings - required for authentication": "来自打印机网络设置的设备序列号——认证时必需",
+    "H2C-Series": "H2C系列",
     "H2D-Series": "H2D系列",
     "Here you can upload files, like g-code, to send to the printer": "您可以在此上传文件（如G代码）以发送到打印机",
     "Message buffer": "消息缓冲区",

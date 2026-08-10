@@ -41,13 +41,14 @@ The location of the API token and serial number depends on your printer model:
 2. The access token is directly visible in network settings
 3. Serial number can be found in the same menu or in device information
 
-**Note:** You must select your Printer model correctly in the adapter settings. Only the X1 series allows pushing of messages, P1x series needs to request by interval setting (default every 5 seconds)
+**Note:** You must select your Printer model correctly in the adapter settings. X1 and H2 series push messages after the initial request, while P1x series needs to request by interval setting (default every 5 seconds).
 
 ## Supported models
 | Printer-Model | Status                  |
 |---------------|-------------------------|
 | AMS           | :white_check_mark:      |
 | A1            | :white_check_mark:      |
+| H2C           | :white_check_mark:      |
 | P1p           | :white_check_mark:      |
 | P1s           | :white_check_mark:      |
 | X1            | :white_check_mark:      |
@@ -94,6 +95,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 	### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+* Add H2C local MQTT support, firmware discovery and dual-nozzle temperatures
 * (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs
 * (DutchmanNL & Copilot) Synchronize admin translations with jsonConfig.json - add missing translations and remove orphaned keys (#202)
 
