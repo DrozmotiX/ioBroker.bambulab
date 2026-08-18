@@ -94,6 +94,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 	### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
 * (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs
 * (DutchmanNL & Copilot) Synchronize admin translations with jsonConfig.json - add missing translations and remove orphaned keys (#202)
 
