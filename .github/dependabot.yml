@@ -1,29 +1,27 @@
-# Dependabot will run on day 13 of each month at 02:25 (Europe/Berlin timezone)
+# Dependabot will run on day 24 of each month at 02:56 (Europe/Berlin timezone)
 version: 2
 updates:
 
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "cron"
-      timezone: "Europe/Berlin"
-      cronjob: "25 2 13 * *"
+      interval: 'cron'
+      timezone: 'Europe/Berlin'
+      cronjob: '25 2 13 * *'
     open-pull-requests-limit: 30
-    versioning-strategy: "increase"
+    versioning-strategy: 'increase'
     ignore:
-      # @types/node must track engines.node (Node 22); major bumps introduce wrong typings
-      - dependency-name: "@types/node"
+      - dependency-name: '@types/node'
         update-types:
-          - "version-update:semver-major"
-    # Delay non-security npm updates by 7 days to reduce supply chain risk
+          - 'version-update:semver-major'
     cooldown:
       default-days: 7
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "cron"
-      timezone: "Europe/Berlin"
-      cronjob: "25 2 13 * *"
+      interval: 'cron'
+      timezone: 'Europe/Berlin'
+      cronjob: '25 2 13 * *'
     open-pull-requests-limit: 30
-    target-branch: "dependabot"
+    target-branch: 'dependabot'
