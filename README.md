@@ -125,6 +125,8 @@ All of this helps me to provide error-free adapters that basically never crash.
 
 Older changes can be found at [CHANGELOG_OLD.md](CHANGELOG_OLD.md).
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 MIT License
 
