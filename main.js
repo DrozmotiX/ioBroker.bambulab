@@ -190,10 +190,10 @@ class Bambulab extends utils.Adapter {
 
                 // Try to reconnect by creating a new client instead of using reconnect()
                 if (timeouts[this.config.serial]) {
-                    clearTimeout(timeouts[this.config.serial]);
+                    this.clearTimeout(timeouts[this.config.serial]);
                     timeouts[this.config.serial] = null;
                 }
-                timeouts[this.config.serial] = setTimeout(() => {
+                timeouts[this.config.serial] = this.setTimeout(() => {
                     // Create a new MQTT connection instead of reconnecting the ended client
                     this.mqttMessageHandle();
                 }, 30000);
@@ -219,7 +219,7 @@ class Bambulab extends utils.Adapter {
                     this.log.debug(`Message buffer inactive, message processing`);
                     if (this.config.messageBuffer > 0) {
                         clientConnection.messageBuffer = true;
-                        timeouts['messageBuffer'] = setTimeout(() => {
+                        timeouts['messageBuffer'] = this.setTimeout(() => {
                             // Request data for P1p printer series
                             clientConnection.messageBuffer = false;
                         }, this.config.messageBuffer * 1000);
@@ -496,10 +496,10 @@ class Bambulab extends utils.Adapter {
 
         // Handle an interval only if not X1-Series
         if (timeouts['dataPolling']) {
-            clearTimeout(timeouts['dataPolling']);
+            this.clearTimeout(timeouts['dataPolling']);
             timeouts['dataPolling'] = null;
         }
-        timeouts['dataPolling'] = setTimeout(() => {
+        timeouts['dataPolling'] = this.setTimeout(() => {
             // Request data for P1p printer series
             if (this.config.printerModel === 'P1-Series') {
                 this.requestData();
@@ -711,16 +711,16 @@ class Bambulab extends utils.Adapter {
         try {
             // Close running timers
             if (timeouts[this.config.serial]) {
-                clearTimeout(timeouts[this.config.serial]);
+                this.clearTimeout(timeouts[this.config.serial]);
                 timeouts[this.config.serial] = null;
             }
             if (timeouts['dataPolling']) {
-                clearTimeout(timeouts['dataPolling']);
+                this.clearTimeout(timeouts['dataPolling']);
                 timeouts[timeouts['dataPolling']] = null;
             }
 
             if (timeouts['messageBuffer']) {
-                clearTimeout(timeouts['messageBuffer']);
+                this.clearTimeout(timeouts['messageBuffer']);
                 timeouts['messageBuffer'] = null;
             }
 

@@ -10,6 +10,14 @@ updates:
       cronjob: "25 2 13 * *"
     open-pull-requests-limit: 30
     versioning-strategy: "increase"
+    ignore:
+      # @types/node must track engines.node (Node 22); major bumps introduce wrong typings
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
+    # Delay non-security npm updates by 7 days to reduce supply chain risk
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: "github-actions"
     directory: "/"
