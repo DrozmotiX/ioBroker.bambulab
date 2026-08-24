@@ -1,202 +1,202 @@
 {
-    "common": {
-        "name": "bambulab",
-        "version": "0.4.3",
-        "news": {
-            "0.4.3": {
-                "en": "🛠️ Improved error messages when the printer is offline or unreachable.\n🖨️ Added HD2 printer to the selection menu for easier access (#142)\n🔧 Resolved multiple type definition issues (#203, #202, #201, #200, #199, #198)\n⚙️ Implemented a buffer system to reduce CPU usage and improve performance (#145)\n🔄 Fixed type conversion errors by replacing deprecated 'tonumber' with TOINTEGER/TOFLOAT (#197)\n📊 Added missing state attributes for HD2 printer during printing (height, platform, tool, mapping) (#194)",
-                "de": "🛠️ Verbesserte Fehlermeldungen, wenn der Drucker offline oder nicht erreichbar ist.\n🖨️ HD2-Drucker zur Auswahl hinzugefügt für einfacheren Zugriff (#142)\n🔧 Mehrere Probleme mit Typdefinitionen gelöst (#203, #202, #201, #200, #199, #198)\n⚙️ Puffersystem implementiert zur Reduzierung der CPU-Auslastung und Verbesserung der Leistung (#145)\n🔄 Fehler bei der Typkonvertierung behoben durch Ersetzen von 'tonumber' mit TOINTEGER/TOFLOAT (#197)\n📊 Fehlende Zustandsattribute für HD2-Drucker während des Druckens hinzugefügt (Höhe, Plattform, Werkzeug, Zuordnung) (#194)",
-                "ru": "🛠️ Улучшены сообщения об ошибках, если принтер не в сети или недоступен.\n🖨️ Добавлен принтер HD2 в меню выбора для удобства (#142)\n🔧 Решены несколько проблем с определением типов (#203, #202, #201, #200, #199, #198)\n⚙️ Реализована система буферизации для снижения нагрузки на процессор и повышения производительности (#145)\n🔄 Исправлены ошибки преобразования типов, заменив устаревший 'tonumber' на TOINTEGER/TOFLOAT (#197)\n📊 Добавлены отсутствующие атрибуты состояния для принтера HD2 во время печати (высота, платформа, инструмент, сопоставление) (#194)",
-                "pt": "🛠️ Melhoradas as mensagens de erro quando a impressora está offline ou inacessível.\n🖨️ Adicionado impressora HD2 ao menu de seleção para facilitar o acesso (#142)\n🔧 Resolvidos vários problemas de definição de tipos (#203, #202, #201, #200, #199, #198)\n⚙️ Implementado sistema de buffer para reduzir o uso da CPU e melhorar o desempenho (#145)\n🔄 Corrigidos erros de conversão de tipo substituindo 'tonumber' por TOINTEGER/TOFLOAT (#197)\n📊 Adicionados atributos de estado ausentes para a impressora HD2 durante a impressão (altura, plataforma, ferramenta, mapeamento) (#194)",
-                "nl": "🛠️ Verbeterde foutmeldingen wanneer de printer offline of niet bereikbaar is.\n🖨️ HD2-printer toegevoegd aan het selectiemenu voor betere toegankelijkheid (#142)\n🔧 Meerdere problemen met typedefinities opgelost (#203, #202, #201, #200, #199, #198)\n⚙️ Buffersysteem geïmplementeerd om CPU-belasting te verminderen en prestaties te verbeteren (#145)\n🔄 Typeconversiefouten opgelost door verouderde 'tonumber' te vervangen door TOINTEGER/TOFLOAT (#197)\n📊 Ontbrekende statusattributen toegevoegd voor HD2-printer tijdens het printen (hoogte, platform, gereedschap, mapping) (#194)",
-                "fr": "🛠️ Amélioration des messages d'erreur lorsque l'imprimante est hors ligne ou inaccessible.\n🖨️ Ajout de l'imprimante HD2 au menu de sélection pour un accès simplifié (#142)\n🔧 Résolution de plusieurs problèmes de définition de types (#203, #202, #201, #200, #199, #198)\n⚙️ Mise en place d'un système de tampon pour réduire l'utilisation du CPU et améliorer les performances (#145)\n🔄 Correction des erreurs de conversion de type en remplaçant 'tonumber' par TOINTEGER/TOFLOAT (#197)\n📊 Ajout des attributs d'état manquants pour l'imprimante HD2 pendant l'impression (hauteur, plateforme, outil, mappage) (#194)",
-                "it": "🛠️ Migliorati i messaggi di errore quando la stampante è offline o non raggiungibile.\n🖨️ Aggiunta stampante HD2 al menu di selezione per un accesso più semplice (#142)\n🔧 Risolti diversi problemi di definizione dei tipi (#203, #202, #201, #200, #199, #198)\n⚙️ Implementato sistema di buffer per ridurre l'utilizzo della CPU e migliorare le prestazioni (#145)\n🔄 Correzione degli errori di conversione dei tipi sostituendo 'tonumber' con TOINTEGER/TOFLOAT (#197)\n📊 Aggiunti attributi di stato mancanti per la stampante HD2 durante la stampa (altezza, piattaforma, strumento, mappatura) (#194)",
-                "es": "🛠️ Mejorados los mensajes de error cuando la impresora está fuera de línea o no disponible.\n🖨️ Añadida impresora HD2 al menú de selección para facilitar el acceso (#142)\n🔧 Resueltos varios problemas de definición de tipos (#203, #202, #201, #200, #199, #198)\n⚙️ Implementado sistema de búfer para reducir el uso de CPU y mejorar el rendimiento (#145)\n🔄 Corregidos errores de conversión de tipo reemplazando 'tonumber' por TOINTEGER/TOFLOAT (#197)\n📊 Añadidos atributos de estado faltantes para la impresora HD2 durante la impresión (altura, plataforma, herramienta, mapeo) (#194)",
-                "pl": "🛠️ Poprawiono komunikaty o błędach, gdy drukarka jest offline lub niedostępna.\n🖨️ Dodano drukarkę HD2 do menu wyboru dla łatwiejszego dostępu (#142)\n🔧 Rozwiązano kilka problemów z definicjami typów (#203, #202, #201, #200, #199, #198)\n⚙️ Zaimplementowano system buforowania w celu zmniejszenia obciążenia CPU i poprawy wydajności (#145)\n🔄 Naprawiono błędy konwersji typów, zastępując 'tonumber' odpowiednimi TOINTEGER/TOFLOAT (#197)\n📊 Dodano brakujące atrybuty stanu dla drukarki HD2 podczas drukowania (wysokość, platforma, narzędzie, mapowanie) (#194)",
-                "uk": "🛠️ Покращено повідомлення про помилки, якщо принтер офлайн або недоступний.\n🖨️ Додано принтер HD2 до меню вибору для зручного доступу (#142)\n🔧 Вирішено кілька проблем з визначенням типів (#203, #202, #201, #200, #199, #198)\n⚙️ Реалізовано систему буферизації для зменшення навантаження на ЦП та покращення продуктивності (#145)\n🔄 Виправлено помилки перетворення типів, замінивши 'tonumber' на TOINTEGER/TOFLOAT (#197)\n📊 Додано відсутні атрибути стану для принтера HD2 під час друку (висота, платформа, інструмент, зіставлення) (#194)",
-                "zh-cn": "🛠️ 修复了打印机离线或无法访问时的错误消息。\n🖨️ 将 HD2 打印机添加到选择菜单以便于访问 (#142)\n🔧 解决了多个类型定义问题 (#203, #202, #201, #200, #199, #198)\n⚙️ 实现缓冲系统以减少 CPU 使用并提升性能 (#145)\n🔄 通过将过时的 'tonumber' 替换为 TOINTEGER/TOFLOAT 修复了类型转换错误 (#197)\n📊 添加了 HD2 打印机在打印过程中缺失的状态属性（高度、平台、工具、映射） (#194)"
-            },
-            "0.4.1": {
-                "en": "Fixed HMS error code translation timeout handling (#183)\nBlocked dangerous G-code commands during printing for safety (#185)\nResolved P1S fan speed display issues with conversion and mapping fixes (#184)\nAdded detailed API token location documentation for all Bambulab printer models (#182)",
-                "de": "Fehlerbehandlung für Zeitüberschreitung bei HMS-Fehlercodeübersetzung behoben (#183)\nGefährliche G-Code-Befehle während des Druckens zur Sicherheit blockiert (#185)\nAnzeigeprobleme der P1S-Lüftergeschwindigkeit durch Korrekturen bei Umrechnung und Zuordnung behoben (#184)\nDetaillierte Dokumentation der API-Token-Standorte für alle Bambulab-Druckermodelle hinzugefügt (#182)",
-                "ru": "Исправлена обработка тайм-аута при переводе кодов ошибок HMS (#183)\nЗаблокированы опасные команды G-кода во время печати для обеспечения безопасности (#185)\nИсправлены проблемы отображения скорости вентилятора P1S — двойное преобразование и неправильное сопоставление (#184)\nДобавлена подробная документация по расположению API-токенов для всех моделей принтеров Bambulab (#182)",
-                "pt": "Corrigido o tratamento de tempo limite na tradução de códigos de erro HMS (#183)\nComandos G-code perigosos bloqueados durante a impressão por segurança (#185)\nProblemas de exibição da velocidade do ventilador P1S resolvidos com correções de conversão e mapeamento (#184)\nAdicionada documentação detalhada sobre a localização do token da API para todos os modelos de impressoras Bambulab (#182)",
-                "nl": "Timeout-afhandeling bij HMS-foutcodevertalingen opgelost (#183)\nGevaarlijke G-code opdrachten tijdens het printen geblokkeerd voor veiligheid (#185)\nProblemen met weergave van P1S ventilatorsnelheid opgelost – dubbele conversie en verkeerde mapping (#184)\nUitgebreide documentatie toegevoegd over API-tokenlocaties voor alle Bambulab-printermodellen (#182)",
-                "fr": "Correction de la gestion du délai d'attente pour la traduction des codes d'erreur HMS (#183)\nBlocage des commandes G-code dangereuses pendant l'impression pour plus de sécurité (#185)\nProblèmes d'affichage de la vitesse du ventilateur P1S corrigés – conversion double et mappage incorrect (#184)\nAjout d'une documentation complète sur l'emplacement des jetons API pour tous les modèles d'imprimantes Bambulab (#182)",
-                "it": "Corretto il timeout nella traduzione dei codici di errore HMS (#183)\nBloccati i comandi G-code pericolosi durante la stampa per sicurezza (#185)\nRisolti i problemi di visualizzazione della velocità della ventola P1S – doppia conversione e mappatura errata (#184)\nAggiunta documentazione dettagliata sulla posizione del token API per tutti i modelli di stampanti Bambulab (#182)",
-                "es": "Corregido el manejo del tiempo de espera en la traducción de códigos de error HMS (#183)\nBloqueados comandos G-code peligrosos durante la impresión por seguridad (#185)\nResueltos problemas de visualización de la velocidad del ventilador P1S – conversión doble y mapeo incorrecto (#184)\nAñadida documentación detallada sobre la ubicación del token API para todos los modelos de impresoras Bambulab (#182)",
-                "pl": "Naprawiono obsługę przekroczenia czasu tłumaczenia kodów błędów HMS (#183)\nZablokowano niebezpieczne komendy G-code podczas drukowania dla bezpieczeństwa (#185)\nRozwiązano problemy z wyświetlaniem prędkości wentylatora P1S – podwójna konwersja i błędne mapowanie (#184)\nDodano szczegółową dokumentację lokalizacji tokena API dla wszystkich modeli drukarek Bambulab (#182)",
-                "uk": "Виправлено обробку тайм-ауту при перекладі кодів помилок HMS (#183)\nЗаблоковано небезпечні команди G-коду під час друку для безпеки (#185)\nВирішено проблеми з відображенням швидкості вентилятора P1S – подвійне перетворення та неправильне зіставлення (#184)\nДодано детальну документацію щодо розташування токенів API для всіх моделей принтерів Bambulab (#182)",
-                "zh-cn": "修复了HMS错误代码翻译的超时处理问题 (#183)\n为安全起见，在打印过程中屏蔽了危险的G-code命令 (#185)\n修复了P1S风扇速度显示问题，包括双重转换和错误映射 (#184)\n为所有Bambulab打印机型号添加了详细的API令牌位置文档 (#182)"
-            },
-            "0.4.0": {
-                "en": "Improved adapter stability by adding missing state definitions (#181)\nStopped calculating time when not printing and cleared finishTime (#179)\nFixed MQTT reconnect issue that caused a crash (#177)",
-                "de": "Stabilität des Adapters verbessert durch Hinzufügen fehlender Zustandsdefinitionen (#181)\nZeitberechnung gestoppt und finishTime geleert, wenn nicht gedruckt wird (#179)\nMQTT-Wiederverbindungsproblem behoben, das zu einem Absturz führte (#177)",
-                "ru": "Улучшена стабильность адаптера за счёт добавления недостающих состояний (#181)\nОтключён расчёт времени и очищено finishTime при отсутствии печати (#179)\nИсправлена ошибка переподключения MQTT, вызывавшая сбой (#177)",
-                "pt": "Melhorada a estabilidade do adaptador com definições de estado ausentes (#181)\nParado o cálculo de tempo e limpado finishTime quando não há impressão (#179)\nCorrigido problema de reconexão MQTT que causava falha (#177)",
-                "nl": "Adapter stabieler gemaakt door ontbrekende statusdefinities toe te voegen (#181)\nTijdsberekening gestopt en finishTime geleegd als er niet wordt geprint (#179)\nMQTT-herverbindingsprobleem opgelost dat een crash veroorzaakte (#177)",
-                "fr": "Stabilité de l'adaptateur améliorée en ajoutant les statuts manquants (#181)\nArrêt du calcul du temps et vidage de finishTime en cas d'absence d'impression (#179)\nCorrection du problème de reconnexion MQTT qui causait un plantage (#177)",
-                "it": "Migliorata la stabilità dell'adattatore aggiungendo gli stati mancanti (#181)\nInterrotto il calcolo del tempo e svuotato finishTime quando non si stampa (#179)\nRisolto il problema di riconnessione MQTT che causava un crash (#177)",
-                "es": "Mejorada la estabilidad del adaptador al agregar estados faltantes (#181)\nSe detuvo el cálculo de tiempo y se vació finishTime cuando no se imprime (#179)\nSolucionado el problema de reconexión MQTT que causaba fallos (#177)",
-                "pl": "Poprawiono stabilność adaptera poprzez dodanie brakujących definicji stanów (#181)\nZatrzymano obliczanie czasu i wyczyszczono finishTime, gdy nie trwa drukowanie (#179)\nNaprawiono problem z ponownym połączeniem MQTT powodujący awarię (#177)",
-                "uk": "Покращено стабільність адаптера шляхом додавання відсутніх станів (#181)\nЗупинено обчислення часу та очищено finishTime, коли друк не виконується (#179)\nВиправлено проблему перепідключення MQTT, яка спричиняла збій (#177)",
-                "zh-cn": "通过添加缺失的状态定义提升了适配器稳定性 (#181)\n在未打印时停止时间计算并清空finishTime (#179)\n修复了导致崩溃的MQTT重新连接问题 (#177)"
-            },
-            "0.3.5": {
-                "en": "Fix several type mismatches #143 #139 #130\nUpdated missing definitions for full MQTT API incl H2D\nFix repository checker issues and improve admin UI compatibility",
-                "de": "Mehrere Typinkompatibilitäten beheben #143 #139 #130\nFehlende Definitionen für die vollständige MQTT-API inkl. H2D aktualisiert\nProbleme mit dem Repository-Checker behoben und Kompatibilität der Admin-Oberfläche verbessert",
-                "ru": "Исправлены несколько несоответствий типов #143 #139 #130\nОбновлены отсутствующие определения для полной MQTT API, включая H2D\nИсправлены ошибки проверки репозитория и улучшена совместимость с административным интерфейсом",
-                "pt": "Corrigidas várias incompatibilidades de tipos #143 #139 #130\nDefinições ausentes para a API MQTT completa, incluindo H2D, foram atualizadas\nCorrigidos problemas do verificador de repositório e melhorada a compatibilidade da interface administrativa",
-                "nl": "Meerdere typeverschillen opgelost #143 #139 #130\nOntbrekende definities voor de volledige MQTT-API inclusief H2D bijgewerkt\nProblemen met de repository-checker opgelost en compatibiliteit van de admininterface verbeterd",
-                "fr": "Correction de plusieurs incompatibilités de types #143 #139 #130\nMise à jour des définitions manquantes pour l’API MQTT complète, y compris H2D\nCorrection des problèmes du vérificateur de dépôt et amélioration de la compatibilité de l’interface d’administration",
-                "it": "Corrette diverse incompatibilità di tipo #143 #139 #130\nAggiornate le definizioni mancanti per l’intera API MQTT, inclusa H2D\nRisolti i problemi del controllo del repository e migliorata la compatibilità dell’interfaccia amministrativa",
-                "es": "Corregidas varias incompatibilidades de tipos #143 #139 #130\nActualizadas las definiciones faltantes para la API MQTT completa, incluyendo H2D\nSolucionados los problemas del verificador de repositorios y mejorada la compatibilidad con la interfaz de administración",
-                "pl": "Naprawiono kilka niezgodności typów #143 #139 #130\nZaktualizowano brakujące definicje dla pełnej API MQTT, w tym H2D\nNaprawiono problemy z weryfikatorem repozytorium i poprawiono kompatybilność interfejsu administracyjnego",
-                "uk": "Виправлено кілька невідповідностей типів #143 #139 #130\nОновлено відсутні визначення для повної MQTT API, включаючи H2D\nВиправлено проблеми з перевіркою репозиторію та покращено сумісність адміністративного інтерфейсу",
-                "zh-cn": "修复多个类型不匹配的问题 #143 #139 #130\n更新了完整 MQTT API（包括 H2D）中缺失的定义\n修复了仓库检查器的问题，并提升了管理界面的兼容性"
-            },
-            "0.3.4": {
-                "en": "Added doorOpen indicator",
-                "de": "Tür Indikator hinzugefügt",
-                "ru": "Добавленная дверь Open indicator",
-                "pt": "Porta adicionada Indicador aberto",
-                "nl": "Toegevoegde deur Open indicator",
-                "fr": "Porte ajoutée Indicateur ouvert",
-                "it": "Aggiunto la porta Indicatore aperto",
-                "es": "Puerta Open indicator",
-                "pl": "Dodano drzwi Inne informacje",
-                "uk": "Додані двері Відкрити індикатор",
-                "zh-cn": "添加门 开放指标"
-            },
-            "0.3.3": {
-                "en": "update state definitions, (solves #77 #58)\nupdate connection handling, show connection error only once (Solves #99 #78 #74)",
-                "de": "aktualisierung von zustandsdefinitionen, (lösungen #77 #58)\nupdate-Verbindungshandling, Verbindungsfehler nur einmal anzeigen (Solves #99 #78 #74)",
-                "ru": "обновление определений состояния (половки #77 #58)\nобновить обработку подключения, показать ошибку соединения только один раз (Солнце #99 #78 #74)",
-                "pt": "atualizar definições de estado, (solves #77 #58)\nmanipulação de conexão de atualização, mostrar erro de conexão apenas uma vez (Solves #99 #78 #74)",
-                "nl": "statusdefinities bijwerken, (oplosst #77 #58)\nupdate verbinding behandeling, tonen verbinding fout slechts eenmaal (Solves #99 #78 #74)",
-                "fr": "mettre à jour les définitions de l'état, (sols #77 #58)\nmettre à jour la gestion de la connexion, afficher l'erreur de connexion une seule fois (Solves #99 #78 #74)",
-                "it": "aggiorna le definizioni di stato, (solves #77 #58)\ngestione della connessione di aggiornamento, errore di visualizzazione solo una volta (Solves #99 #78 #74)",
-                "es": "actualizar las definiciones del estado, (solves #77 #58)\nactualizar el manejo de conexión, mostrar error de conexión sólo una vez (Solves #99 #78 #74)",
-                "pl": "aktualizacji definicji stanu (rozwiązanie # 77 # 58)\nupdate connection handling, show connection error only once (Solves # 99 # 78 # 74)",
-                "uk": "оновлення державних визначень (solves #77 #58)\nоновлення з'єднання, відображення помилки з'єднання тільки один раз (Solves #99 #78 #74)",
-                "zh-cn": "更新状态定义, (解决方案 #77#58)\n更新连接处理, 只显示一次连接错误( Solves # 99 # 78 # 74)"
-            }
-        },
-        "titleLang": {
-            "en": "Bambulab 3d Printer integration",
-            "de": "Integration des Bambulab 3D-Druckers",
-            "ru": "Интеграция с 3D-принтером Bambulab",
-            "pt": "Integração da impressora 3D Bambulab",
-            "nl": "Bambulab 3D Printer integratie",
-            "fr": "Intégration de l'imprimante 3d Bambulab",
-            "it": "Integrazione della stampante 3d Bambulab",
-            "es": "Integración de la impresora 3d Bambulab",
-            "pl": "Integracja drukarki 3D Bambulab",
-            "uk": "Інтеграція 3d принтера Bambulab",
-            "zh-cn": "Bambulab 3D 打印机集成"
-        },
-        "desc": {
-            "en": "Connects to Bambulab 3d printers to retrieve data of current print and control main aspects",
-            "de": "Verbindet sich mit Bambulab-3D-Druckern, um Daten des aktuellen Drucks abzurufen und Hauptaspekte zu steuern",
-            "ru": "Подключается к 3D-принтерам Bambulab для получения данных о текущей печати и управления основными аспектами.",
-            "pt": "Conecta-se às impressoras 3D Bambulab para recuperar dados de impressão atual e controlar os principais aspectos",
-            "nl": "Maakt verbinding met Bambulab 3D-printers om gegevens op te halen over de huidige afdruk- en controleaspecten",
-            "fr": "Se connecte aux imprimantes 3d Bambulab pour récupérer les données d'impression en cours et contrôler les principaux aspects",
-            "it": "Si collega alle stampanti 3D Bambulab per recuperare i dati della stampa corrente e controllare gli aspetti principali",
-            "es": "Se conecta a impresoras 3d Bambulab para recuperar datos de impresión actual y controlar aspectos principales",
-            "pl": "Łączy się z drukarkami 3D Bambulab, aby pobierać dane dotyczące bieżącego drukowania i kontrolować główne aspekty",
-            "uk": "Підключається до 3d-принтерів Bambulab для отримання даних поточного друку та контролю основних аспектів",
-            "zh-cn": "连接到 Bambulab 3D 打印机以检索当前打印的数据并控制主要方面"
-        },
-        "authors": [
-            "DutchmanNL <oss@drozmotix.eu>"
-        ],
-        "keywords": [
-            "bambulab",
-            "3d-printing"
-        ],
-        "platform": "Javascript/Node.js",
-        "icon": "bambulab.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.bambulab/main/admin/bambulab.png",
-        "readme": "https://github.com/DrozmotiX/ioBroker.bambulab/blob/main/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "hardware",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "push",
-        "adminUI": {
-            "config": "json"
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=6.0.11"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=7.6.20"
-            }
-        ],
-        "tier": 3,
-        "licenseInformation": {
-            "license": "MIT",
-            "type": "free"
-        }
+  "common": {
+    "name": "bambulab",
+    "version": "0.4.3",
+    "news": {
+      "0.4.3": {
+        "en": "🛠️ Improved error messages when the printer is offline or unreachable.\n🖨️ Added HD2 printer to the selection menu for easier access (#142)\n🔧 Resolved multiple type definition issues (#203, #202, #201, #200, #199, #198)\n⚙️ Implemented a buffer system to reduce CPU usage and improve performance (#145)\n🔄 Fixed type conversion errors by replacing deprecated 'tonumber' with TOINTEGER/TOFLOAT (#197)\n📊 Added missing state attributes for HD2 printer during printing (height, platform, tool, mapping) (#194)",
+        "de": "🛠️ Verbesserte Fehlermeldungen, wenn der Drucker offline oder nicht erreichbar ist.\n🖨️ HD2-Drucker zur Auswahl hinzugefügt für einfacheren Zugriff (#142)\n🔧 Mehrere Probleme mit Typdefinitionen gelöst (#203, #202, #201, #200, #199, #198)\n⚙️ Puffersystem implementiert zur Reduzierung der CPU-Auslastung und Verbesserung der Leistung (#145)\n🔄 Fehler bei der Typkonvertierung behoben durch Ersetzen von 'tonumber' mit TOINTEGER/TOFLOAT (#197)\n📊 Fehlende Zustandsattribute für HD2-Drucker während des Druckens hinzugefügt (Höhe, Plattform, Werkzeug, Zuordnung) (#194)",
+        "ru": "🛠️ Улучшены сообщения об ошибках, если принтер не в сети или недоступен.\n🖨️ Добавлен принтер HD2 в меню выбора для удобства (#142)\n🔧 Решены несколько проблем с определением типов (#203, #202, #201, #200, #199, #198)\n⚙️ Реализована система буферизации для снижения нагрузки на процессор и повышения производительности (#145)\n🔄 Исправлены ошибки преобразования типов, заменив устаревший 'tonumber' на TOINTEGER/TOFLOAT (#197)\n📊 Добавлены отсутствующие атрибуты состояния для принтера HD2 во время печати (высота, платформа, инструмент, сопоставление) (#194)",
+        "pt": "🛠️ Melhoradas as mensagens de erro quando a impressora está offline ou inacessível.\n🖨️ Adicionado impressora HD2 ao menu de seleção para facilitar o acesso (#142)\n🔧 Resolvidos vários problemas de definição de tipos (#203, #202, #201, #200, #199, #198)\n⚙️ Implementado sistema de buffer para reduzir o uso da CPU e melhorar o desempenho (#145)\n🔄 Corrigidos erros de conversão de tipo substituindo 'tonumber' por TOINTEGER/TOFLOAT (#197)\n📊 Adicionados atributos de estado ausentes para a impressora HD2 durante a impressão (altura, plataforma, ferramenta, mapeamento) (#194)",
+        "nl": "🛠️ Verbeterde foutmeldingen wanneer de printer offline of niet bereikbaar is.\n🖨️ HD2-printer toegevoegd aan het selectiemenu voor betere toegankelijkheid (#142)\n🔧 Meerdere problemen met typedefinities opgelost (#203, #202, #201, #200, #199, #198)\n⚙️ Buffersysteem geïmplementeerd om CPU-belasting te verminderen en prestaties te verbeteren (#145)\n🔄 Typeconversiefouten opgelost door verouderde 'tonumber' te vervangen door TOINTEGER/TOFLOAT (#197)\n📊 Ontbrekende statusattributen toegevoegd voor HD2-printer tijdens het printen (hoogte, platform, gereedschap, mapping) (#194)",
+        "fr": "🛠️ Amélioration des messages d'erreur lorsque l'imprimante est hors ligne ou inaccessible.\n🖨️ Ajout de l'imprimante HD2 au menu de sélection pour un accès simplifié (#142)\n🔧 Résolution de plusieurs problèmes de définition de types (#203, #202, #201, #200, #199, #198)\n⚙️ Mise en place d'un système de tampon pour réduire l'utilisation du CPU et améliorer les performances (#145)\n🔄 Correction des erreurs de conversion de type en remplaçant 'tonumber' par TOINTEGER/TOFLOAT (#197)\n📊 Ajout des attributs d'état manquants pour l'imprimante HD2 pendant l'impression (hauteur, plateforme, outil, mappage) (#194)",
+        "it": "🛠️ Migliorati i messaggi di errore quando la stampante è offline o non raggiungibile.\n🖨️ Aggiunta stampante HD2 al menu di selezione per un accesso più semplice (#142)\n🔧 Risolti diversi problemi di definizione dei tipi (#203, #202, #201, #200, #199, #198)\n⚙️ Implementato sistema di buffer per ridurre l'utilizzo della CPU e migliorare le prestazioni (#145)\n🔄 Correzione degli errori di conversione dei tipi sostituendo 'tonumber' con TOINTEGER/TOFLOAT (#197)\n📊 Aggiunti attributi di stato mancanti per la stampante HD2 durante la stampa (altezza, piattaforma, strumento, mappatura) (#194)",
+        "es": "🛠️ Mejorados los mensajes de error cuando la impresora está fuera de línea o no disponible.\n🖨️ Añadida impresora HD2 al menú de selección para facilitar el acceso (#142)\n🔧 Resueltos varios problemas de definición de tipos (#203, #202, #201, #200, #199, #198)\n⚙️ Implementado sistema de búfer para reducir el uso de CPU y mejorar el rendimiento (#145)\n🔄 Corregidos errores de conversión de tipo reemplazando 'tonumber' por TOINTEGER/TOFLOAT (#197)\n📊 Añadidos atributos de estado faltantes para la impresora HD2 durante la impresión (altura, plataforma, herramienta, mapeo) (#194)",
+        "pl": "🛠️ Poprawiono komunikaty o błędach, gdy drukarka jest offline lub niedostępna.\n🖨️ Dodano drukarkę HD2 do menu wyboru dla łatwiejszego dostępu (#142)\n🔧 Rozwiązano kilka problemów z definicjami typów (#203, #202, #201, #200, #199, #198)\n⚙️ Zaimplementowano system buforowania w celu zmniejszenia obciążenia CPU i poprawy wydajności (#145)\n🔄 Naprawiono błędy konwersji typów, zastępując 'tonumber' odpowiednimi TOINTEGER/TOFLOAT (#197)\n📊 Dodano brakujące atrybuty stanu dla drukarki HD2 podczas drukowania (wysokość, platforma, narzędzie, mapowanie) (#194)",
+        "uk": "🛠️ Покращено повідомлення про помилки, якщо принтер офлайн або недоступний.\n🖨️ Додано принтер HD2 до меню вибору для зручного доступу (#142)\n🔧 Вирішено кілька проблем з визначенням типів (#203, #202, #201, #200, #199, #198)\n⚙️ Реалізовано систему буферизації для зменшення навантаження на ЦП та покращення продуктивності (#145)\n🔄 Виправлено помилки перетворення типів, замінивши 'tonumber' на TOINTEGER/TOFLOAT (#197)\n📊 Додано відсутні атрибути стану для принтера HD2 під час друку (висота, платформа, інструмент, зіставлення) (#194)",
+        "zh-cn": "🛠️ 修复了打印机离线或无法访问时的错误消息。\n🖨️ 将 HD2 打印机添加到选择菜单以便于访问 (#142)\n🔧 解决了多个类型定义问题 (#203, #202, #201, #200, #199, #198)\n⚙️ 实现缓冲系统以减少 CPU 使用并提升性能 (#145)\n🔄 通过将过时的 'tonumber' 替换为 TOINTEGER/TOFLOAT 修复了类型转换错误 (#197)\n📊 添加了 HD2 打印机在打印过程中缺失的状态属性（高度、平台、工具、映射） (#194)"
+      },
+      "0.4.1": {
+        "en": "Fixed HMS error code translation timeout handling (#183)\nBlocked dangerous G-code commands during printing for safety (#185)\nResolved P1S fan speed display issues with conversion and mapping fixes (#184)\nAdded detailed API token location documentation for all Bambulab printer models (#182)",
+        "de": "Fehlerbehandlung für Zeitüberschreitung bei HMS-Fehlercodeübersetzung behoben (#183)\nGefährliche G-Code-Befehle während des Druckens zur Sicherheit blockiert (#185)\nAnzeigeprobleme der P1S-Lüftergeschwindigkeit durch Korrekturen bei Umrechnung und Zuordnung behoben (#184)\nDetaillierte Dokumentation der API-Token-Standorte für alle Bambulab-Druckermodelle hinzugefügt (#182)",
+        "ru": "Исправлена обработка тайм-аута при переводе кодов ошибок HMS (#183)\nЗаблокированы опасные команды G-кода во время печати для обеспечения безопасности (#185)\nИсправлены проблемы отображения скорости вентилятора P1S — двойное преобразование и неправильное сопоставление (#184)\nДобавлена подробная документация по расположению API-токенов для всех моделей принтеров Bambulab (#182)",
+        "pt": "Corrigido o tratamento de tempo limite na tradução de códigos de erro HMS (#183)\nComandos G-code perigosos bloqueados durante a impressão por segurança (#185)\nProblemas de exibição da velocidade do ventilador P1S resolvidos com correções de conversão e mapeamento (#184)\nAdicionada documentação detalhada sobre a localização do token da API para todos os modelos de impressoras Bambulab (#182)",
+        "nl": "Timeout-afhandeling bij HMS-foutcodevertalingen opgelost (#183)\nGevaarlijke G-code opdrachten tijdens het printen geblokkeerd voor veiligheid (#185)\nProblemen met weergave van P1S ventilatorsnelheid opgelost – dubbele conversie en verkeerde mapping (#184)\nUitgebreide documentatie toegevoegd over API-tokenlocaties voor alle Bambulab-printermodellen (#182)",
+        "fr": "Correction de la gestion du délai d'attente pour la traduction des codes d'erreur HMS (#183)\nBlocage des commandes G-code dangereuses pendant l'impression pour plus de sécurité (#185)\nProblèmes d'affichage de la vitesse du ventilateur P1S corrigés – conversion double et mappage incorrect (#184)\nAjout d'une documentation complète sur l'emplacement des jetons API pour tous les modèles d'imprimantes Bambulab (#182)",
+        "it": "Corretto il timeout nella traduzione dei codici di errore HMS (#183)\nBloccati i comandi G-code pericolosi durante la stampa per sicurezza (#185)\nRisolti i problemi di visualizzazione della velocità della ventola P1S – doppia conversione e mappatura errata (#184)\nAggiunta documentazione dettagliata sulla posizione del token API per tutti i modelli di stampanti Bambulab (#182)",
+        "es": "Corregido el manejo del tiempo de espera en la traducción de códigos de error HMS (#183)\nBloqueados comandos G-code peligrosos durante la impresión por seguridad (#185)\nResueltos problemas de visualización de la velocidad del ventilador P1S – conversión doble y mapeo incorrecto (#184)\nAñadida documentación detallada sobre la ubicación del token API para todos los modelos de impresoras Bambulab (#182)",
+        "pl": "Naprawiono obsługę przekroczenia czasu tłumaczenia kodów błędów HMS (#183)\nZablokowano niebezpieczne komendy G-code podczas drukowania dla bezpieczeństwa (#185)\nRozwiązano problemy z wyświetlaniem prędkości wentylatora P1S – podwójna konwersja i błędne mapowanie (#184)\nDodano szczegółową dokumentację lokalizacji tokena API dla wszystkich modeli drukarek Bambulab (#182)",
+        "uk": "Виправлено обробку тайм-ауту при перекладі кодів помилок HMS (#183)\nЗаблоковано небезпечні команди G-коду під час друку для безпеки (#185)\nВирішено проблеми з відображенням швидкості вентилятора P1S – подвійне перетворення та неправильне зіставлення (#184)\nДодано детальну документацію щодо розташування токенів API для всіх моделей принтерів Bambulab (#182)",
+        "zh-cn": "修复了HMS错误代码翻译的超时处理问题 (#183)\n为安全起见，在打印过程中屏蔽了危险的G-code命令 (#185)\n修复了P1S风扇速度显示问题，包括双重转换和错误映射 (#184)\n为所有Bambulab打印机型号添加了详细的API令牌位置文档 (#182)"
+      },
+      "0.4.0": {
+        "en": "Improved adapter stability by adding missing state definitions (#181)\nStopped calculating time when not printing and cleared finishTime (#179)\nFixed MQTT reconnect issue that caused a crash (#177)",
+        "de": "Stabilität des Adapters verbessert durch Hinzufügen fehlender Zustandsdefinitionen (#181)\nZeitberechnung gestoppt und finishTime geleert, wenn nicht gedruckt wird (#179)\nMQTT-Wiederverbindungsproblem behoben, das zu einem Absturz führte (#177)",
+        "ru": "Улучшена стабильность адаптера за счёт добавления недостающих состояний (#181)\nОтключён расчёт времени и очищено finishTime при отсутствии печати (#179)\nИсправлена ошибка переподключения MQTT, вызывавшая сбой (#177)",
+        "pt": "Melhorada a estabilidade do adaptador com definições de estado ausentes (#181)\nParado o cálculo de tempo e limpado finishTime quando não há impressão (#179)\nCorrigido problema de reconexão MQTT que causava falha (#177)",
+        "nl": "Adapter stabieler gemaakt door ontbrekende statusdefinities toe te voegen (#181)\nTijdsberekening gestopt en finishTime geleegd als er niet wordt geprint (#179)\nMQTT-herverbindingsprobleem opgelost dat een crash veroorzaakte (#177)",
+        "fr": "Stabilité de l'adaptateur améliorée en ajoutant les statuts manquants (#181)\nArrêt du calcul du temps et vidage de finishTime en cas d'absence d'impression (#179)\nCorrection du problème de reconnexion MQTT qui causait un plantage (#177)",
+        "it": "Migliorata la stabilità dell'adattatore aggiungendo gli stati mancanti (#181)\nInterrotto il calcolo del tempo e svuotato finishTime quando non si stampa (#179)\nRisolto il problema di riconnessione MQTT che causava un crash (#177)",
+        "es": "Mejorada la estabilidad del adaptador al agregar estados faltantes (#181)\nSe detuvo el cálculo de tiempo y se vació finishTime cuando no se imprime (#179)\nSolucionado el problema de reconexión MQTT que causaba fallos (#177)",
+        "pl": "Poprawiono stabilność adaptera poprzez dodanie brakujących definicji stanów (#181)\nZatrzymano obliczanie czasu i wyczyszczono finishTime, gdy nie trwa drukowanie (#179)\nNaprawiono problem z ponownym połączeniem MQTT powodujący awarię (#177)",
+        "uk": "Покращено стабільність адаптера шляхом додавання відсутніх станів (#181)\nЗупинено обчислення часу та очищено finishTime, коли друк не виконується (#179)\nВиправлено проблему перепідключення MQTT, яка спричиняла збій (#177)",
+        "zh-cn": "通过添加缺失的状态定义提升了适配器稳定性 (#181)\n在未打印时停止时间计算并清空finishTime (#179)\n修复了导致崩溃的MQTT重新连接问题 (#177)"
+      },
+      "0.3.5": {
+        "en": "Fix several type mismatches #143 #139 #130\nUpdated missing definitions for full MQTT API incl H2D\nFix repository checker issues and improve admin UI compatibility",
+        "de": "Mehrere Typinkompatibilitäten beheben #143 #139 #130\nFehlende Definitionen für die vollständige MQTT-API inkl. H2D aktualisiert\nProbleme mit dem Repository-Checker behoben und Kompatibilität der Admin-Oberfläche verbessert",
+        "ru": "Исправлены несколько несоответствий типов #143 #139 #130\nОбновлены отсутствующие определения для полной MQTT API, включая H2D\nИсправлены ошибки проверки репозитория и улучшена совместимость с административным интерфейсом",
+        "pt": "Corrigidas várias incompatibilidades de tipos #143 #139 #130\nDefinições ausentes para a API MQTT completa, incluindo H2D, foram atualizadas\nCorrigidos problemas do verificador de repositório e melhorada a compatibilidade da interface administrativa",
+        "nl": "Meerdere typeverschillen opgelost #143 #139 #130\nOntbrekende definities voor de volledige MQTT-API inclusief H2D bijgewerkt\nProblemen met de repository-checker opgelost en compatibiliteit van de admininterface verbeterd",
+        "fr": "Correction de plusieurs incompatibilités de types #143 #139 #130\nMise à jour des définitions manquantes pour l’API MQTT complète, y compris H2D\nCorrection des problèmes du vérificateur de dépôt et amélioration de la compatibilité de l’interface d’administration",
+        "it": "Corrette diverse incompatibilità di tipo #143 #139 #130\nAggiornate le definizioni mancanti per l’intera API MQTT, inclusa H2D\nRisolti i problemi del controllo del repository e migliorata la compatibilità dell’interfaccia amministrativa",
+        "es": "Corregidas varias incompatibilidades de tipos #143 #139 #130\nActualizadas las definiciones faltantes para la API MQTT completa, incluyendo H2D\nSolucionados los problemas del verificador de repositorios y mejorada la compatibilidad con la interfaz de administración",
+        "pl": "Naprawiono kilka niezgodności typów #143 #139 #130\nZaktualizowano brakujące definicje dla pełnej API MQTT, w tym H2D\nNaprawiono problemy z weryfikatorem repozytorium i poprawiono kompatybilność interfejsu administracyjnego",
+        "uk": "Виправлено кілька невідповідностей типів #143 #139 #130\nОновлено відсутні визначення для повної MQTT API, включаючи H2D\nВиправлено проблеми з перевіркою репозиторію та покращено сумісність адміністративного інтерфейсу",
+        "zh-cn": "修复多个类型不匹配的问题 #143 #139 #130\n更新了完整 MQTT API（包括 H2D）中缺失的定义\n修复了仓库检查器的问题，并提升了管理界面的兼容性"
+      },
+      "0.3.4": {
+        "en": "Added doorOpen indicator",
+        "de": "Tür Indikator hinzugefügt",
+        "ru": "Добавленная дверь Open indicator",
+        "pt": "Porta adicionada Indicador aberto",
+        "nl": "Toegevoegde deur Open indicator",
+        "fr": "Porte ajoutée Indicateur ouvert",
+        "it": "Aggiunto la porta Indicatore aperto",
+        "es": "Puerta Open indicator",
+        "pl": "Dodano drzwi Inne informacje",
+        "uk": "Додані двері Відкрити індикатор",
+        "zh-cn": "添加门 开放指标"
+      },
+      "0.3.3": {
+        "en": "update state definitions, (solves #77 #58)\nupdate connection handling, show connection error only once (Solves #99 #78 #74)",
+        "de": "aktualisierung von zustandsdefinitionen, (lösungen #77 #58)\nupdate-Verbindungshandling, Verbindungsfehler nur einmal anzeigen (Solves #99 #78 #74)",
+        "ru": "обновление определений состояния (половки #77 #58)\nобновить обработку подключения, показать ошибку соединения только один раз (Солнце #99 #78 #74)",
+        "pt": "atualizar definições de estado, (solves #77 #58)\nmanipulação de conexão de atualização, mostrar erro de conexão apenas uma vez (Solves #99 #78 #74)",
+        "nl": "statusdefinities bijwerken, (oplosst #77 #58)\nupdate verbinding behandeling, tonen verbinding fout slechts eenmaal (Solves #99 #78 #74)",
+        "fr": "mettre à jour les définitions de l'état, (sols #77 #58)\nmettre à jour la gestion de la connexion, afficher l'erreur de connexion une seule fois (Solves #99 #78 #74)",
+        "it": "aggiorna le definizioni di stato, (solves #77 #58)\ngestione della connessione di aggiornamento, errore di visualizzazione solo una volta (Solves #99 #78 #74)",
+        "es": "actualizar las definiciones del estado, (solves #77 #58)\nactualizar el manejo de conexión, mostrar error de conexión sólo una vez (Solves #99 #78 #74)",
+        "pl": "aktualizacji definicji stanu (rozwiązanie # 77 # 58)\nupdate connection handling, show connection error only once (Solves # 99 # 78 # 74)",
+        "uk": "оновлення державних визначень (solves #77 #58)\nоновлення з'єднання, відображення помилки з'єднання тільки один раз (Solves #99 #78 #74)",
+        "zh-cn": "更新状态定义, (解决方案 #77#58)\n更新连接处理, 只显示一次连接错误( Solves # 99 # 78 # 74)"
+      }
     },
-    "encryptedNative": [
-        "Password",
-        "serial"
-    ],
-    "protectedNative": [
-        "Password",
-        "serial"
-    ],
-    "native": {
-        "host": "192.168.1.100",
-        "port": 8883,
-        "serial": "",
-        "Password": "",
-        "printerModel": "X1",
-        "requestInterval": 5,
-        "messageBuffer": 5
+    "titleLang": {
+      "en": "Bambulab 3d Printer integration",
+      "de": "Integration des Bambulab 3D-Druckers",
+      "ru": "Интеграция с 3D-принтером Bambulab",
+      "pt": "Integração da impressora 3D Bambulab",
+      "nl": "Bambulab 3D Printer integratie",
+      "fr": "Intégration de l'imprimante 3d Bambulab",
+      "it": "Integrazione della stampante 3d Bambulab",
+      "es": "Integración de la impresora 3d Bambulab",
+      "pl": "Integracja drukarki 3D Bambulab",
+      "uk": "Інтеграція 3d принтера Bambulab",
+      "zh-cn": "Bambulab 3D 打印机集成"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "Device or service connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.hmsErrorCodeTranslations",
-            "type": "state",
-            "common": {
-                "role": "json",
-                "name": "HMS translations",
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        }
-    ]
+    "desc": {
+      "en": "Connects to Bambulab 3d printers to retrieve data of current print and control main aspects",
+      "de": "Verbindet sich mit Bambulab-3D-Druckern, um Daten des aktuellen Drucks abzurufen und Hauptaspekte zu steuern",
+      "ru": "Подключается к 3D-принтерам Bambulab для получения данных о текущей печати и управления основными аспектами.",
+      "pt": "Conecta-se às impressoras 3D Bambulab para recuperar dados de impressão atual e controlar os principais aspectos",
+      "nl": "Maakt verbinding met Bambulab 3D-printers om gegevens op te halen over de huidige afdruk- en controleaspecten",
+      "fr": "Se connecte aux imprimantes 3d Bambulab pour récupérer les données d'impression en cours et contrôler les principaux aspects",
+      "it": "Si collega alle stampanti 3D Bambulab per recuperare i dati della stampa corrente e controllare gli aspetti principali",
+      "es": "Se conecta a impresoras 3d Bambulab para recuperar datos de impresión actual y controlar aspectos principales",
+      "pl": "Łączy się z drukarkami 3D Bambulab, aby pobierać dane dotyczące bieżącego drukowania i kontrolować główne aspekty",
+      "uk": "Підключається до 3d-принтерів Bambulab для отримання даних поточного друку та контролю основних аспектів",
+      "zh-cn": "连接到 Bambulab 3D 打印机以检索当前打印的数据并控制主要方面"
+    },
+    "authors": [
+      "DutchmanNL <oss@drozmotix.eu>"
+    ],
+    "keywords": [
+      "bambulab",
+      "3d-printing"
+    ],
+    "platform": "Javascript/Node.js",
+    "icon": "bambulab.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.bambulab/main/admin/bambulab.png",
+    "readme": "https://github.com/DrozmotiX/ioBroker.bambulab/blob/main/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "hardware",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "push",
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.8.23"
+      }
+    ],
+    "tier": 3,
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    }
+  },
+  "encryptedNative": [
+    "Password",
+    "serial"
+  ],
+  "protectedNative": [
+    "Password",
+    "serial"
+  ],
+  "native": {
+    "host": "192.168.1.100",
+    "port": 8883,
+    "serial": "",
+    "Password": "",
+    "printerModel": "X1",
+    "requestInterval": 5,
+    "messageBuffer": 5
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.hmsErrorCodeTranslations",
+      "type": "state",
+      "common": {
+        "role": "json",
+        "name": "HMS translations",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    }
+  ]
 }
