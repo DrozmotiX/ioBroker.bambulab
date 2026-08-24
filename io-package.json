@@ -136,13 +136,12 @@
         ],
         "globalDependencies": [
             {
-                "admin": ">=7.6.17"
+                "admin": ">=7.6.20"
             }
         ],
         "tier": 3,
         "licenseInformation": {
             "license": "MIT",
-            "link": "https://github.com/DrozmotiX/ioBroker.bambulab/blob/main/LICENSE",
             "type": "free"
         }
     },
@@ -190,7 +189,7 @@
             "_id": "info.hmsErrorCodeTranslations",
             "type": "state",
             "common": {
-                "role": "indicator.maintenance",
+                "role": "json",
                 "name": "HMS translations",
                 "type": "string",
                 "read": true,
