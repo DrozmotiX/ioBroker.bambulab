@@ -40,8 +40,8 @@ Siehe [`docs/CLOUD.md`](docs/CLOUD.md) (Login, Token, 2FA, Limits). Maintainer-K
 | **0** | Fork, Branch, Test-Docker | erledigt |
 | **1** | `lib/bambu-cloud.js` Login | erledigt |
 | **2** | Cloud-MQTT, H2D pushall | erledigt (Test H2D) |
-| **3** | Härtefälle (siehe Checkliste) | **fast fertig** (2 manuelle Tests offen) |
-| **4** | README, upstream merge, WIP-PR | offen (Maintainer: ok weiter) |
+| **3** | Härtefälle (siehe Checkliste) | **erledigt** |
+| **4** | README, upstream merge, WIP-PR | **Draft-PR** (0.5.0) |
 
 ### Phase 3 – Checkliste (vor merge-ready PR)
 
@@ -59,7 +59,7 @@ Siehe [`docs/CLOUD.md`](docs/CLOUD.md) (Login, Token, 2FA, Limits). Maintainer-K
 - [x] **LAN-Regression H2D** (2026-11-02): LAN `10.1.1.130:8883`, Dev-Modus; alle `set_fan` 1–3 ohne `failed`; Heatbreak bewusst übersprungen; Werklicht schaltet, MQTT `fail` kosmetisch
 - [x] Maintainer informiert (Kommentar in [#186](https://github.com/DrozmotiX/ioBroker.bambulab/issues/186), Nov 2026)
 - [x] Maintainer-Antwort: @DutchmanNL „Awesome thanks!“ – grünes Licht weiterzumachen, keine Detail-Vorgaben
-- [ ] `upstream/main` mergen, Konflikte lösen (vor PR)
+- [x] Branch auf aktuellem `upstream/main` (Merge-Base ok)
 
 ### Phase 4 – danach
 
