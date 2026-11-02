@@ -276,6 +276,7 @@ class Bambulab extends utils.Adapter {
                 if (mode !== 'cloud') {
                     this.cloudPrintControlBlocked = false;
                     this.setState('info.cloudPrintControlBlocked', false, true).catch(() => {});
+                    this.applyCloudPrintBlockedUi().catch(() => {});
                 }
                 this.setState('info.connection', true, true);
                 clientConnection.connected = true;
@@ -300,6 +301,15 @@ class Bambulab extends utils.Adapter {
                 }
 
                 this.createControlStates();
+
+                if (mode === 'cloud') {
+                    this.getState('info.cloudPrintControlBlocked', (err, st) => {
+                        if (!err && st && st.val) {
+                            this.cloudPrintControlBlocked = true;
+                            this.applyCloudPrintBlockedUi().catch(() => {});
+                        }
+                    });
+                }
 
                 // Subscribe on a printer topic after connection
                 client.subscribe([`device/${this.config.serial}/report`], () => {
@@ -952,7 +962,20 @@ class Bambulab extends utils.Adapter {
         }
         const pr = message.print;
         if (pr && pr.result != null && String(pr.result).toUpperCase() !== 'SUCCESS') {
-            this.log.warn(`print.${pr.command || '?'}: ${pr.result}`);
+            // Kalibrier-Abfragen (oft während Filamentwechsel) – kein Pause/Lüfter-Befehl vom Adapter
+            const caliNoise = pr.command === 'extrusion_cali_get' || pr.command === 'extrusion_cali_sel';
+            if (caliNoise) {
+                this.log.debug(`print.${pr.command}: ${pr.result} (Firmware/AMS, nicht ioBroker-Button)`);
+            } else if (
+                (this.config.connectionMode || 'lan') === 'cloud' &&
+                (pr.command === 'pause' || pr.command === 'resume' || pr.command === 'stop')
+            ) {
+                this.log.warn(
+                    `print.${pr.command}: ${pr.result} – Job-Steuerung über Cloud am H2D oft blockiert (wie Lüfter); LAN-Modus am Drucker + connectionMode=lan.`,
+                );
+            } else {
+                this.log.warn(`print.${pr.command || '?'}: ${pr.result}`);
+            }
             if (pr.command === 'set_fan' || pr.command === 'gcode_line') {
                 this.markCloudPrintControlBlocked();
             }
@@ -983,8 +1006,65 @@ class Bambulab extends utils.Adapter {
         this.setState('info.cloudPrintControlBlocked', true, true).catch(() => {});
         // Einmalig info (kein warn): erwarteter Zustand an Cloud-H2D, kein Fehler
         this.log.info(
-            'Cloud-H2D: Remote-print-Befehle (Lüfter/G-Code) sind firmwareseitig gesperrt → info.cloudPrintControlBlocked=true. Volle Steuerung nur per LAN (Drucker-IP + Access Code).',
+            'Cloud-H2D: Remote-print-Befehle (Lüfter/G-Code/Pause/…) firmwareseitig gesperrt → info.cloudPrintControlBlocked=true. Volle Steuerung nur per LAN (Drucker-IP + Access Code).',
         );
+        this.applyCloudPrintBlockedUi().catch(err => {
+            this.log.debug(`Cloud-Sperre UI (write-Flags): ${err.message || err}`);
+        });
+    }
+
+    /**
+     * Cloud + Firmware-Sperre: Schreib-States für Lüfter/Temp/G-Code in der Objekt-UI read-only,
+     * damit Visu nicht suggeriert, man könne über Cloud steuern. Pause/Stop/Resume bleiben schreibbar.
+     */
+    async applyCloudPrintBlockedUi() {
+        const serial = (this.config.serial || '').trim();
+        if (!serial) {
+            return;
+        }
+        const cloud = (this.config.connectionMode || 'lan') === 'cloud';
+        const writeAllowed = !cloud || !this.cloudPrintControlBlocked;
+        const names = [
+            'cooling_fan_speed',
+            'heatbreak_fan_speed',
+            'big_fan1_speed',
+            'big_fan2_speed',
+            'bed_target_temper',
+            'nozzle_target_temper',
+            'spd_lvl',
+            '_customGcode',
+            'pause',
+            'resume',
+            'stop',
+        ];
+        for (const name of names) {
+            const id = `${serial}.control.${name}`;
+            try {
+                const obj = await this.getObjectAsync(id);
+                if (!obj || !obj.common) {
+                    continue;
+                }
+                if (obj.common.write === writeAllowed) {
+                    continue;
+                }
+                await this.extendObjectAsync(id, { common: { write: writeAllowed } });
+            } catch {
+                // State existiert erst nach erstem MQTT (jsonExplorer) – ok
+            }
+        }
+    }
+
+    /** Cloud-H2D: gesperrte print.*-Befehle nicht senden (H2D-Test: auch pause → failed). */
+    shouldSkipCloudPrintCommand(msg) {
+        if ((this.config.connectionMode || 'lan') !== 'cloud' || !this.cloudPrintControlBlocked || !msg?.print) {
+            return false;
+        }
+        const cmd = msg.print.command;
+        if (!cmd) {
+            return false;
+        }
+        // pushing.* / reine Status-Abfragen haben kein print.command – hier nicht betroffen
+        return true;
     }
 
     setControlWriteOverride(controlName, val, seconds = 45) {
@@ -1130,6 +1210,14 @@ class Bambulab extends utils.Adapter {
         };
     }
 
+    /** Pause/Stop/Resume laut OpenBambuAPI: param leer, eigene sequence_id (nicht ständig „0“). */
+    buildPrintJobControlMessage(command) {
+        return this.buildPrintCommand({
+            command,
+            param: '',
+        });
+    }
+
     /** H2D: Lüfter laufen im Kühl-Luftkanal (modeId 0) – sonst oft „MQTT fehlgeschlagen“. */
     buildSetAirductMessage(modeId) {
         return this.buildPrintCommand({
@@ -1223,6 +1311,8 @@ class Bambulab extends utils.Adapter {
             'bed_target_temper',
             'nozzle_target_temper',
         ];
+        // fanSpeedChamber: Legacy-Name älterer Instanzen – gleiche Funktion wie big_fan2_speed
+        names.push('fanSpeedChamber');
         for (const name of names) {
             await this.subscribeStatesAsync(`${serial}.control.${name}`);
         }
@@ -1328,6 +1418,13 @@ class Bambulab extends utils.Adapter {
     }
 
     publishMQTTmessages(msg) {
+        if (this.shouldSkipCloudPrintCommand(msg)) {
+            const cmd = msg.print.command;
+            this.log.warn(
+                `MQTT print.${cmd} übersprungen – Cloud-print-Befehle blockiert (info.cloudPrintControlBlocked).`,
+            );
+            return;
+        }
         msg = this.applyMqttUserId(msg);
         const brief =
             msg.system?.command ||
@@ -1343,7 +1440,9 @@ class Bambulab extends utils.Adapter {
         this.log.debug(`Publish message ${JSON.stringify(msg)}`);
 
         const topic = `device/${this.config.serial}/request`;
-        client.publish(topic, JSON.stringify(msg), { qos: 0, retain: false }, error => {
+        const cmd = msg.print && msg.print.command;
+        const qos = cmd === 'pause' || cmd === 'resume' || cmd === 'stop' ? 1 : 0;
+        client.publish(topic, JSON.stringify(msg), { qos, retain: false }, error => {
             if (error) {
                 console.error(error);
             }
@@ -1723,35 +1822,34 @@ class Bambulab extends utils.Adapter {
                         }
                         break;
                     case 'pause':
-                        msg = {
-                            print: {
-                                sequence_id: '0',
-                                command: 'pause',
-                            },
-                        };
+                        this.log.info('Pause-Button → MQTT print.pause');
+                        msg = this.buildPrintJobControlMessage('pause');
                         break;
                     case 'updateHMSErrorCodeTranslation':
                         await this.loadHMSErrorCodeTranslations();
                         break;
                     case 'stop':
-                        msg = {
-                            print: {
-                                sequence_id: '0',
-                                command: 'stop',
-                            },
-                        };
+                        this.log.info('Stop-Button → MQTT print.stop');
+                        msg = this.buildPrintJobControlMessage('stop');
                         break;
                     case 'resume':
-                        msg = {
-                            print: {
-                                sequence_id: '0',
-                                command: 'resume',
-                            },
-                        };
+                        this.log.info('Resume-Button → MQTT print.resume');
+                        msg = this.buildPrintJobControlMessage('resume');
                         break;
                     case 'fanSpeedChamber':
-                        this.publishFanSpeedCommand(3, state.val, 'Lüfter Kammer (fanSpeedChamber)', 'big_fan2_speed');
+                    case 'big_fan2_speed': {
+                        if (controlState === 'fanSpeedChamber') {
+                            this.log.info(
+                                'control.fanSpeedChamber ist veraltet – bitte control.big_fan2_speed in Skripten/Visu nutzen.',
+                            );
+                        }
+                        const fanLabel =
+                            controlState === 'fanSpeedChamber'
+                                ? 'Lüfter Kammer (fanSpeedChamber, veraltet)'
+                                : 'Lüfter Kammer (big_fan2)';
+                        this.publishFanSpeedCommand(3, state.val, fanLabel, 'big_fan2_speed');
                         return;
+                    }
                     case 'heatbreak_fan_speed':
                         if (this.isH2dPrinter()) {
                             this.log.warn(
@@ -1788,9 +1886,6 @@ class Bambulab extends utils.Adapter {
                         break;
                     case 'big_fan1_speed':
                         this.publishFanSpeedCommand(2, state.val, 'Lüfter AUX (big_fan1)', 'big_fan1_speed');
-                        return;
-                    case 'big_fan2_speed':
-                        this.publishFanSpeedCommand(3, state.val, 'Lüfter Kammer (big_fan2)', 'big_fan2_speed');
                         return;
                     case 'cooling_fan_speed':
                         this.publishFanSpeedCommand(1, state.val, 'Part-Cooling-Lüfter', 'cooling_fan_speed');

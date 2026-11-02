@@ -16,6 +16,10 @@ iobroker url https://github.com/crunchip77/ioBroker.bambulab/tarball/feature/clo
 
 Danach Instanz **bambulab.0** neu starten (bei Cloud-Updates **kein** Token leeren, wenn Login schon ok war).
 
+## Nutzer-Doku Cloud
+
+Siehe [`docs/CLOUD.md`](docs/CLOUD.md) (Login, Token, 2FA, Limits). Maintainer-Kontakt **vor** offiziellem PR: [`MAINTAINER_HANDOFF.md`](MAINTAINER_HANDOFF.md).
+
 ## Cloud-Login (Stand Fork)
 
 1. `connectionMode = cloud`, Modell + **Serial** setzen
@@ -36,8 +40,8 @@ Danach Instanz **bambulab.0** neu starten (bei Cloud-Updates **kein** Token leer
 | **0** | Fork, Branch, Test-Docker | erledigt |
 | **1** | `lib/bambu-cloud.js` Login | erledigt |
 | **2** | Cloud-MQTT, H2D pushall | erledigt (Test H2D) |
-| **3** | Härtefälle (siehe Checkliste) | **in Arbeit** |
-| **4** | README, upstream merge, WIP-PR | offen |
+| **3** | Härtefälle (siehe Checkliste) | **fast fertig** (2 manuelle Tests offen) |
+| **4** | README, upstream merge, WIP-PR | offen (Maintainer: ok weiter) |
 
 ### Phase 3 – Checkliste (vor merge-ready PR)
 
@@ -46,17 +50,21 @@ Danach Instanz **bambulab.0** neu starten (bei Cloud-Updates **kein** Token leer
 - [x] JWT-Ablauf-Warnung im Log (~14 Tage vorher)
 - [x] Cloud-`user_id` für MQTT-Befehle (keine Hardcodes mehr)
 - [x] **Cloud H2D:** Kammer-LED ok; Lüfter/`print.*` → `failed` (Doku + `info.cloudPrintControlBlocked`)
-- [ ] **Manuell testen:** Pause / Stop / Resume über Cloud am H2D
-- [ ] 2FA: bewusst **nicht** implementiert – Doku/ Fehlermeldung (Workaround E-Mail-Code)
-- [ ] Token-Refresh-API: **nicht** – Re-Login bei Ablauf (Doku)
-- [ ] Region **China** untestiert dokumentieren
+- [x] Log: `pushall` nur **debug**; Cloud-Sperre einmal **info**
+- [x] Kosmetik: Legacy `fanSpeedChamber` → `big_fan2_speed`; UI **write=false** bei Cloud-Sperre
+- [x] 2FA: **nicht** implementiert – Fehlermeldung in `bambu-cloud.js` + [`docs/CLOUD.md`](docs/CLOUD.md)
+- [x] Token-Refresh: **nicht** – Re-Login bei Ablauf ([`docs/CLOUD.md`](docs/CLOUD.md), Admin-Hilfe, Log-Warnung)
+- [x] Region **China**: wählbar, **ungetestet** dokumentiert (Admin + [`docs/CLOUD.md`](docs/CLOUD.md))
+- [x] **Cloud H2D Pause:** `MQTT → pause` gesendet, Drucker **`print.pause: failed`** (2026-11-02) – Stop/Resume über Cloud nicht extra getestet, gleiche Policy erwartet
 - [ ] **LAN-Regression:** kurzer Test `connectionMode = lan` (anderes Gerät oder zweite Instanz)
-- [ ] `upstream/main` mergen, Konflikte lösen
+- [x] Maintainer informiert (Kommentar in [#186](https://github.com/DrozmotiX/ioBroker.bambulab/issues/186), Nov 2026)
+- [x] Maintainer-Antwort: @DutchmanNL „Awesome thanks!“ – grünes Licht weiterzumachen, keine Detail-Vorgaben
+- [ ] `upstream/main` mergen, Konflikte lösen (vor PR)
 
 ### Phase 4 – danach
 
-- README-Abschnitt Cloud (Limits: kein Kamera-Stream, kein Studio-Ersatz)
-- WIP-PR an [DrozmotiX/ioBroker.bambulab](https://github.com/DrozmotiX/ioBroker.bambulab), Issue [#186](https://github.com/DrozmotiX/ioBroker.bambulab/issues/186)
+- README/Changelog upstream-tauglich (Cloud-Abschnitt verlinkt)
+- Offizieller PR an [DrozmotiX/ioBroker.bambulab](https://github.com/DrozmotiX/ioBroker.bambulab), Issue [#186](https://github.com/DrozmotiX/ioBroker.bambulab/issues/186)
 
 ## Cloud vs. LAN – was der PR realistisch abdeckt
 
@@ -68,18 +76,18 @@ Gleicher MQTT-Broker-Typ wie Bambu Studio / Handy / [ha-bambulab](https://github
 | Kammer-LED (`system.ledctrl`) | ja (H2D getestet) | ja |
 | Werklicht H2D (`heatbed_light`) | oft **fail** am Gerät | LAN testen |
 | Lüfter, Soll-Temp., G-Code (`print.*`) | am H2D oft **`failed`** (Firmware) | **vorgesehen** für volle Steuerung |
-| Pause / Stop / Resume | Phase-3-Test offen | wie upstream |
+| Pause / Stop / Resume | **Pause: failed** (Cloud-H2D-Test) | wie upstream |
 
 **Kein ioBroker-Bug:** Der Drucker antwortet mit `print.set_fan: failed` / `gcode_line: failed`. HA dokumentiert das als **By Design** bei MQTT-Verschlüsselung / Remote-Sperre ([Issue #1330](https://github.com/greghesp/ha-bambulab/issues/1330)). Es gibt am H2D **keinen** zuverlässigen „Entwicklermodus“-Schalter in der App wie bei manchen P1-Firmwares – **volle Steuerung = LAN-Modus am Drucker + `connectionMode: lan` in der Instanz.**
 
-**PR-Botschaft:** Cloud-Modus = optional für **Monitoring + begrenzte Steuerung**; Schreib-States für Lüfter/G-Code bleiben im Code (LAN + ggf. Cloud ohne Sperre), mit State **`info.cloudPrintControlBlocked`** und Doku statt falschem „es müsste über Cloud gehen“.
+**PR-Botschaft:** Cloud-Modus = optional für **Monitoring + begrenzte Steuerung**; Schreib-States für Lüfter/G-Code bleiben im Code (LAN + ggf. Cloud ohne Sperre), mit State **`info.cloudPrintControlBlocked`**, UI read-only wenn gesperrt, und Doku statt falschem „es müsste über Cloud gehen“.
 
 ## Adapter testen
 
 - State: `bambulab.0.info.connection`
-- Log-Level `info` reicht; H2D: weniger Spam ab cloud.12
+- Log-Level **`info`** im Alltag; **`debug`** nur bei MQTT-Fehlersuche (`pushall` sichtbar)
 
-## H2D Datenpunkte – Audit (Stand cloud.15)
+## H2D Datenpunkte – Audit (Stand cloud.15+)
 
 **Serial-Ordner:** `bambulab.0.<serial>.*` – bei H2D kommen viele Felder unter `device.*` per jsonExplorer automatisch an (575+ States). Nur dokumentierte `state_attr`-Einträge haben schöne Namen/Rollen; der Rest ist lesbar, aber oft generisch benannt.
 
@@ -101,22 +109,22 @@ Gleicher MQTT-Broker-Typ wie Bambu Studio / Handy / [ha-bambulab](https://github
 | `lightChamber` | ok (`chamber_light` + `chamber_light2`) | ok |
 | `lightToolHeadLogo` | H2D: linke Leiste (`chamber_light`); X/P: M960 | wie Cloud |
 | `lightWorkHead` | H2D: `heatbed_light` (Drucker meldet oft **fail**) | `heatbed_light` / `work_light` testen |
-| `pause`, `stop`, `resume` | offen testen | print commands |
-| `big_fan*_speed`, `cooling_fan_speed` | **blockiert** (`set_fan` failed) | M106 / H2D `set_fan` |
+| `pause`, `stop`, `resume` | **Pause: failed** (Cloud); UI read-only bei `cloudPrintControlBlocked` | print commands |
+| `big_fan*_speed`, `cooling_fan_speed` | **blockiert** (`set_fan` failed); UI read-only wenn `cloudPrintControlBlocked` | M106 / H2D `set_fan` |
 | `heatbreak_fan_speed` | H2D: bewusst kein Befehl (wie HA) | M106 P4 |
 | `bed_target_temper`, `nozzle_target_temper` | vermutlich blockiert wie G-Code | M140 / M104 |
 | `spd_lvl`, `_customGcode` | `print.*` – ggf. blockiert | wie upstream |
 
 ### Kosmetik / Legacy
 
-- `fanSpeedChamber` – alter Name, Handler bleibt (P3); aktiver State heißt `big_fan2_speed`.
+- **`fanSpeedChamber`:** veralteter State-Name; Handler leitet auf **`big_fan2_speed`** um, einmaliger Log-Hinweis.
 - Viele `device.*`-States ohne `state_attr` – Werte stimmen, Namen/Rollen oft „roh“.
 
 ### Bewusst nicht / fehlt
 
-- Live-Kamera, Bambu Studio, 2FA-Login
+- Live-Kamera, Bambu Studio, 2FA-Login (nur Workaround-Doku)
 - Getrennte Soll-Temperatur Extruder L/R (nur `nozzle_target_temper` + `device.extruder.info.*.temp` lesen)
 - Airduct-Modi schreiben (nur Anzeige der MQTT-Struktur)
 - Vollständige H2D-`state_attr`-Map (Phase 4/Doku)
 
-Nach Deploy `.15`: Instanz neu starten; optional alte `control.stg_cur`-Werte einmal aktualisieren lassen (pushall).
+Nach Deploy: Instanz neu starten; optional alte `control.stg_cur`-Werte einmal aktualisieren lassen (pushall).

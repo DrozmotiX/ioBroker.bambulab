@@ -55,6 +55,7 @@
                 { "label": "Global (EU/US)", "value": "global" },
                 { "label": "China", "value": "china" }
             ],
+            "help": "Global (EU/US) is tested. China endpoints are selectable but not verified in this fork — use at your own risk.",
             "hidden": "data.connectionMode !== 'cloud'"
         },
         "cloudLoginMethod": {
@@ -112,7 +113,7 @@
         "cloudAccessToken": {
             "type": "password",
             "label": "Cloud access token (optional)",
-            "help": "If set, email/password are skipped. Token from Bambu login (~360 days validity)",
+            "help": "If set, email/password are skipped. Token from Bambu login (~360 days validity). No automatic refresh — re-login when the log warns about expiry.",
             "newLine": true,
             "xs": 12,
             "sm": 12,

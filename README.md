@@ -19,8 +19,19 @@ With credits to [kmxak](https://forum.iobroker.net/user/kmxak), [djalexz](https:
 this adapter integrates Bambulab 3D-Printers into ioBroker.
 
 Please provide your Printer IP-Address, API token and serial number in adapter settings;
-these are required for a local connection (no cloud involved) to your printer.
+these are required for a **local (LAN)** connection to your printer.
 These credentials are stored locally and not shared to third parties.
+
+### Optional: Bambu Cloud MQTT (work in progress, fork)
+
+Upstream npm releases use **LAN only**. The community fork for [issue #186](https://github.com/DrozmotiX/ioBroker.bambulab/issues/186) adds an optional **Cloud** connection mode (same MQTT broker as the Bambu app / Home Assistant integration).
+
+- **Default remains LAN** – full control (fans, target temperatures, G-code) via printer IP and LAN access code.
+- **Cloud** is mainly for **monitoring** and **limited control** (e.g. chamber LED). On **H2D**, firmware often **rejects** remote `print.*` commands (fans, G-code); the adapter exposes `info.cloudPrintControlBlocked` and documents this honestly.
+- User guide (German, fork): [`docs/CLOUD.md`](docs/CLOUD.md)
+
+Install fork for testing:  
+`iobroker url https://github.com/crunchip77/ioBroker.bambulab/tarball/feature/cloud-mqtt`
 
 ## Finding the API Token and Serial Number
 
