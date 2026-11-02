@@ -56,7 +56,7 @@ Siehe [`docs/CLOUD.md`](docs/CLOUD.md) (Login, Token, 2FA, Limits). Maintainer-K
 - [x] Token-Refresh: **nicht** – Re-Login bei Ablauf ([`docs/CLOUD.md`](docs/CLOUD.md), Admin-Hilfe, Log-Warnung)
 - [x] Region **China**: wählbar, **ungetestet** dokumentiert (Admin + [`docs/CLOUD.md`](docs/CLOUD.md))
 - [x] **Cloud H2D Pause:** `MQTT → pause` gesendet, Drucker **`print.pause: failed`** (2026-11-02) – Stop/Resume über Cloud nicht extra getestet, gleiche Policy erwartet
-- [ ] **LAN-Regression:** kurzer Test `connectionMode = lan` (anderes Gerät oder zweite Instanz)
+- [x] **LAN-Regression H2D** (2026-11-02): LAN `10.1.1.130:8883`, Dev-Modus; alle `set_fan` 1–3 ohne `failed`; Heatbreak bewusst übersprungen; Werklicht schaltet, MQTT `fail` kosmetisch
 - [x] Maintainer informiert (Kommentar in [#186](https://github.com/DrozmotiX/ioBroker.bambulab/issues/186), Nov 2026)
 - [x] Maintainer-Antwort: @DutchmanNL „Awesome thanks!“ – grünes Licht weiterzumachen, keine Detail-Vorgaben
 - [ ] `upstream/main` mergen, Konflikte lösen (vor PR)
@@ -74,9 +74,11 @@ Gleicher MQTT-Broker-Typ wie Bambu Studio / Handy / [ha-bambulab](https://github
 |----------|----------------------|------------------------|
 | Status, Temperaturen, AMS, Airduct, HMS | ja | ja |
 | Kammer-LED (`system.ledctrl`) | ja (H2D getestet) | ja |
-| Werklicht H2D (`heatbed_light`) | oft **fail** am Gerät | LAN testen |
-| Lüfter, Soll-Temp., G-Code (`print.*`) | am H2D oft **`failed`** (Firmware) | **vorgesehen** für volle Steuerung |
-| Pause / Stop / Resume | **Pause: failed** (Cloud-H2D-Test) | wie upstream |
+| Werklicht H2D (`heatbed_light`) | oft **fail** / pulsierend | **schaltet am Gerät**; MQTT meldet oft trotzdem `LED heatbed_light: fail` (LAN-Test) |
+| Lüfter Kammer (`big_fan2` / Airduct) | **blockiert** (`set_fan` failed) | **ok** (Raumlüfter + Klappe, LAN-Test) |
+| Heatbreak-Lüfter steuern | – | **H2D: absichtlich kein Befehl** (wie HA) |
+| Lüfter/Soll-Temp./G-Code sonst | **`failed`** (Cloud) | LAN + Dev-Modus vorgesehen |
+| Pause / Stop / Resume | **Pause: failed** (Cloud) | nicht extra getestet (Drucker idle) |
 
 **Kein ioBroker-Bug:** Der Drucker antwortet mit `print.set_fan: failed` / `gcode_line: failed`. HA dokumentiert das als **By Design** bei MQTT-Verschlüsselung / Remote-Sperre ([Issue #1330](https://github.com/greghesp/ha-bambulab/issues/1330)). Es gibt am H2D **keinen** zuverlässigen „Entwicklermodus“-Schalter in der App wie bei manchen P1-Firmwares – **volle Steuerung = LAN-Modus am Drucker + `connectionMode: lan` in der Instanz.**
 
@@ -101,6 +103,7 @@ Gleicher MQTT-Broker-Typ wie Bambu Studio / Handy / [ha-bambulab](https://github
 | AMS / Tray | `ams.*`, `vt_tray` | wie P1/X1 |
 | HMS / Fehler | `print.hms.*` | Übersetzung wenn JSON geladen |
 | Kamera / Laser-Cam | `device.cam.*` | **kein Live-Stream** (Adapter-Limit) |
+| **Gesamt-Druckstunden** | `printer.print_time` | H2D getestet: entspricht Display „Nutzungsdauer“ (h); 44→52 nach ~8 h Druck (Nov 2026) |
 
 ### Steuern – nach Verbindungsmodus
 
@@ -108,10 +111,10 @@ Gleicher MQTT-Broker-Typ wie Bambu Studio / Handy / [ha-bambulab](https://github
 |--------------------------|------------------|---------------------|
 | `lightChamber` | ok (`chamber_light` + `chamber_light2`) | ok |
 | `lightToolHeadLogo` | H2D: linke Leiste (`chamber_light`); X/P: M960 | wie Cloud |
-| `lightWorkHead` | H2D: `heatbed_light` (Drucker meldet oft **fail**) | `heatbed_light` / `work_light` testen |
+| `lightWorkHead` | H2D: oft **fail** / pulsierend | Heizbettlicht **ok am Gerät**; Log kann `fail` zeigen (2026-11-02 LAN) |
 | `pause`, `stop`, `resume` | **Pause: failed** (Cloud); UI read-only bei `cloudPrintControlBlocked` | print commands |
-| `big_fan*_speed`, `cooling_fan_speed` | **blockiert** (`set_fan` failed); UI read-only wenn `cloudPrintControlBlocked` | M106 / H2D `set_fan` |
-| `heatbreak_fan_speed` | H2D: bewusst kein Befehl (wie HA) | M106 P4 |
+| `big_fan*_speed`, `cooling_fan_speed` | **blockiert** (`set_fan` failed); UI read-only wenn `cloudPrintControlBlocked` | LAN: **`big_fan2`** Kammer+Klappe; **`big_fan1`** seitlich links; **`cooling_fan_speed`** Düsen-Lüfter (H2D physisch bestätigt) |
+| `heatbreak_fan_speed` | H2D: Adapter sendet **nichts** (Log-Hinweis) | **gleich** – Firmware/HA steuern Heatbreak am H2D nicht per MQTT |
 | `bed_target_temper`, `nozzle_target_temper` | vermutlich blockiert wie G-Code | M140 / M104 |
 | `spd_lvl`, `_customGcode` | `print.*` – ggf. blockiert | wie upstream |
 

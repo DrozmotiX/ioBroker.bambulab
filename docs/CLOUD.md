@@ -30,7 +30,9 @@
 | Status, Temperaturen, AMS, HMS, Airduct (lesen) | ja |
 | Kammer-LED (`control.lightChamber`) | ja |
 | H2D „Logo“-State (linke Kammerleiste) | ja |
-| Werklicht (`lightWorkHead`) | oft unzuverlässig / `fail` |
+| Werklicht (`lightWorkHead`) | Cloud oft unzuverlässig; **LAN + Dev-Modus: ok** (H2D-Test) |
+| Lüfter Kammer (`big_fan2_speed`) | Cloud blockiert; **LAN: ok** (inkl. Airduct/Klappe) |
+| Heatbreak-Lüfter (`heatbreak_fan_speed`) | am H2D **kein MQTT-Befehl** (Adapter wie HA) |
 | Lüfter, Soll-Temp., Custom G-Code | am H2D oft **gesperrt** → `info.cloudPrintControlBlocked` |
 | Pause / Stop / Resume | **Pause am H2D getestet: `failed`** (2026-11-02); Stop/Resume über Cloud nicht empfohlen |
 
@@ -39,6 +41,14 @@ Referenz: [Home Assistant Bambu Lab #1330](https://github.com/greghesp/ha-bambul
 ## Volle Steuerung
 
 **LAN-Modus am Drucker** + Admin **LAN** + Drucker-IP + **LAN Access Code** ([Bambu Wiki – Netzwerk](https://wiki.bambulab.com/en/general/printer-network-ports)).
+
+## Gesamt-Druckstunden (H2D)
+
+Am Gerät: Einstellungen → Geräteinformation. In ioBroker (MQTT, getestet Cloud):
+
+- **`bambulab.0.<serial>.printer.print_time`** – Wert in **Stunden** (technischer MQTT-Name `print_time`, **nicht** Laufzeit des aktuellen Jobs)
+
+Nach Instanz-Update mit `state_attr` heißt der State in der UI „Total usage hours (device)“.
 
 ## States
 
