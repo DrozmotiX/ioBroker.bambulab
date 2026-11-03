@@ -815,6 +815,15 @@ class Bambulab extends utils.Adapter {
                     // Call function to handle states for AMS unit
                     message.print.ams.ams = this.handleAMSUnits(message);
                 }
+                // Externe Spule (vt_tray): gleiche Gramm-Schätzung wie AMS-Slots
+                const vtTray = message.print.vt_tray;
+                if (vtTray && vtTray.remain_g == null) {
+                    const pct = Number(vtTray.remain);
+                    const nominalG = Number(vtTray.tray_weight);
+                    if (!Number.isNaN(pct) && pct >= 0 && !Number.isNaN(nominalG) && nominalG > 0) {
+                        vtTray.remain_g = Math.round((nominalG * pct) / 100);
+                    }
+                }
             }
 
             // Translate home_flag to door state
@@ -832,11 +841,8 @@ class Bambulab extends utils.Adapter {
                 }
             }
             const nozzle = message.print.device && message.print.device.nozzle;
-            if (nozzle && nozzle.tar_id != null && typeof nozzle.tar_id !== 'number') {
-                const n = Number(nozzle.tar_id);
-                if (!Number.isNaN(n)) {
-                    nozzle.tar_id = n;
-                }
+            if (nozzle && nozzle.tar_id != null && typeof nozzle.tar_id !== 'string') {
+                nozzle.tar_id = String(nozzle.tar_id);
             }
 
             // H2D sendet viele Felder, die in state_attr.js (noch) fehlen – ohne validateAttribute kein Sentry-/Warn-Spam
@@ -893,6 +899,15 @@ class Bambulab extends utils.Adapter {
                     }
                     if (amsData[unit].tray[tray].bed_temp != null) {
                         amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
+                    }
+                    // Gramm-Schätzung wie in der Bambu-App (RFID-Nenngewicht × Rest-%), nur wenn der Drucker kein remain_g sendet.
+                    const trayObj = amsData[unit].tray[tray];
+                    if (trayObj.remain_g == null) {
+                        const pct = Number(trayObj.remain);
+                        const nominalG = Number(trayObj.tray_weight);
+                        if (!Number.isNaN(pct) && pct >= 0 && !Number.isNaN(nominalG) && nominalG > 0) {
+                            trayObj.remain_g = Math.round((nominalG * pct) / 100);
+                        }
                     }
                 }
             }
