@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.5.0",
+        "version": "0.5.1",
         "news": {
+            "0.5.1": {
+                "en": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "de": "🏷️ AMS/Filament-Objekt-Namen (remain = %, Trocknungs-Profil h, remain_g); MQTT-Typ-Fix #292",
+                "ru": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "pt": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "nl": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "fr": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "it": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "es": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "pl": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "uk": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "zh-cn": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292"
+            },
             "0.5.0": {
                 "en": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
                 "de": "☁️ Optional Bambu Cloud MQTT (E-Mail-Code-Login, Zugangsdaten pro Adapterinstanz) — Nutzerwunsch #186\n🏠 Standard bleibt LAN (Drucker-IP + Access Code); Cloud vor allem Monitoring und begrenzte Steuerung\n🖨️ H2D getestet: Kammer-LED über Cloud; volle Lüfter/Licht-Steuerung über LAN + Entwicklermodus; State info.cloudPrintControlBlocked bei Firmware-Sperre\n📄 Grenzen in docs/CLOUD.md (kein Kamera-Stream, kein Studio-Ersatz)",
