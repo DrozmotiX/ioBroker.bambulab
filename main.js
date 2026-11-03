@@ -404,6 +404,15 @@ class Bambulab extends utils.Adapter {
                     // Call function to handle states for AMS unit
                     message.print.ams.ams = this.handleAMSUnits(message);
                 }
+                // Externe Spule (vt_tray): gleiche Gramm-Schätzung wie AMS-Slots
+                const vtTray = message.print.vt_tray;
+                if (vtTray && vtTray.remain_g == null) {
+                    const pct = Number(vtTray.remain);
+                    const nominalG = Number(vtTray.tray_weight);
+                    if (!Number.isNaN(pct) && pct >= 0 && !Number.isNaN(nominalG) && nominalG > 0) {
+                        vtTray.remain_g = Math.round((nominalG * pct) / 100);
+                    }
+                }
             }
 
             // Translate home_flag to door state
@@ -411,6 +420,18 @@ class Bambulab extends utils.Adapter {
                 message.print.doorOpen = true;
             } else if (message.print.home_flag === 6407560) {
                 message.print.doorOpen = false;
+            }
+
+            // Typ-Korrektur vor jsonExplorer (sonst ioBroker info: „has to be type …“)
+            if (message.print.err2 && message.print.err2.err_code != null) {
+                const c = message.print.err2.err_code;
+                if (typeof c === 'string' && c !== '' && !Number.isNaN(Number(c))) {
+                    message.print.err2.err_code = Number(c);
+                }
+            }
+            const nozzle = message.print.device && message.print.device.nozzle;
+            if (nozzle && nozzle.tar_id != null && typeof nozzle.tar_id !== 'string') {
+                nozzle.tar_id = String(nozzle.tar_id);
             }
 
             // Explore JSON & create states
@@ -463,6 +484,15 @@ class Bambulab extends utils.Adapter {
                     }
                     if (amsData[unit].tray[tray].bed_temp != null) {
                         amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
+                    }
+                    // Gramm-Schätzung wie in der Bambu-App (RFID-Nenngewicht × Rest-%), nur wenn der Drucker kein remain_g sendet.
+                    const trayObj = amsData[unit].tray[tray];
+                    if (trayObj.remain_g == null) {
+                        const pct = Number(trayObj.remain);
+                        const nominalG = Number(trayObj.tray_weight);
+                        if (!Number.isNaN(pct) && pct >= 0 && !Number.isNaN(nominalG) && nominalG > 0) {
+                            trayObj.remain_g = Math.round((nominalG * pct) / 100);
+                        }
                     }
                 }
             }
