@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.4.3",
+        "version": "0.4.4",
         "news": {
+            "0.4.4": {
+                "en": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "de": "🏷️ AMS/Filament: remain = % statt Druckzeit; Trocknungs-Profil vs. dry_time; klarere tray_weight/total_len\n🔧 MQTT-Normalisierung err2.err_code und nozzle tar_id (#292 Log-Spam)\n📊 remain_g Beschriftung bei Gramm-Schätzung vom Drucker",
+                "ru": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "pt": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "nl": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "fr": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "it": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "es": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "pl": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "uk": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "zh-cn": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate"
+            },
             "0.4.3": {
                 "en": "🛠️ Improved error messages when the printer is offline or unreachable.\n🖨️ Added HD2 printer to the selection menu for easier access (#142)\n🔧 Resolved multiple type definition issues (#203, #202, #201, #200, #199, #198)\n⚙️ Implemented a buffer system to reduce CPU usage and improve performance (#145)\n🔄 Fixed type conversion errors by replacing deprecated 'tonumber' with TOINTEGER/TOFLOAT (#197)\n📊 Added missing state attributes for HD2 printer during printing (height, platform, tool, mapping) (#194)",
                 "de": "🛠️ Verbesserte Fehlermeldungen, wenn der Drucker offline oder nicht erreichbar ist.\n🖨️ HD2-Drucker zur Auswahl hinzugefügt für einfacheren Zugriff (#142)\n🔧 Mehrere Probleme mit Typdefinitionen gelöst (#203, #202, #201, #200, #199, #198)\n⚙️ Puffersystem implementiert zur Reduzierung der CPU-Auslastung und Verbesserung der Leistung (#145)\n🔄 Fehler bei der Typkonvertierung behoben durch Ersetzen von 'tonumber' mit TOINTEGER/TOFLOAT (#197)\n📊 Fehlende Zustandsattribute für HD2-Drucker während des Druckens hinzugefügt (Höhe, Plattform, Werkzeug, Zuordnung) (#194)",
