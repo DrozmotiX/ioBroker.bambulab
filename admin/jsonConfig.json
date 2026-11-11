@@ -122,6 +122,18 @@
             "xl": 4,
             "hidden": "data.connectionMode !== 'cloud'"
         },
+        "cloudMqttUsername": {
+            "type": "text",
+            "label": "Cloud MQTT username (optional)",
+            "help": "Only if cloud login works but MQTT user is missing: copy u_… from MQTTX (username field), not the password/token.",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 4,
+            "xl": 4,
+            "hidden": "data.connectionMode !== 'cloud'"
+        },
         "serial": {
             "type": "text",
             "label": "Serial number of device",

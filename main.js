@@ -429,6 +429,26 @@ class Bambulab extends utils.Adapter {
                 this.log.warn(
                     'Im Admin „Cloud access token“ leeren und speichern (kein Auto-Neustart). Dann Instanz starten – eine E-Mail mit Code.',
                 );
+            } else if (e instanceof bambuCloud.BambuCloudAuthError && e.code === 'preferenceFailed') {
+                this.log.error(e.message || e);
+                clientConnection.cloudAuthHold = true;
+                const freshToken = (e.cloudAccessTokenFromLogin || '').trim();
+                if (freshToken) {
+                    try {
+                        await this.writeCloudCredentialsFile({
+                            accessToken: freshToken,
+                            cloudMqttUsername: (this.config.cloudMqttUsername || '').trim(),
+                            cloudUserId: (this.config.cloudUserId || '').trim(),
+                        });
+                        this.log.warn(
+                            'Login-Token in cloud-credentials.json gesichert. „Cloud MQTT username“ (u_…) aus MQTTX eintragen, speichern, Instanz neu starten.',
+                        );
+                    } catch (writeErr) {
+                        this.log.warn(
+                            `Cloud: Token nicht speicherbar (${writeErr.message || writeErr}) – Token im Admin unter „Cloud access token“ eintragen.`,
+                        );
+                    }
+                }
             } else {
                 this.log.error(`[MQTT Message handler] ${e} | ${e.stack}`);
             }

@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.5.1",
+        "version": "0.5.2",
         "news": {
             "0.5.1": {
                 "en": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
