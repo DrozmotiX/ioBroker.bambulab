@@ -403,7 +403,9 @@ class Bambulab extends utils.Adapter {
                     ? amsUnits.length > 0
                     : amsUnits != null && typeof amsUnits === 'object';
                 if (hasAmsList) {
-                    message.print.ams.ams = this.handleAMSUnits(message);
+                    const amsHandled = this.handleAMSUnits(message);
+                    message.print.ams.ams = amsHandled.amsData;
+                    this._amsTraysClearedThisMessage = amsHandled.cleared;
                 }
                 // Externe Spule (vt_tray): gleiche Gramm-Schätzung wie AMS-Slots
                 const vtTray = message.print.vt_tray;
@@ -433,6 +435,14 @@ class Bambulab extends utils.Adapter {
                 false,
                 0,
             );
+            if (this._amsTraysClearedThisMessage && this._amsTraysClearedThisMessage.length > 0) {
+                await amsTrayNormalize.syncClearedTrayStates(
+                    this,
+                    this.config.serial,
+                    this._amsTraysClearedThisMessage,
+                );
+                this._amsTraysClearedThisMessage = [];
+            }
             this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);
         } catch (e) {
             this.log.error(`[messageHandler] ${e} | ${e.stack}`);
@@ -442,14 +452,18 @@ class Bambulab extends utils.Adapter {
 
     handleAMSUnits(message) {
         const amsData = message.print.ams.ams;
+        const trayExistBits = message.print.ams && message.print.ams.tray_exist_bits;
+        const cleared = [];
         // handle conversion for all AMS units
         for (const unit in amsData) {
             if (amsData[unit] !== null) {
+                const amsUnitId = amsData[unit].id != null ? amsData[unit].id : unit;
                 for (const tray in amsData[unit].tray) {
                     const trayObj = amsData[unit].tray[tray];
-                    // #204: leerer Slot nur { id } – sonst bleibt PLA/cols in ioBroker stehen
-                    if (amsTrayNormalize.isAmsTrayEmptyFromMqtt(trayObj)) {
+                    // #204: { id } nur ODER tray_exist_bits (H2D hält altes cols-JSON oft noch)
+                    if (amsTrayNormalize.shouldClearAmsTray(trayObj, trayExistBits, amsUnitId)) {
                         amsTrayNormalize.applyEmptyAmsTrayDefaults(trayObj);
+                        cleared.push({ unit, tray });
                         continue;
                     }
                     if (trayObj.bed_temp != null) {
@@ -466,7 +480,7 @@ class Bambulab extends utils.Adapter {
                 }
             }
         }
-        return amsData;
+        return { amsData, cleared };
     }
 
     publishMQTTmessages(msg) {

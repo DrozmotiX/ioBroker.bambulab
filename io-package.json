@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.4.6",
+        "version": "0.4.8",
         "news": {
+            "0.4.8": {
+                "en": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "de": "AMS leer #204: tray_exist_bits (H2D), alle rollenbezogenen States zurücksetzen",
+                "ru": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "pt": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "nl": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "fr": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "it": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "es": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "pl": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "uk": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "zh-cn": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)"
+            },
             "0.4.6": {
                 "en": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
                 "de": "🧵 AMS leerer Slot: alte Farbe/Material löschen wenn MQTT nur id sendet (#204)",
