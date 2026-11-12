@@ -14,6 +14,8 @@ const { default: axios } = require('axios'); // Http request library
 const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer library
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
+const mqttPrintCoerce = require('./lib/mqtt_print_coerce');
+const amsTrayNormalize = require('./lib/ams_tray_normalize');
 
 let client; // Memory to store client connection information
 const clientConnection = {
@@ -395,14 +397,24 @@ class Bambulab extends utils.Adapter {
                     ack: true,
                 });
 
-                // For some reason library does not convert the ams related bed_temp to number when value = 0
-                if (
-                    message.print.ams != null &&
-                    message.print.ams.ams_exist_bits != null &&
-                    message.print.ams.ams_exist_bits === '1'
-                ) {
-                    // Call function to handle states for AMS unit
-                    message.print.ams.ams = this.handleAMSUnits(message);
+                // AMS-Temperaturen/remain_g bei 1..n Einheiten (exist_bits: 1, 3, 7, …)
+                const amsUnits = message.print.ams && message.print.ams.ams;
+                const hasAmsList = Array.isArray(amsUnits)
+                    ? amsUnits.length > 0
+                    : amsUnits != null && typeof amsUnits === 'object';
+                if (hasAmsList) {
+                    const amsHandled = this.handleAMSUnits(message);
+                    message.print.ams.ams = amsHandled.amsData;
+                    this._amsTraysClearedThisMessage = amsHandled.cleared;
+                }
+                // Externe Spule (vt_tray): gleiche Gramm-Schätzung wie AMS-Slots
+                const vtTray = message.print.vt_tray;
+                if (vtTray && vtTray.remain_g == null) {
+                    const pct = Number(vtTray.remain);
+                    const nominalG = Number(vtTray.tray_weight);
+                    if (!Number.isNaN(pct) && pct >= 0 && !Number.isNaN(nominalG) && nominalG > 0) {
+                        vtTray.remain_g = Math.round((nominalG * pct) / 100);
+                    }
                 }
             }
 
@@ -413,6 +425,8 @@ class Bambulab extends utils.Adapter {
                 message.print.doorOpen = false;
             }
 
+            mqttPrintCoerce.coerceMqttPrintTypes(message.print);
+
             // Explore JSON & create states
             const returnJONexplorer = await jsonExplorer.traverseJson(
                 message.print,
@@ -421,6 +435,14 @@ class Bambulab extends utils.Adapter {
                 false,
                 0,
             );
+            if (this._amsTraysClearedThisMessage && this._amsTraysClearedThisMessage.length > 0) {
+                await amsTrayNormalize.syncClearedTrayStates(
+                    this,
+                    this.config.serial,
+                    this._amsTraysClearedThisMessage,
+                );
+                this._amsTraysClearedThisMessage = [];
+            }
             this.log.debug(`Response of JSONexploer: ${JSON.stringify(returnJONexplorer)}`);
         } catch (e) {
             this.log.error(`[messageHandler] ${e} | ${e.stack}`);
@@ -430,44 +452,35 @@ class Bambulab extends utils.Adapter {
 
     handleAMSUnits(message) {
         const amsData = message.print.ams.ams;
+        const trayExistBits = message.print.ams && message.print.ams.tray_exist_bits;
+        const cleared = [];
         // handle conversion for all AMS units
         for (const unit in amsData) {
             if (amsData[unit] !== null) {
+                const amsUnitId = amsData[unit].id != null ? amsData[unit].id : unit;
                 for (const tray in amsData[unit].tray) {
-                    if (!amsData[unit].tray[tray].cols) {
-                        // amsData[unit].tray[tray] =   {
-                        // 	'bed_temp': '',
-                        // 	'bed_temp_type': '',
-                        // 	'cols': [],
-                        // 	'drying_temp': '',
-                        // 	'drying_time': '',
-                        // 	'id': '',
-                        // 	'nozzle_temp_max': '',
-                        // 	'nozzle_temp_min': '',
-                        // 	'remain': 0,
-                        // 	'tag_uid': '',
-                        // 	'tray_color': '',
-                        // 	'tray_diameter': '',
-                        // 	'tray_id_name': '',
-                        // 	'tray_info_idx': '',
-                        // 	'tray_sub_brands': '',
-                        // 	'tray_type': '',
-                        // 	'tray_uuid': '',
-                        // 	'tray_weight': '',
-                        // 	'xcam_info': ''
-                        // };
-                        // amsData[unit].tray[tray]._filamentPresent = false;
-                    } else {
-                        // amsData[unit].tray[tray]._filamentPresent = true;
-                        amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
+                    const trayObj = amsData[unit].tray[tray];
+                    // #204: { id } nur ODER tray_exist_bits (H2D hält altes cols-JSON oft noch)
+                    if (amsTrayNormalize.shouldClearAmsTray(trayObj, trayExistBits, amsUnitId)) {
+                        amsTrayNormalize.applyEmptyAmsTrayDefaults(trayObj);
+                        cleared.push({ unit, tray });
+                        continue;
                     }
-                    if (amsData[unit].tray[tray].bed_temp != null) {
-                        amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
+                    if (trayObj.bed_temp != null) {
+                        trayObj.bed_temp = parseInt(trayObj.bed_temp, 10);
+                    }
+                    // Gramm-Schätzung wie in der Bambu-App (RFID-Nenngewicht × Rest-%), nur wenn der Drucker kein remain_g sendet.
+                    if (trayObj.remain_g == null) {
+                        const pct = Number(trayObj.remain);
+                        const nominalG = Number(trayObj.tray_weight);
+                        if (!Number.isNaN(pct) && pct >= 0 && !Number.isNaN(nominalG) && nominalG > 0) {
+                            trayObj.remain_g = Math.round((nominalG * pct) / 100);
+                        }
                     }
                 }
             }
         }
-        return amsData;
+        return { amsData, cleared };
     }
 
     publishMQTTmessages(msg) {

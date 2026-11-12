@@ -1,8 +1,60 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.4.3",
+        "version": "0.4.8",
         "news": {
+            "0.4.8": {
+                "en": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "de": "AMS leer #204: tray_exist_bits (H2D), alle rollenbezogenen States zurücksetzen",
+                "ru": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "pt": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "nl": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "fr": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "it": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "es": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "pl": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "uk": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
+                "zh-cn": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)"
+            },
+            "0.4.6": {
+                "en": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "de": "🧵 AMS leerer Slot: alte Farbe/Material löschen wenn MQTT nur id sendet (#204)",
+                "ru": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "pt": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "nl": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "fr": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "it": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "es": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "pl": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "uk": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "zh-cn": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)"
+            },
+            "0.4.5": {
+                "en": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "de": "🖨️ Zweites AMS (ams_exist_bits 3): Tray-Aufbereitung wieder aktiv\n🔧 mqtt_print_coerce für H2D err_code/tar_id (#292)",
+                "ru": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "pt": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "nl": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "fr": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "it": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "es": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "pl": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "uk": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "zh-cn": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)"
+            },
+            "0.4.4": {
+                "en": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "de": "🏷️ AMS/Filament: remain = % statt Druckzeit; Trocknungs-Profil vs. dry_time; klarere tray_weight/total_len\n🔧 MQTT-Normalisierung err2.err_code und nozzle tar_id (#292 Log-Spam)\n📊 remain_g Beschriftung bei Gramm-Schätzung vom Drucker",
+                "ru": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "pt": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "nl": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "fr": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "it": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "es": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "pl": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "uk": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
+                "zh-cn": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate"
+            },
             "0.4.3": {
                 "en": "🛠️ Improved error messages when the printer is offline or unreachable.\n🖨️ Added HD2 printer to the selection menu for easier access (#142)\n🔧 Resolved multiple type definition issues (#203, #202, #201, #200, #199, #198)\n⚙️ Implemented a buffer system to reduce CPU usage and improve performance (#145)\n🔄 Fixed type conversion errors by replacing deprecated 'tonumber' with TOINTEGER/TOFLOAT (#197)\n📊 Added missing state attributes for HD2 printer during printing (height, platform, tool, mapping) (#194)",
                 "de": "🛠️ Verbesserte Fehlermeldungen, wenn der Drucker offline oder nicht erreichbar ist.\n🖨️ HD2-Drucker zur Auswahl hinzugefügt für einfacheren Zugriff (#142)\n🔧 Mehrere Probleme mit Typdefinitionen gelöst (#203, #202, #201, #200, #199, #198)\n⚙️ Puffersystem implementiert zur Reduzierung der CPU-Auslastung und Verbesserung der Leistung (#145)\n🔄 Fehler bei der Typkonvertierung behoben durch Ersetzen von 'tonumber' mit TOINTEGER/TOFLOAT (#197)\n📊 Fehlende Zustandsattribute für HD2-Drucker während des Druckens hinzugefügt (Höhe, Plattform, Werkzeug, Zuordnung) (#194)",
