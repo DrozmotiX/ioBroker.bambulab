@@ -15,6 +15,7 @@ const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer libra
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
 const mqttPrintCoerce = require('./lib/mqtt_print_coerce');
+const amsTrayNormalize = require('./lib/ams_tray_normalize');
 
 let client; // Memory to store client connection information
 const clientConnection = {
@@ -445,38 +446,16 @@ class Bambulab extends utils.Adapter {
         for (const unit in amsData) {
             if (amsData[unit] !== null) {
                 for (const tray in amsData[unit].tray) {
-                    if (!amsData[unit].tray[tray].cols) {
-                        // amsData[unit].tray[tray] =   {
-                        // 	'bed_temp': '',
-                        // 	'bed_temp_type': '',
-                        // 	'cols': [],
-                        // 	'drying_temp': '',
-                        // 	'drying_time': '',
-                        // 	'id': '',
-                        // 	'nozzle_temp_max': '',
-                        // 	'nozzle_temp_min': '',
-                        // 	'remain': 0,
-                        // 	'tag_uid': '',
-                        // 	'tray_color': '',
-                        // 	'tray_diameter': '',
-                        // 	'tray_id_name': '',
-                        // 	'tray_info_idx': '',
-                        // 	'tray_sub_brands': '',
-                        // 	'tray_type': '',
-                        // 	'tray_uuid': '',
-                        // 	'tray_weight': '',
-                        // 	'xcam_info': ''
-                        // };
-                        // amsData[unit].tray[tray]._filamentPresent = false;
-                    } else {
-                        // amsData[unit].tray[tray]._filamentPresent = true;
-                        amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
+                    const trayObj = amsData[unit].tray[tray];
+                    // #204: leerer Slot nur { id } – sonst bleibt PLA/cols in ioBroker stehen
+                    if (amsTrayNormalize.isAmsTrayEmptyFromMqtt(trayObj)) {
+                        amsTrayNormalize.applyEmptyAmsTrayDefaults(trayObj);
+                        continue;
                     }
-                    if (amsData[unit].tray[tray].bed_temp != null) {
-                        amsData[unit].tray[tray].bed_temp = parseInt(amsData[unit].tray[tray].bed_temp);
+                    if (trayObj.bed_temp != null) {
+                        trayObj.bed_temp = parseInt(trayObj.bed_temp, 10);
                     }
                     // Gramm-Schätzung wie in der Bambu-App (RFID-Nenngewicht × Rest-%), nur wenn der Drucker kein remain_g sendet.
-                    const trayObj = amsData[unit].tray[tray];
                     if (trayObj.remain_g == null) {
                         const pct = Number(trayObj.remain);
                         const nominalG = Number(trayObj.tray_weight);

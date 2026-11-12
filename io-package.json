@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.4.5",
+        "version": "0.4.6",
         "news": {
+            "0.4.6": {
+                "en": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "de": "🧵 AMS leerer Slot: alte Farbe/Material löschen wenn MQTT nur id sendet (#204)",
+                "ru": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "pt": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "nl": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "fr": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "it": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "es": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "pl": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "uk": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "zh-cn": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)"
+            },
             "0.4.5": {
                 "en": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
                 "de": "🖨️ Zweites AMS (ams_exist_bits 3): Tray-Aufbereitung wieder aktiv\n🔧 mqtt_print_coerce für H2D err_code/tar_id (#292)",
