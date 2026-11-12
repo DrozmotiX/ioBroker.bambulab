@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.5.3",
+        "version": "0.5.4",
         "news": {
+            "0.5.4": {
+                "en": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "de": "🧵 AMS leerer Slot: alte Farbe/Material löschen wenn MQTT nur id sendet (#204)",
+                "ru": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "pt": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "nl": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "fr": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "it": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "es": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "pl": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "uk": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
+                "zh-cn": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)"
+            },
             "0.5.3": {
                 "en": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
                 "de": "🖨️ Zweites AMS (ams_exist_bits 3): Tray-Aufbereitung; H2D err_code/tar_id; Cloud-Lint",
