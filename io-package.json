@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.4.3",
+        "version": "0.4.4",
         "news": {
+            "0.4.4": {
+                "en": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "de": "AMS leere Slots (#204): alte Filament-Daten löschen; tray_exist_bits (H2D); Gewicht/Farbe zurücksetzen",
+                "ru": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "pt": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "nl": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "fr": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "it": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "es": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "pl": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "uk": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states",
+                "zh-cn": "AMS empty slots (#204): clear stale filament metadata; tray_exist_bits for H2D; reset weight/color states"
+            },
             "0.4.3": {
                 "en": "🛠️ Improved error messages when the printer is offline or unreachable.\n🖨️ Added HD2 printer to the selection menu for easier access (#142)\n🔧 Resolved multiple type definition issues (#203, #202, #201, #200, #199, #198)\n⚙️ Implemented a buffer system to reduce CPU usage and improve performance (#145)\n🔄 Fixed type conversion errors by replacing deprecated 'tonumber' with TOINTEGER/TOFLOAT (#197)\n📊 Added missing state attributes for HD2 printer during printing (height, platform, tool, mapping) (#194)",
                 "de": "🛠️ Verbesserte Fehlermeldungen, wenn der Drucker offline oder nicht erreichbar ist.\n🖨️ HD2-Drucker zur Auswahl hinzugefügt für einfacheren Zugriff (#142)\n🔧 Mehrere Probleme mit Typdefinitionen gelöst (#203, #202, #201, #200, #199, #198)\n⚙️ Puffersystem implementiert zur Reduzierung der CPU-Auslastung und Verbesserung der Leistung (#145)\n🔄 Fehler bei der Typkonvertierung behoben durch Ersetzen von 'tonumber' mit TOINTEGER/TOFLOAT (#197)\n📊 Fehlende Zustandsattribute für HD2-Drucker während des Druckens hinzugefügt (Höhe, Plattform, Werkzeug, Zuordnung) (#194)",
