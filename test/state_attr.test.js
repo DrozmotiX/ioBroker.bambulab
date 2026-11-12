@@ -43,6 +43,11 @@ describe('State Attributes Type Compatibility', () => {
         expect(stateAttr.remain_g.unit).to.equal('g');
     });
 
+    it('should use mixed types for H2D MQTT quirks (err_code, tar_id)', () => {
+        expect(stateAttr.err_code.type).to.equal('mixed');
+        expect(stateAttr.tar_id.type).to.equal('mixed');
+    });
+
     it('should have printer-specific attributes', () => {
         expect(stateAttr.aux).to.exist;
         expect(stateAttr.aux.type).to.equal('string');

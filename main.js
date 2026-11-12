@@ -14,6 +14,7 @@ const { default: axios } = require('axios'); // Http request library
 const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer library
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
+const mqttPrintCoerce = require('./lib/mqtt_print_coerce');
 
 let client; // Memory to store client connection information
 const clientConnection = {
@@ -395,13 +396,12 @@ class Bambulab extends utils.Adapter {
                     ack: true,
                 });
 
-                // For some reason library does not convert the ams related bed_temp to number when value = 0
-                if (
-                    message.print.ams != null &&
-                    message.print.ams.ams_exist_bits != null &&
-                    message.print.ams.ams_exist_bits === '1'
-                ) {
-                    // Call function to handle states for AMS unit
+                // AMS-Temperaturen/remain_g bei 1..n Einheiten (exist_bits: 1, 3, 7, …)
+                const amsUnits = message.print.ams && message.print.ams.ams;
+                const hasAmsList = Array.isArray(amsUnits)
+                    ? amsUnits.length > 0
+                    : amsUnits != null && typeof amsUnits === 'object';
+                if (hasAmsList) {
                     message.print.ams.ams = this.handleAMSUnits(message);
                 }
                 // Externe Spule (vt_tray): gleiche Gramm-Schätzung wie AMS-Slots
@@ -422,17 +422,7 @@ class Bambulab extends utils.Adapter {
                 message.print.doorOpen = false;
             }
 
-            // Typ-Korrektur vor jsonExplorer (sonst ioBroker info: „has to be type …“)
-            if (message.print.err2 && message.print.err2.err_code != null) {
-                const c = message.print.err2.err_code;
-                if (typeof c === 'string' && c !== '' && !Number.isNaN(Number(c))) {
-                    message.print.err2.err_code = Number(c);
-                }
-            }
-            const nozzle = message.print.device && message.print.device.nozzle;
-            if (nozzle && nozzle.tar_id != null && typeof nozzle.tar_id !== 'string') {
-                nozzle.tar_id = String(nozzle.tar_id);
-            }
+            mqttPrintCoerce.coerceMqttPrintTypes(message.print);
 
             // Explore JSON & create states
             const returnJONexplorer = await jsonExplorer.traverseJson(

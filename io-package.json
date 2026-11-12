@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.4.4",
+        "version": "0.4.5",
         "news": {
+            "0.4.5": {
+                "en": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "de": "🖨️ Zweites AMS (ams_exist_bits 3): Tray-Aufbereitung wieder aktiv\n🔧 mqtt_print_coerce für H2D err_code/tar_id (#292)",
+                "ru": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "pt": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "nl": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "fr": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "it": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "es": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "pl": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "uk": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
+                "zh-cn": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)"
+            },
             "0.4.4": {
                 "en": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
                 "de": "🏷️ AMS/Filament: remain = % statt Druckzeit; Trocknungs-Profil vs. dry_time; klarere tray_weight/total_len\n🔧 MQTT-Normalisierung err2.err_code und nozzle tar_id (#292 Log-Spam)\n📊 remain_g Beschriftung bei Gramm-Schätzung vom Drucker",
