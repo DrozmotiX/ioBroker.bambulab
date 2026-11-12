@@ -16,7 +16,8 @@ describe('AMS leerer Slot (#204)', () => {
         const tray = { id: '0' };
         applyEmptyAmsTrayDefaults(tray);
         expect(tray.tray_type).to.equal('');
-        expect(tray.cols).to.deep.equal([]);
+        expect(tray.cols).to.equal('');
+        expect(tray.remain_g).to.equal(0);
         expect(tray.remain).to.equal(-1);
         expect(tray.id).to.equal('0');
     });

@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.5.5",
+        "version": "0.5.6",
         "news": {
+            "0.5.6": {
+                "en": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "de": "AMS leer: cols und remain_g zurücksetzen (jsonExplorer ignoriert leere Arrays)",
+                "ru": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "pt": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "nl": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "fr": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "it": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "es": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "pl": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "uk": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "zh-cn": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)"
+            },
             "0.5.5": {
                 "en": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
                 "de": "AMS leer: tray_exist_bits auswerten wenn Firmware altes Tray-JSON sendet (H2D)",
