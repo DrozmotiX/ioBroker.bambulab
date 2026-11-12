@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.5.2",
+        "version": "0.5.3",
         "news": {
+            "0.5.3": {
+                "en": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "de": "🖨️ Zweites AMS (ams_exist_bits 3): Tray-Aufbereitung; H2D err_code/tar_id; Cloud-Lint",
+                "ru": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "pt": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "nl": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "fr": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "it": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "es": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "pl": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "uk": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "zh-cn": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint"
+            },
             "0.5.1": {
                 "en": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
                 "de": "🏷️ AMS/Filament-Objekt-Namen (remain = %, Trocknungs-Profil h, remain_g); MQTT-Typ-Fix #292",

@@ -18,6 +18,7 @@ const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer libra
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
 const bambuCloud = require('./lib/bambu-cloud'); // LAN vs. Cloud MQTT (Fork)
+const mqttPrintCoerce = require('./lib/mqtt_print_coerce');
 
 let client; // Memory to store client connection information
 const clientConnection = {
@@ -261,9 +262,7 @@ class Bambulab extends utils.Adapter {
                 }
             }
 
-            this.log.info(
-                `MQTT ${mode === 'cloud' ? 'Cloud' : 'LAN'} → ${connect.url.replace(/\/\/.*@/, '//')}`,
-            );
+            this.log.info(`MQTT ${mode === 'cloud' ? 'Cloud' : 'LAN'} → ${connect.url.replace(/\/\/.*@/, '//')}`);
 
             // Connect to printer (LAN) or Bambu cloud broker
             client = mqtt.connect(connect.url, connect.options);
@@ -462,6 +461,8 @@ class Bambulab extends utils.Adapter {
      * WICHTIG: getForeignObjectAsync().native enthält oft KEINE protected/encrypted Felder
      * (serial, cloudAccessToken, …). Nur this.config als Basis nutzen – sonst gehen sie verloren
      * → NO_ADAPTER_CONFIG_FOUND.
+     *
+     * @param patch
      */
     async mergeCloudNativePatch(patch) {
         const id = `system.adapter.${this.namespace}`;
@@ -498,9 +499,7 @@ class Bambulab extends utils.Adapter {
         }
         return {
             accessToken: token,
-            cloudMqttUsername: cred.cloudMqttUsername
-                ? String(cred.cloudMqttUsername).trim()
-                : '',
+            cloudMqttUsername: cred.cloudMqttUsername ? String(cred.cloudMqttUsername).trim() : '',
             cloudUserId: cred.cloudUserId != null ? String(cred.cloudUserId).trim() : '',
         };
     }
@@ -594,6 +593,11 @@ class Bambulab extends utils.Adapter {
     /**
      * Nach erfolgreichem Cloud-MQTT: Token in Datei, MQTT-User in Native, E-Mail-Code löschen.
      * JWT nicht in encryptedNative speichern – ioBroker kann es verfälschen → MQTT „Not authorized“.
+     *
+     * @param root0
+     * @param root0.accessToken
+     * @param root0.cloudMqttUsername
+     * @param root0.cloudUserId
      */
     async saveCloudCredentials({ accessToken, cloudMqttUsername, cloudUserId }) {
         const token = (accessToken || '').trim();
@@ -826,13 +830,12 @@ class Bambulab extends utils.Adapter {
                     ack: true,
                 });
 
-                // For some reason library does not convert the ams related bed_temp to number when value = 0
-                if (
-                    message.print.ams != null &&
-                    message.print.ams.ams_exist_bits != null &&
-                    message.print.ams.ams_exist_bits === '1'
-                ) {
-                    // Call function to handle states for AMS unit
+                // AMS-Temperaturen/remain_g: nicht nur bei einem AMS (bits „1“), auch bei zwei („3“), drei, …
+                const amsUnits = message.print.ams && message.print.ams.ams;
+                const hasAmsList = Array.isArray(amsUnits)
+                    ? amsUnits.length > 0
+                    : amsUnits != null && typeof amsUnits === 'object';
+                if (hasAmsList) {
                     message.print.ams.ams = this.handleAMSUnits(message);
                 }
                 // Externe Spule (vt_tray): gleiche Gramm-Schätzung wie AMS-Slots
@@ -853,17 +856,8 @@ class Bambulab extends utils.Adapter {
                 message.print.doorOpen = false;
             }
 
-            // Typ-Korrektur vor jsonExplorer (sonst ioBroker info: „has to be type …“)
-            if (message.print.err2 && message.print.err2.err_code != null) {
-                const c = message.print.err2.err_code;
-                if (typeof c === 'string' && c !== '' && !Number.isNaN(Number(c))) {
-                    message.print.err2.err_code = Number(c);
-                }
-            }
-            const nozzle = message.print.device && message.print.device.nozzle;
-            if (nozzle && nozzle.tar_id != null && typeof nozzle.tar_id !== 'string') {
-                nozzle.tar_id = String(nozzle.tar_id);
-            }
+            // Typ-Korrektur vor jsonExplorer (H2D: err_code/tar_id, siehe lib/mqtt_print_coerce.js)
+            mqttPrintCoerce.coerceMqttPrintTypes(message.print);
 
             // H2D sendet viele Felder, die in state_attr.js (noch) fehlen – ohne validateAttribute kein Sentry-/Warn-Spam
             const strictStateAttr = !/^H2D/i.test(this.config.printerModel || '');
@@ -949,6 +943,8 @@ class Bambulab extends utils.Adapter {
     /**
      * Cloud: user_id nur in print.* (OpenBambu/HA) – nicht an system.ledctrl (Kammer funktioniert ohne).
      * Zusätzliche user_id an der Wurzel kann print.gcode_line am H2D ablehnen.
+     *
+     * @param msg
      */
     applyMqttUserId(msg) {
         if (!msg || (this.config.connectionMode || 'lan') !== 'cloud') {
@@ -971,7 +967,11 @@ class Bambulab extends utils.Adapter {
         return String(this.mqttPublishSeq);
     }
 
-    /** Drucker-Antwort auf Steuerbefehl (Fehler → Warnung im Log). */
+    /**
+     * Drucker-Antwort auf Steuerbefehl (Fehler → Warnung im Log).
+     *
+     * @param message
+     */
     logMqttControlReport(message) {
         if (!message) {
             return;
@@ -1017,7 +1017,11 @@ class Bambulab extends utils.Adapter {
         }
     }
 
-    /** Firmware-Flag print.fun (Hex) – Bit 0x20000000 = Remote-G-Code/Lüfter oft gesperrt */
+    /**
+     * Firmware-Flag print.fun (Hex) – Bit 0x20000000 = Remote-G-Code/Lüfter oft gesperrt
+     *
+     * @param print
+     */
     updatePrintFunFlags(print) {
         if (!print || print.fun == null || print.fun === '') {
             return;
@@ -1089,7 +1093,11 @@ class Bambulab extends utils.Adapter {
         }
     }
 
-    /** Cloud-H2D: gesperrte print.*-Befehle nicht senden (H2D-Test: auch pause → failed). */
+    /**
+     * Cloud-H2D: gesperrte print.*-Befehle nicht senden (H2D-Test: auch pause → failed).
+     *
+     * @param msg
+     */
     shouldSkipCloudPrintCommand(msg) {
         if ((this.config.connectionMode || 'lan') !== 'cloud' || !this.cloudPrintControlBlocked || !msg?.print) {
             return false;
@@ -1121,17 +1129,16 @@ class Bambulab extends utils.Adapter {
         return true;
     }
 
-    /** Schreib-States aus MQTT nur anwenden, wenn kein frischer Nutzer-Override aktiv ist */
+    /**
+     * Schreib-States aus MQTT nur anwenden, wenn kein frischer Nutzer-Override aktiv ist
+     *
+     * @param print
+     */
     applyControlWriteOverrides(print) {
         if (!print || !print.control) {
             return;
         }
-        const fanKeys = [
-            'cooling_fan_speed',
-            'big_fan1_speed',
-            'big_fan2_speed',
-            'heatbreak_fan_speed',
-        ];
+        const fanKeys = ['cooling_fan_speed', 'big_fan1_speed', 'big_fan2_speed', 'heatbreak_fan_speed'];
         for (const key of fanKeys) {
             if (this.isControlWriteOverrideActive(key)) {
                 const v = this.controlWriteOverrides[key].val;
@@ -1163,7 +1170,11 @@ class Bambulab extends utils.Adapter {
         }
     }
 
-    /** H2D meldet Düsen-Temperaturen teils als Encoder-Rohwert (>500) statt °C. */
+    /**
+     * H2D meldet Düsen-Temperaturen teils als Encoder-Rohwert (>500) statt °C.
+     *
+     * @param raw
+     */
     decodeExtruderTempValue(raw) {
         if (raw == null || typeof raw !== 'number') {
             return raw;
@@ -1214,6 +1225,9 @@ class Bambulab extends utils.Adapter {
     /**
      * Lüfter-Sollwert (0–100 %) → G-code S0–255 (wie ha-bambulab: 10 %-Schritte, ceil).
      * Format: "M106 P1 S127\n" – eine Zeile, kein M145 (Mehrzeiler löst am H2D oft „MQTT fehlgeschlagen“ aus).
+     *
+     * @param fanP
+     * @param percent
      */
     buildFanSpeedGcode(fanP, percent) {
         let p = Number(percent);
@@ -1245,7 +1259,11 @@ class Bambulab extends utils.Adapter {
         };
     }
 
-    /** Pause/Stop/Resume laut OpenBambuAPI: param leer, eigene sequence_id (nicht ständig „0“). */
+    /**
+     * Pause/Stop/Resume laut OpenBambuAPI: param leer, eigene sequence_id (nicht ständig „0“).
+     *
+     * @param command
+     */
     buildPrintJobControlMessage(command) {
         return this.buildPrintCommand({
             command,
@@ -1253,7 +1271,11 @@ class Bambulab extends utils.Adapter {
         });
     }
 
-    /** H2D: Lüfter laufen im Kühl-Luftkanal (modeId 0) – sonst oft „MQTT fehlgeschlagen“. */
+    /**
+     * H2D: Lüfter laufen im Kühl-Luftkanal (modeId 0) – sonst oft „MQTT fehlgeschlagen“.
+     *
+     * @param modeId
+     */
     buildSetAirductMessage(modeId) {
         return this.buildPrintCommand({
             command: 'set_airduct',
@@ -1271,7 +1293,12 @@ class Bambulab extends utils.Adapter {
         this.publishMQTTmessages(this.buildSetAirductMessage(0));
     }
 
-    /** H2D Cloud: gcode_line schlägt oft fehl → Bambu-Studio-Protokoll set_fan (fan_index 1–3). */
+    /**
+     * H2D Cloud: gcode_line schlägt oft fehl → Bambu-Studio-Protokoll set_fan (fan_index 1–3).
+     *
+     * @param fanIndex
+     * @param percent
+     */
     buildSetFanMessage(fanIndex, percent) {
         let p = Number(percent);
         if (Number.isNaN(p)) {
@@ -1286,7 +1313,11 @@ class Bambulab extends utils.Adapter {
         });
     }
 
-    /** M106 P-Nummer → set_fan fan_index (Part=1, AUX=2, Kammer=3). */
+    /**
+     * M106 P-Nummer → set_fan fan_index (Part=1, AUX=2, Kammer=3).
+     *
+     * @param fanP
+     */
     fanPToSetFanIndex(fanP) {
         const map = { 1: 1, 2: 2, 3: 3, 10: 4 };
         return map[fanP] != null ? map[fanP] : fanP;
@@ -1319,7 +1350,11 @@ class Bambulab extends utils.Adapter {
         this.publishMQTTmessages(msg);
     }
 
-    /** State-Name aus …control.<name> (Serial-Ordner oder Instanz-control). */
+    /**
+     * State-Name aus …control.<name> (Serial-Ordner oder Instanz-control).
+     *
+     * @param checkID
+     */
     resolveControlStateName(checkID) {
         const idx = checkID.indexOf('control');
         if (idx === -1 || idx >= checkID.length - 1) {
@@ -1375,6 +1410,8 @@ class Bambulab extends utils.Adapter {
     /**
      * Werklicht (work_light): wie HA heatbed_light – Zeiten 0 (Kammer-LED nutzt 500 ms).
      * Kammer und Werklicht teilen sich sonst dasselbe JSON; nur die Zeiten unterscheiden sich.
+     *
+     * @param turnOn
      */
     buildWorkHeadLedCtrlMessage(turnOn) {
         const ledNode = this.workHeadLedNode();
@@ -1404,7 +1441,11 @@ class Bambulab extends utils.Adapter {
         this.publishMQTTmessages(this.buildWorkHeadLedCtrlMessage(turnOn));
     }
 
-    /** Ein Schalter: alle Kammer-LED-Kanäle des Modells schalten (wie Bambu-App). */
+    /**
+     * Ein Schalter: alle Kammer-LED-Kanäle des Modells schalten (wie Bambu-App).
+     *
+     * @param turnOn
+     */
     publishChamberLightCommand(turnOn) {
         for (const node of this.chamberLightLedNodes()) {
             this.publishMQTTmessages(this.buildChamberLedCtrlMessage(node, turnOn));
@@ -1415,6 +1456,8 @@ class Bambulab extends utils.Adapter {
      * lights_report → control.* (Schreib-States spiegeln MQTT).
      * H2D Kammer: mindestens eine LED „on“ → lightChamber true.
      * Werklicht: node work_light → lightWorkHead.
+     *
+     * @param print
      */
     syncLightsReportToControl(print) {
         if (!print || !Array.isArray(print.lights_report)) {
