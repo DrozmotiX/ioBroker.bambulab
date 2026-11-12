@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.5.4",
+        "version": "0.5.5",
         "news": {
+            "0.5.5": {
+                "en": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "de": "AMS leer: tray_exist_bits auswerten wenn Firmware altes Tray-JSON sendet (H2D)",
+                "ru": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "pt": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "nl": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "fr": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "it": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "es": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "pl": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "uk": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "zh-cn": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)"
+            },
             "0.5.4": {
                 "en": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
                 "de": "🧵 AMS leerer Slot: alte Farbe/Material löschen wenn MQTT nur id sendet (#204)",

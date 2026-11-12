@@ -881,13 +881,15 @@ class Bambulab extends utils.Adapter {
 
     handleAMSUnits(message) {
         const amsData = message.print.ams.ams;
+        const trayExistBits = message.print.ams && message.print.ams.tray_exist_bits;
         // handle conversion for all AMS units
         for (const unit in amsData) {
             if (amsData[unit] !== null) {
+                const amsUnitId = amsData[unit].id != null ? amsData[unit].id : unit;
                 for (const tray in amsData[unit].tray) {
                     const trayObj = amsData[unit].tray[tray];
-                    // #204: leerer Slot nur { id } – sonst bleibt PLA/cols in ioBroker stehen
-                    if (amsTrayNormalize.isAmsTrayEmptyFromMqtt(trayObj)) {
+                    // #204: { id } nur ODER tray_exist_bits (H2D hält altes cols-JSON oft noch)
+                    if (amsTrayNormalize.shouldClearAmsTray(trayObj, trayExistBits, amsUnitId)) {
                         amsTrayNormalize.applyEmptyAmsTrayDefaults(trayObj);
                         continue;
                     }
