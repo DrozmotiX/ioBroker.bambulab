@@ -18,9 +18,23 @@
 With credits to [kmxak](https://forum.iobroker.net/user/kmxak), [djalexz](https://forum.iobroker.net/user/djalexz), all other involved and inspired by [this forum thread](https://forum.iobroker.net/topic/61585/bambu-lab-3d-drucker-mqtt-integration)
 this adapter integrates Bambulab 3D-Printers into ioBroker.
 
-Please provide your Printer IP-Address, API token and serial number in adapter settings;
-these are required for a local connection (no cloud involved) to your printer.
-These credentials are stored locally and not shared to third parties.
+Choose **connection mode** in the adapter admin:
+
+### LAN (default)
+
+Provide printer **IP address**, **LAN access code** (API token), **serial number**, and **model**.  
+Required for **full control** (fans, temperatures, G-code). On **H2D**, enable **developer mode (3D print)** on the printer when using third-party control over LAN.
+
+Credentials are stored locally and not shared with third parties.
+
+### Cloud (optional, Bambu account)
+
+Uses the same cloud MQTT broker as the Bambu app / Home Assistant ([issue #186](https://github.com/DrozmotiX/ioBroker.bambulab/issues/186)):
+
+- **Email code login** (Google/OAuth-friendly); token stored under the adapter instance data directory.
+- **Default remains LAN** for new instances.
+- **Cloud** = mainly **monitoring** and **limited control** (e.g. chamber LED). On **H2D**, firmware often **rejects** remote `print.*` (fans, pause, G-code); see state `info.cloudPrintControlBlocked`.
+- Details: [`docs/CLOUD.md`](docs/CLOUD.md) (German/English).
 
 ## Finding the API Token and Serial Number
 
@@ -48,6 +62,7 @@ The location of the API token and serial number depends on your printer model:
 |---------------|-------------------------|
 | AMS           | :white_check_mark:      |
 | A1            | :white_check_mark:      |
+| H2D           | :white_check_mark:      |
 | P1p           | :white_check_mark:      |
 | P1s           | :white_check_mark:      |
 | X1            | :white_check_mark:      |
@@ -93,10 +108,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
-* (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs
-* (DutchmanNL & Copilot) Synchronize admin translations with jsonConfig.json - add missing translations and remove orphaned keys (#202)
-* (DutchmanNL) Raise minimum Node.js to 22, modernise CI (Node 24, testing-action-check v2) and release tooling, and resolve repository checker findings
+### 0.5.0
+* (crunchip77) Optional Bambu Cloud MQTT connection (email code login, LAN remains default) — #186
+* (crunchip77) H2D: cloud vs LAN behaviour documented; `info.cloudPrintControlBlocked`; LAN fan/LED control tested
+* (crunchip77) `docs/CLOUD.md`, admin connection mode, `lib/bambu-cloud.js`
 
 ### 0.4.3 (2025-09-16)
 * (DutchmanNL) Improve error messages if printer is offline or not reachable.

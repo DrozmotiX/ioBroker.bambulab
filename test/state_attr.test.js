@@ -21,6 +21,8 @@ describe('State Attributes Type Compatibility', () => {
         expect(stateAttr.dry_time).to.exist;
         expect(stateAttr.dry_time.type).to.equal('number');
         expect(stateAttr.dry_time.unit).to.equal('min');
+        expect(stateAttr.drying_time.unit).to.equal('h');
+        expect(stateAttr.drying_time.role).to.equal('value');
 
         expect(stateAttr.state).to.exist;
         expect(stateAttr.state.type).to.equal('number');
@@ -31,6 +33,19 @@ describe('State Attributes Type Compatibility', () => {
 
         expect(stateAttr.color).to.exist;
         expect(stateAttr.color.type).to.equal('string');
+    });
+
+    it('should define AMS filament remain as percent, not print time', () => {
+        expect(stateAttr.remain).to.exist;
+        expect(stateAttr.remain.unit).to.equal('%');
+        expect(stateAttr.remain.role).to.equal('value.level');
+        expect(stateAttr.remain_g).to.exist;
+        expect(stateAttr.remain_g.unit).to.equal('g');
+    });
+
+    it('should use mixed types for H2D MQTT quirks (err_code, tar_id)', () => {
+        expect(stateAttr.err_code.type).to.equal('mixed');
+        expect(stateAttr.tar_id.type).to.equal('mixed');
     });
 
     it('should have printer-specific attributes', () => {
