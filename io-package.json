@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.5.6",
+        "version": "0.5.7",
         "news": {
+            "0.5.7": {
+                "en": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "de": "AMS leer: alle rollenbezogenen States zurücksetzen (Gewicht, Farbe, H2D)",
+                "ru": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "pt": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "nl": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "fr": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "it": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "es": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "pl": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "uk": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "zh-cn": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)"
+            },
             "0.5.6": {
                 "en": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
                 "de": "AMS leer: cols und remain_g zurücksetzen (jsonExplorer ignoriert leere Arrays)",
