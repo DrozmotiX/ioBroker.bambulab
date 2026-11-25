@@ -108,8 +108,7 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### __WORK IN PROGRESS__
 -->
-
-### **WORK IN PROGRESS**
+### 0.5.0 (2026-11-25)
 * (crunchip77) Optional Bambu Cloud MQTT connection: email code login, credentials stored per adapter instance, LAN (printer IP + access code) stays the default. See `docs/CLOUD.md` for limits (#186, #294)
 * (crunchip77) H2D: cloud vs. LAN behaviour tested and documented, new state `info.cloudPrintControlBlocked` when the firmware rejects remote print commands (#294)
 * (FiraSenax) Add H2C printer support: local MQTT, firmware and module discovery, dual-nozzle current and target temperatures (#272)
