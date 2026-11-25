@@ -55,14 +55,14 @@ The location of the API token and serial number depends on your printer model:
 2. The access token is directly visible in network settings
 3. Serial number can be found in the same menu or in device information
 
-**Note:** You must select your Printer model correctly in the adapter settings. Only the X1 series allows pushing of messages, P1x series needs to request by interval setting (default every 5 seconds)
+**Note:** You must select your Printer model correctly in the adapter settings. X1 and H2 series push messages after the initial request, while P1x series needs to request by interval setting (default every 5 seconds).
 
 ## Supported models
 | Printer-Model | Status                  |
 |---------------|-------------------------|
 | AMS           | :white_check_mark:      |
 | A1            | :white_check_mark:      |
-| H2D           | :white_check_mark:      |
+| H2C           | :white_check_mark:      |
 | P1p           | :white_check_mark:      |
 | P1s           | :white_check_mark:      |
 | X1            | :white_check_mark:      |
@@ -108,6 +108,12 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### __WORK IN PROGRESS__
 -->
+
+### **WORK IN PROGRESS**
+* Add H2C local MQTT support, firmware discovery and dual-nozzle temperatures
+- (ioBroker-Bot) Adapter requires admin >= 7.8.23 now.
+
+
 ### 0.5.0
 * (crunchip77) Optional Bambu Cloud MQTT connection (email code login, LAN remains default) — #186
 * (crunchip77) H2D: cloud vs LAN behaviour documented; `info.cloudPrintControlBlocked`; LAN fan/LED control tested
