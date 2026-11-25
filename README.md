@@ -110,18 +110,20 @@ All of this helps me to provide error-free adapters that basically never crash.
 -->
 
 ### **WORK IN PROGRESS**
-* Add H2C local MQTT support, firmware discovery and dual-nozzle temperatures
-- (ioBroker-Bot) Adapter requires admin >= 7.8.23 now.
-
-
-### 0.5.0
-* (crunchip77) Optional Bambu Cloud MQTT connection (email code login, LAN remains default) — #186
-* (crunchip77) H2D: cloud vs LAN behaviour documented; `info.cloudPrintControlBlocked`; LAN fan/LED control tested
-* (crunchip77) `docs/CLOUD.md`, admin connection mode, `lib/bambu-cloud.js`
+* (crunchip77) Optional Bambu Cloud MQTT connection: email code login, credentials stored per adapter instance, LAN (printer IP + access code) stays the default. See `docs/CLOUD.md` for limits (#186, #294)
+* (crunchip77) H2D: cloud vs. LAN behaviour tested and documented, new state `info.cloudPrintControlBlocked` when the firmware rejects remote print commands (#294)
+* (FiraSenax) Add H2C printer support: local MQTT, firmware and module discovery, dual-nozzle current and target temperatures (#272)
+* (mono1982-runner1) Add state attribute for extruder `z_bias` (X2D/H2D dual nozzle) (#317)
+* (crunchip77) AMS empty slots: stale filament data (type, colour, weight, `remain_g`, H2D extras) is reset, also via `tray_exist_bits` when the firmware keeps old tray JSON (#204, #296)
+* (crunchip77) AMS/filament state names: `remain` in % instead of print time, drying profile vs. `dry_time`, clearer `tray_weight`/`total_len`, `remain_g` estimate (#295)
+* (crunchip77) Second AMS unit (`ams_exist_bits` 3) is processed again; MQTT type normalisation for `err2.err_code` and nozzle `tar_id` stops the log spam on H2D (#292, #295)
+* (FiraSenax) Restore JavaScript type checking and refresh the runtime dependency lock (#273, #274)
+* (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs (#246)
+* (DutchmanNL & Copilot) Synchronize admin translations with jsonConfig.json, add missing translations and remove orphaned keys (#202, #248)
+* (DutchmanNL & Copilot) Fix ESLint errors and establish a lint-first validation workflow (#244)
+* (DutchmanNL) Raise minimum Node.js to 22, modernise CI (Node 24, testing-action-check v2) and release tooling, resolve repository checker findings (#277, #278)
 * (ioBroker-Bot) Adapter requires admin >= 7.8.23 now.
-* (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs
-* (DutchmanNL & Copilot) Synchronize admin translations with jsonConfig.json - add missing translations and remove orphaned keys (#202)
-* (DutchmanNL) Raise minimum Node.js to 22, modernise CI (Node 24, testing-action-check v2) and release tooling, and resolve repository checker findings
+* (ioBroker-Bot) Template updates: tests on Node.js 22 to 26, Dependabot automerge and settings, `CHANGELOG_OLD.md` (#279, #280, #281, #282, #285, #293)
 
 ### 0.4.3 (2025-09-16)
 * (DutchmanNL) Improve error messages if printer is offline or not reachable.
