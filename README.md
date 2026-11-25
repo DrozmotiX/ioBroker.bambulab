@@ -112,6 +112,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 * (crunchip77) Optional Bambu Cloud MQTT connection (email code login, LAN remains default) — #186
 * (crunchip77) H2D: cloud vs LAN behaviour documented; `info.cloudPrintControlBlocked`; LAN fan/LED control tested
 * (crunchip77) `docs/CLOUD.md`, admin connection mode, `lib/bambu-cloud.js`
+* (ioBroker-Bot) Adapter requires admin >= 7.8.23 now.
+* (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs
+* (DutchmanNL & Copilot) Synchronize admin translations with jsonConfig.json - add missing translations and remove orphaned keys (#202)
+* (DutchmanNL) Raise minimum Node.js to 22, modernise CI (Node 24, testing-action-check v2) and release tooling, and resolve repository checker findings
 
 ### 0.4.3 (2025-09-16)
 * (DutchmanNL) Improve error messages if printer is offline or not reachable.
@@ -139,6 +143,8 @@ All of this helps me to provide error-free adapters that basically never crash.
 * (DutchmanNL & Copilot) Fix repository checker issues and improve admin UI compatibility
 
 Older changes can be found at [CHANGELOG_OLD.md](CHANGELOG_OLD.md).
+
+[Older changelogs can be found there](CHANGELOG_OLD.md)
 
 ## License
 MIT License

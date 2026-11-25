@@ -832,6 +832,7 @@ class Bambulab extends utils.Adapter {
                 });
 
                 // AMS-Temperaturen/remain_g: nicht nur bei einem AMS (bits „1“), auch bei zwei („3“), drei, …
+                // AMS-Temperaturen/remain_g bei 1..n Einheiten (exist_bits: 1, 3, 7, …)
                 const amsUnits = message.print.ams && message.print.ams.ams;
                 const hasAmsList = Array.isArray(amsUnits)
                     ? amsUnits.length > 0
@@ -864,6 +865,8 @@ class Bambulab extends utils.Adapter {
 
             // H2D sendet viele Felder, die in state_attr.js (noch) fehlen – ohne validateAttribute kein Sentry-/Warn-Spam
             const strictStateAttr = !/^H2D/i.test(this.config.printerModel || '');
+
+            mqttPrintCoerce.coerceMqttPrintTypes(message.print);
 
             // Explore JSON & create states
             const returnJONexplorer = await jsonExplorer.traverseJson(
@@ -904,6 +907,10 @@ class Bambulab extends utils.Adapter {
                         amsTrayNormalize.applyEmptyAmsTrayDefaults(trayObj);
                         cleared.push({ unit, tray });
                         continue;
+                    }
+                    if (trayObj.bed_temp != null) {
+                        trayObj.bed_temp = parseInt(trayObj.bed_temp, 10);
+                    }
                     }
                     if (trayObj.bed_temp != null) {
                         trayObj.bed_temp = parseInt(trayObj.bed_temp, 10);
