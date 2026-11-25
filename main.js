@@ -14,6 +14,7 @@ const { default: axios } = require('axios'); // Http request library
 const jsonExplorer = require('iobroker-jsonexplorer'); // Use jsonExplorer library
 const convert = require('./lib/converter'); // Load converter functions
 const stateAttr = require(`${__dirname}/lib/state_attr.js`); // Load attribute library
+const mqttPrintCoerce = require('./lib/mqtt_print_coerce');
 const amsTrayNormalize = require('./lib/ams_tray_normalize');
 
 let client; // Memory to store client connection information
@@ -396,6 +397,7 @@ class Bambulab extends utils.Adapter {
                     ack: true,
                 });
 
+                // AMS-Temperaturen/remain_g bei 1..n Einheiten (exist_bits: 1, 3, 7, …)
                 const amsUnits = message.print.ams && message.print.ams.ams;
                 const hasAmsList = Array.isArray(amsUnits)
                     ? amsUnits.length > 0
@@ -405,6 +407,15 @@ class Bambulab extends utils.Adapter {
                     message.print.ams.ams = amsHandled.amsData;
                     this._amsTraysClearedThisMessage = amsHandled.cleared;
                 }
+                // Externe Spule (vt_tray): gleiche Gramm-Schätzung wie AMS-Slots
+                const vtTray = message.print.vt_tray;
+                if (vtTray && vtTray.remain_g == null) {
+                    const pct = Number(vtTray.remain);
+                    const nominalG = Number(vtTray.tray_weight);
+                    if (!Number.isNaN(pct) && pct >= 0 && !Number.isNaN(nominalG) && nominalG > 0) {
+                        vtTray.remain_g = Math.round((nominalG * pct) / 100);
+                    }
+                }
             }
 
             // Translate home_flag to door state
@@ -413,6 +424,8 @@ class Bambulab extends utils.Adapter {
             } else if (message.print.home_flag === 6407560) {
                 message.print.doorOpen = false;
             }
+
+            mqttPrintCoerce.coerceMqttPrintTypes(message.print);
 
             // Explore JSON & create states
             const returnJONexplorer = await jsonExplorer.traverseJson(
@@ -441,11 +454,13 @@ class Bambulab extends utils.Adapter {
         const amsData = message.print.ams.ams;
         const trayExistBits = message.print.ams && message.print.ams.tray_exist_bits;
         const cleared = [];
+        // handle conversion for all AMS units
         for (const unit in amsData) {
             if (amsData[unit] !== null) {
                 const amsUnitId = amsData[unit].id != null ? amsData[unit].id : unit;
                 for (const tray in amsData[unit].tray) {
                     const trayObj = amsData[unit].tray[tray];
+                    // #204: { id } nur ODER tray_exist_bits (H2D hält altes cols-JSON oft noch)
                     if (amsTrayNormalize.shouldClearAmsTray(trayObj, trayExistBits, amsUnitId)) {
                         amsTrayNormalize.applyEmptyAmsTrayDefaults(trayObj);
                         cleared.push({ unit, tray });
@@ -453,6 +468,14 @@ class Bambulab extends utils.Adapter {
                     }
                     if (trayObj.bed_temp != null) {
                         trayObj.bed_temp = parseInt(trayObj.bed_temp, 10);
+                    }
+                    // Gramm-Schätzung wie in der Bambu-App (RFID-Nenngewicht × Rest-%), nur wenn der Drucker kein remain_g sendet.
+                    if (trayObj.remain_g == null) {
+                        const pct = Number(trayObj.remain);
+                        const nominalG = Number(trayObj.tray_weight);
+                        if (!Number.isNaN(pct) && pct >= 0 && !Number.isNaN(nominalG) && nominalG > 0) {
+                            trayObj.remain_g = Math.round((nominalG * pct) / 100);
+                        }
                     }
                 }
             }
