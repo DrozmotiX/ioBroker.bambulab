@@ -919,10 +919,6 @@ class Bambulab extends utils.Adapter {
                     if (trayObj.bed_temp != null) {
                         trayObj.bed_temp = parseInt(trayObj.bed_temp, 10);
                     }
-                    }
-                    if (trayObj.bed_temp != null) {
-                        trayObj.bed_temp = parseInt(trayObj.bed_temp, 10);
-                    }
                     // Gramm-Schätzung wie in der Bambu-App (RFID-Nenngewicht × Rest-%), nur wenn der Drucker kein remain_g sendet.
                     if (trayObj.remain_g == null) {
                         const pct = Number(trayObj.remain);
