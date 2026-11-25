@@ -93,6 +93,10 @@ All of this helps me to provide error-free adapters that basically never crash.
 	Placeholder for the next version (at the beginning of the line):
 	### __WORK IN PROGRESS__
 -->
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires admin >= 7.8.23 now.
+
 ### __WORK IN PROGRESS__
 * (DutchmanNL & Copilot) Update all dependencies to latest versions, consolidating 17 Dependabot PRs
 * (DutchmanNL & Copilot) Synchronize admin translations with jsonConfig.json - add missing translations and remove orphaned keys (#202)
@@ -124,6 +128,8 @@ All of this helps me to provide error-free adapters that basically never crash.
 * (DutchmanNL & Copilot) Fix repository checker issues and improve admin UI compatibility
 
 Older changes can be found at [CHANGELOG_OLD.md](CHANGELOG_OLD.md).
+
+[Older changelogs can be found there](CHANGELOG_OLD.md)
 
 ## License
 MIT License

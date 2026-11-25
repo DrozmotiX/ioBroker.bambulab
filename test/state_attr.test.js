@@ -58,4 +58,10 @@ describe('State Attributes Type Compatibility', () => {
         expect(stateAttr.design_id).to.exist;
         expect(stateAttr.design_id.type).to.equal('string');
     });
+
+    it('should define z_bias reported per extruder by dual-nozzle printers (X2D/H2D)', () => {
+        // device.extruder.info.N.z_bias, numeric; missing definition triggered "State attribute definition missing"
+        expect(stateAttr.z_bias).to.exist;
+        expect(stateAttr.z_bias.type).to.equal('number');
+    });
 });
