@@ -1,22 +1,48 @@
 {
     "common": {
         "name": "bambulab",
-        "version": "0.4.8",
+        "version": "0.5.7",
         "news": {
-            "0.4.8": {
-                "en": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "de": "AMS leer #204: tray_exist_bits (H2D), alle rollenbezogenen States zurücksetzen",
-                "ru": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "pt": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "nl": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "fr": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "it": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "es": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "pl": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "uk": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)",
-                "zh-cn": "AMS empty slot #204: tray_exist_bits (H2D), full filament state reset (weight, color, remain_g)"
+            "0.5.7": {
+                "en": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "de": "AMS leer: alle rollenbezogenen States zurücksetzen (Gewicht, Farbe, H2D)",
+                "ru": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "pt": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "nl": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "fr": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "it": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "es": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "pl": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "uk": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)",
+                "zh-cn": "AMS empty slot: reset all filament-related states (weight, color, H2D extras)"
             },
-            "0.4.6": {
+            "0.5.6": {
+                "en": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "de": "AMS leer: cols und remain_g zurücksetzen (jsonExplorer ignoriert leere Arrays)",
+                "ru": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "pt": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "nl": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "fr": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "it": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "es": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "pl": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "uk": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)",
+                "zh-cn": "AMS empty slot: clear cols/remain_g (jsonExplorer skips empty arrays)"
+            },
+            "0.5.5": {
+                "en": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "de": "AMS leer: tray_exist_bits auswerten wenn Firmware altes Tray-JSON sendet (H2D)",
+                "ru": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "pt": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "nl": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "fr": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "it": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "es": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "pl": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "uk": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)",
+                "zh-cn": "AMS empty slots: also use tray_exist_bits when firmware keeps stale tray JSON (H2D)"
+            },
+            "0.5.4": {
                 "en": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
                 "de": "🧵 AMS leerer Slot: alte Farbe/Material löschen wenn MQTT nur id sendet (#204)",
                 "ru": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
@@ -29,31 +55,44 @@
                 "uk": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)",
                 "zh-cn": "🧵 AMS empty slot: clear stale tray_type/cols when MQTT sends only id (#204)"
             },
-            "0.4.5": {
-                "en": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "de": "🖨️ Zweites AMS (ams_exist_bits 3): Tray-Aufbereitung wieder aktiv\n🔧 mqtt_print_coerce für H2D err_code/tar_id (#292)",
-                "ru": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "pt": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "nl": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "fr": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "it": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "es": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "pl": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "uk": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)",
-                "zh-cn": "🖨️ Fix second AMS unit (ams_exist_bits 3): tray temperature/remain_g prep\n🔧 mqtt_print_coerce module for H2D err_code/tar_id (#292)"
+            "0.5.3": {
+                "en": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "de": "🖨️ Zweites AMS (ams_exist_bits 3): Tray-Aufbereitung; H2D err_code/tar_id; Cloud-Lint",
+                "ru": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "pt": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "nl": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "fr": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "it": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "es": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "pl": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "uk": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint",
+                "zh-cn": "🖨️ Second AMS (ams_exist_bits 3+): tray prep runs again; H2D err_code/tar_id coercion; cloud lint"
             },
-            "0.4.4": {
-                "en": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "de": "🏷️ AMS/Filament: remain = % statt Druckzeit; Trocknungs-Profil vs. dry_time; klarere tray_weight/total_len\n🔧 MQTT-Normalisierung err2.err_code und nozzle tar_id (#292 Log-Spam)\n📊 remain_g Beschriftung bei Gramm-Schätzung vom Drucker",
-                "ru": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "pt": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "nl": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "fr": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "it": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "es": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "pl": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "uk": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate",
-                "zh-cn": "🏷️ AMS/filament state names: remain = % not print time; drying profile vs dry_time; clearer tray_weight/total_len\n🔧 MQTT normalize err2.err_code and nozzle tar_id (fixes log spam #292)\n📊 remain_g label when printer sends gram estimate"
+            "0.5.1": {
+                "en": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "de": "🏷️ AMS/Filament-Objekt-Namen (remain = %, Trocknungs-Profil h, remain_g); MQTT-Typ-Fix #292",
+                "ru": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "pt": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "nl": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "fr": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "it": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "es": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "pl": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "uk": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292",
+                "zh-cn": "🏷️ AMS/filament state metadata (remain = %, drying profile h, remain_g); MQTT type fix for #292"
+            },
+            "0.5.0": {
+                "en": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "de": "☁️ Optional Bambu Cloud MQTT (E-Mail-Code-Login, Zugangsdaten pro Adapterinstanz) — Nutzerwunsch #186\n🏠 Standard bleibt LAN (Drucker-IP + Access Code); Cloud vor allem Monitoring und begrenzte Steuerung\n🖨️ H2D getestet: Kammer-LED über Cloud; volle Lüfter/Licht-Steuerung über LAN + Entwicklermodus; State info.cloudPrintControlBlocked bei Firmware-Sperre\n📄 Grenzen in docs/CLOUD.md (kein Kamera-Stream, kein Studio-Ersatz)",
+                "ru": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "pt": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "nl": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "fr": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "it": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "es": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "pl": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "uk": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)",
+                "zh-cn": "☁️ Optional Bambu Cloud MQTT (email code login, credentials stored per adapter instance) — closes user request #186\n🏠 Default connection remains LAN (printer IP + access code); Cloud is mainly monitoring and limited control\n🖨️ H2D tested: chamber LED over Cloud; full fan/light control over LAN + developer mode; state info.cloudPrintControlBlocked when firmware rejects remote print commands\n📄 See docs/CLOUD.md for limits (no camera stream, no Studio replacement)"
             },
             "0.4.3": {
                 "en": "🛠️ Improved error messages when the printer is offline or unreachable.\n🖨️ Added HD2 printer to the selection menu for easier access (#142)\n🔧 Resolved multiple type definition issues (#203, #202, #201, #200, #199, #198)\n⚙️ Implemented a buffer system to reduce CPU usage and improve performance (#145)\n🔄 Fixed type conversion errors by replacing deprecated 'tonumber' with TOINTEGER/TOFLOAT (#197)\n📊 Added missing state attributes for HD2 printer during printing (height, platform, tool, mapping) (#194)",
@@ -197,121 +236,121 @@
             "type": "free"
         }
     },
-    "titleLang": {
-      "en": "Bambulab 3d Printer integration",
-      "de": "Integration des Bambulab 3D-Druckers",
-      "ru": "Интеграция с 3D-принтером Bambulab",
-      "pt": "Integração da impressora 3D Bambulab",
-      "nl": "Bambulab 3D Printer integratie",
-      "fr": "Intégration de l'imprimante 3d Bambulab",
-      "it": "Integrazione della stampante 3d Bambulab",
-      "es": "Integración de la impresora 3d Bambulab",
-      "pl": "Integracja drukarki 3D Bambulab",
-      "uk": "Інтеграція 3d принтера Bambulab",
-      "zh-cn": "Bambulab 3D 打印机集成"
-    },
-    "desc": {
-      "en": "Connects to Bambulab 3d printers to retrieve data of current print and control main aspects",
-      "de": "Verbindet sich mit Bambulab-3D-Druckern, um Daten des aktuellen Drucks abzurufen und Hauptaspekte zu steuern",
-      "ru": "Подключается к 3D-принтерам Bambulab для получения данных о текущей печати и управления основными аспектами.",
-      "pt": "Conecta-se às impressoras 3D Bambulab para recuperar dados de impressão atual e controlar os principais aspectos",
-      "nl": "Maakt verbinding met Bambulab 3D-printers om gegevens op te halen over de huidige afdruk- en controleaspecten",
-      "fr": "Se connecte aux imprimantes 3d Bambulab pour récupérer les données d'impression en cours et contrôler les principaux aspects",
-      "it": "Si collega alle stampanti 3D Bambulab per recuperare i dati della stampa corrente e controllare gli aspetti principali",
-      "es": "Se conecta a impresoras 3d Bambulab para recuperar datos de impresión actual y controlar aspectos principales",
-      "pl": "Łączy się z drukarkami 3D Bambulab, aby pobierać dane dotyczące bieżącego drukowania i kontrolować główne aspekty",
-      "uk": "Підключається до 3d-принтерів Bambulab для отримання даних поточного друку та контролю основних аспектів",
-      "zh-cn": "连接到 Bambulab 3D 打印机以检索当前打印的数据并控制主要方面"
-    },
-    "authors": [
-      "DutchmanNL <oss@drozmotix.eu>"
+    "protectedNative": [
+        "Password",
+        "serial",
+        "cloudPassword",
+        "cloudAccessToken"
     ],
-    "keywords": [
-      "bambulab",
-      "3d-printing"
+    "encryptedNative": [
+        "Password",
+        "cloudPassword",
+        "cloudAccessToken"
     ],
-    "platform": "Javascript/Node.js",
-    "icon": "bambulab.png",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.bambulab/main/admin/bambulab.png",
-    "readme": "https://github.com/DrozmotiX/ioBroker.bambulab/blob/main/README.md",
-    "loglevel": "info",
-    "mode": "daemon",
-    "type": "hardware",
-    "compact": true,
-    "connectionType": "local",
-    "dataSource": "push",
-    "adminUI": {
-      "config": "json"
+    "native": {
+        "connectionMode": "lan",
+        "host": "192.168.1.100",
+        "port": 8883,
+        "serial": "",
+        "Password": "",
+        "cloudRegion": "global",
+        "cloudLoginMethod": "emailCode",
+        "cloudEmail": "",
+        "cloudVerifyCode": "",
+        "cloudPassword": "",
+        "cloudAccessToken": "",
+        "cloudMqttUsername": "",
+        "cloudUserId": "",
+        "printerModel": "X1",
+        "requestInterval": 5,
+        "messageBuffer": 5
     },
-    "dependencies": [
-      {
-        "js-controller": ">=6.0.11"
-      }
-    ],
-    "globalDependencies": [
-      {
-        "admin": ">=7.8.23"
-      }
-    ],
-    "tier": 3,
-    "licenseInformation": {
-      "license": "MIT",
-      "type": "free"
-    }
-  },
-  "encryptedNative": [
-    "Password",
-    "serial"
-  ],
-  "protectedNative": [
-    "Password",
-    "serial"
-  ],
-  "native": {
-    "host": "192.168.1.100",
-    "port": 8883,
-    "serial": "",
-    "Password": "",
-    "printerModel": "X1",
-    "requestInterval": 5,
-    "messageBuffer": 5
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "info",
-      "type": "channel",
-      "common": {
-        "name": "Information"
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.connection",
-      "type": "state",
-      "common": {
-        "role": "indicator.connected",
-        "name": "Device or service connected",
-        "type": "boolean",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.hmsErrorCodeTranslations",
-      "type": "state",
-      "common": {
-        "role": "json",
-        "name": "HMS translations",
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    }
-  ]
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.hmsErrorCodeTranslations",
+            "type": "state",
+            "common": {
+                "role": "json",
+                "name": "HMS translations",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.cloudEmailCodeRequestedAt",
+            "type": "state",
+            "common": {
+                "role": "state",
+                "name": "Cloud E-Mail-Code zuletzt angefordert (Unix-ms, 0 = nie)",
+                "type": "number",
+                "read": true,
+                "write": false,
+                "def": 0
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.cloudPrintControlBlocked",
+            "type": "state",
+            "common": {
+                "role": "indicator.warning",
+                "name": "Cloud: Drucker lehnt print-Befehle ab (Lüfter/G-Code/Pause/…)",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.mqttPrintFun",
+            "type": "state",
+            "common": {
+                "role": "text",
+                "name": "MQTT print.fun (Hex, Firmware-Flags)",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.cloudRequestEmailCode",
+            "type": "state",
+            "common": {
+                "role": "button",
+                "name": "Cloud: E-Mail-Code erneut anfordern",
+                "type": "boolean",
+                "read": false,
+                "write": true
+            },
+            "native": {}
+        }
+    ]
 }
